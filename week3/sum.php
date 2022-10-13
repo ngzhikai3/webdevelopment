@@ -14,23 +14,28 @@
 
 <body>
 
-    <div class="container m-3 row">
+    <div class="d-flex flex-wrap">
 
-    <?php
-        $sum=0 ;
+        <?php
+        $sum = 0;
+        $plus = "+";
 
-        for ($num = 1; $num <= 100; $num++) { if($num % 2==0) { echo "<strong>" . "<p class=\"d-flex flex-column text-center\">$num</p>" . "</strong>";
+        for ($num = 1; $num <= 100; $num++) {
+            if ($num == 100) {
+                $plus = "";
             }
-            else
-            {
-            echo "<p class=\"d-flex flex-column text-center\">$num</p>";
+            if ($num % 2 == 0) {
+                echo "<p class=\"px-1 m-0\"><strong>$num</strong></p>" . $plus;
+            } else {
+                echo "<p class=\"px-1 m-0\">$num</p>" . $plus;
             }
-            $sum=$sum+$num ;
-            }
-            echo "<strong><p class=\"d-flex flex-column text-center\">$sum</p></strong>";
+            $sum = $sum + $num;
+        }
+        echo "=" . "<strong><p class=\"px-1\">$sum</p></strong>";
 
-            ?>
-            
+        ?>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 </body>
