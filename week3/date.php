@@ -16,11 +16,11 @@
 
     <div class="m-5 d-flex justify-content-center">
 
-        <div class="btn-group mx-3">
+        <div class="btn-group mx-4">
             <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Day
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu text-center">
                 <?php
                 for ($day = 1; $day <= 31; $day++) {
                     echo $day . "<br>";
@@ -29,24 +29,36 @@
             </ul>
         </div>
 
-        <div class="btn-group mx-3">
+        <div class="btn-group mx-5">
             <button class="btn btn-warning btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Month
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu text-center">
                 <?php
-                for ($month = 1; $month <= 12; $month++) {
-                    echo $month . "<br>";
-                }
+                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+                echo $month[0] . "<br>";
+                echo $month[1] . "<br>";
+                echo $month[2] . "<br>";
+                echo $month[3] . "<br>";
+                echo $month[4] . "<br>";
+                echo $month[5] . "<br>";
+                echo $month[6] . "<br>";
+                echo $month[7] . "<br>";
+                echo $month[8] . "<br>";
+                echo $month[9] . "<br>";
+                echo $month[10] . "<br>";
+                echo $month[11] . "<br>";
+
                 ?>
             </ul>
         </div>
 
-        <div class="btn-group mx-3">
+        <div class="btn-group mx-4">
             <button class="btn btn-danger btn-lg dropdown-toggle text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Year
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu text-center">
                 <?php
                 for ($year = 1900; $year <= 2022; $year++) {
                     echo $year . "<br>";
