@@ -43,7 +43,7 @@
         </div>
 
         <div class="btn-group mx-3">
-            <button class="btn btn-danger btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-danger btn-lg dropdown-toggle text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Year
             </button>
             <ul class="dropdown-menu">
