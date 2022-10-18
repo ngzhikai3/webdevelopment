@@ -14,58 +14,38 @@
 
 <body>
 
+    <div class="text-center m-5">
+        <h1>What Is Your Date Of Birth?</h1>
+    </div>
+
     <div class="m-5 d-flex justify-content-center">
 
-        <div class="btn-group mx-4">
-            <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Day
-            </button>
-            <ul class="dropdown-menu text-center">
-                <?php
-                for ($day = 1; $day <= 31; $day++) {
-                    echo $day . "<br>";
-                }
-                ?>
-            </ul>
-        </div>
+        <select class="form-select form-select-lg bg-info mx-4" aria-label=".form-select-lg example">
+            <option selected>Day</option>
+            <?php
+            for ($day = 1; $day <= 31; $day++) {
+                echo "<option value=\"$day\">$day</option>";
+            }
+            ?>
+        </select>
 
-        <div class="btn-group mx-5">
-            <button class="btn btn-warning btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Month
-            </button>
-            <ul class="dropdown-menu text-center">
-                <?php
-                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        <select class="form-select form-select-lg bg-warning mx-4" aria-label=".form-select-lg example">
+            <option selected>Month</option>
+            <?php
+            for ($month = 1; $month <= 12; $month++) {
+                echo "<option value=\"$month\">$month</option>";
+            }
+            ?>
+        </select>
 
-                echo $month[0] . "<br>";
-                echo $month[1] . "<br>";
-                echo $month[2] . "<br>";
-                echo $month[3] . "<br>";
-                echo $month[4] . "<br>";
-                echo $month[5] . "<br>";
-                echo $month[6] . "<br>";
-                echo $month[7] . "<br>";
-                echo $month[8] . "<br>";
-                echo $month[9] . "<br>";
-                echo $month[10] . "<br>";
-                echo $month[11] . "<br>";
-
-                ?>
-            </ul>
-        </div>
-
-        <div class="btn-group mx-4">
-            <button class="btn btn-danger btn-lg dropdown-toggle text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Year
-            </button>
-            <ul class="dropdown-menu text-center">
-                <?php
-                for ($year = 1900; $year <= 2022; $year++) {
-                    echo $year . "<br>";
-                }
-                ?>
-            </ul>
-        </div>
+        <select class="form-select form-select-lg bg-danger mx-4" aria-label=".form-select-lg example">
+            <option selected>Year</option>
+            <?php
+            for ($year = 1900; $year <= 2022; $year++) {
+                echo "<option value=\"$year\">$year</option>";
+            }
+            ?>
+        </select>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
