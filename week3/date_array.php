@@ -7,7 +7,6 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -32,9 +31,9 @@
         <select class="form-select form-select-lg bg-warning mx-4" aria-label=".form-select-lg example">
             <option selected>Month</option>
             <?php
-            for ($num = 0; $num <= 11; $num++) {
+            $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
-                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            for ($num = 0; $num <= 11; $num++) {
                 echo "<option value=\"$num\">$month[$num]</option>";
             }
             ?>
@@ -43,7 +42,7 @@
         <select class="form-select form-select-lg bg-danger mx-4" aria-label=".form-select-lg example">
             <option selected>Year</option>
             <?php
-            for ($year = 1900; $year <= 2022; $year++) {
+            for ($year = 2022; $year >= 1900; $year++) {
                 echo "<option value=\"$year\">$year</option>";
             }
             ?>

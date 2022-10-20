@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Homework 1</title>
+    <title>Date</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,28 +20,47 @@
     <div class="m-5 d-flex justify-content-center">
 
         <select class="form-select form-select-lg bg-info mx-4" aria-label=".form-select-lg example">
-            <option selected>Day</option>
+        <option selected>Day</option>
             <?php
+
             for ($day = 1; $day <= 31; $day++) {
-                echo "<option value=\"$day\">$day</option>";
+
+                if ($day == date("j")) {
+                    echo "<option value=$day selected>$day</option>";
+                } else {
+                    echo "<option value=$day>$day</option>";
+                }
             }
             ?>
         </select>
 
         <select class="form-select form-select-lg bg-warning mx-4" aria-label=".form-select-lg example">
-            <option selected>Month</option>
+        <option selected>Month</option>
             <?php
+            $months = array( "Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            $curmon = date("m");
+
             for ($month = 1; $month <= 12; $month++) {
-                echo "<option value=\"$month\">$month</option>";
+                $state = "";
+                if ($curmon == $month) {
+                    $state = "selected";
+                }
+                echo "<option value=$month $state>$months[$month]</option>";
             }
             ?>
         </select>
 
         <select class="form-select form-select-lg bg-danger mx-4" aria-label=".form-select-lg example">
-            <option selected>Year</option>
+        <option selected>Year</option>
             <?php
-            for ($year = 2022; $year>= 1900; $year++) {
-                echo "<option value=\"$year\">$year</option>";
+            $curyear = date("Y");
+
+            for ($year = 1900; $year <= $curyear; $year++) {
+                $state = "";
+                if ($curyear == $year) {
+                    $state = "selected";
+                }
+                echo "<option value=$year $state>$year</option>";
             }
             ?>
         </select>
