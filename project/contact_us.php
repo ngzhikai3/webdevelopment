@@ -18,17 +18,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" aria-current="page" href="/project/index.php">Home</a>
+                            <a class="nav-link text-white" aria-current="page" href="http://localhost/web/project/index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/project/product_create.php">Create Product</a>
+                            <a class="nav-link text-white" href="http://localhost/web/project/product_create.php">Create Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/project/customer_create.php">Create Customer</a>
+                            <a class="nav-link text-white" href="http://localhost/web/project/customer_create.php">Create Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/project/contact_us.php">Contact Us</a>
-                        </li>
+                            <a class="nav-link text-white" href="http://localhost/web/project/contact_us.php">Contact Us</a>
                     </ul>
                 </div>
             </div>
