@@ -53,22 +53,24 @@
             </div>
 
             <?php
-            $price = $_POST['price'];
-            $promotion_price = $_POST['promotion_price'];
-            $manufacture_date = $_POST['manufacture_date'];
-            $expired_date = $_POST['expired_date'];
-            $date1 = date_create($manufacture_date);
-            $date2 = date_create($expired_date);
-            $diff = date_diff($date1, $date2);
+
+            if ($_POST) {
+                // include database connection
+                $price = $_POST['price'];
+                $promotion_price = $_POST['promotion_price'];
+                $manufacture_date = $_POST['manufacture_date'];
+                $expired_date = $_POST['expired_date'];
+                $date1 = date_create($manufacture_date);
+                $date2 = date_create($expired_date);
+                $diff = date_diff($date1, $date2);
 
 
-            if ($promotion_price >= $price) {
-                echo "Please enter a cheaper price";
-            } elseif ($diff->format("%R%a") <= "0") {
-                echo "Expired date must be after the manufacture date";
-            } else {
-                if ($_POST) {
-                    // include database connection
+                if ($promotion_price >= $price) {
+                    echo "Please enter a cheaper price";
+                } elseif ($diff->format("%R%a") <= "0") {
+                    echo "Expired date must be after the manufacture date";
+                } else {
+                    
                     $name = $_POST['name'];
                     $description = $_POST['description'];
                     $price = $_POST['price'];

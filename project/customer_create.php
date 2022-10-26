@@ -9,18 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script>
-        $(function() {
-            $(".datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -51,18 +39,17 @@
             </div>
 
             <?php
-
             if ($_POST) {
                 // include database connection
-                $username = $_POST['username'];
-                $password = $_POST['password'];
+                $user_name = $_POST['username'];
+                $pass_word = $_POST['password'];
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
                 $account_status = $_POST['account_status'];
 
-                if ($username == "" || $password == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
+                if ($user_name == "" || $pass_word == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
                     echo "Please make sure all fields are not empty";
                 } else {
 
@@ -73,8 +60,8 @@
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
-                        $stmt->bindParam(':username', $username);
-                        $stmt->bindParam(':password', $password);
+                        $stmt->bindParam(':username', $user_name);
+                        $stmt->bindParam(':password', $pass_word);
                         $stmt->bindParam(':first_name', $first_name);
                         $stmt->bindParam(':last_name', $last_name);
                         $stmt->bindParam(':gender', $gender);
@@ -120,13 +107,13 @@
                         <td>Gender</td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender1">
+                                <input class="form-check-input" type="radio" name="gender" value="male">
                                 <label class="form-check-label" for="gender1">
                                     Male
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender2">
+                                <input class="form-check-input" type="radio" name="gender" value="female">
                                 <label class="form-check-label" for="gender2">
                                     Female
                                 </label>
@@ -135,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>Date Of Birth</td>
-                        <td><input type='text' name='date_of_birth' class='form-control datepicker' /></td>
+                        <td><input type='date' name='date_of_birth' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Account Status</td>
