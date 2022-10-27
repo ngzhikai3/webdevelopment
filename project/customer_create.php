@@ -43,20 +43,93 @@
                 // include database connection
                 $user_name = $_POST['username'];
                 $pass_word = $_POST['password'];
+                $comfirm_password = $_POST['comfirm_password'];
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
                 $account_status = $_POST['account_status'];
 
-                if ($user_name == "" || $pass_word == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
-                    echo "Please make sure all fields are not empty";
-                } else {
+                $flag = 0;
+                if ($user_name == "") {
+                    echo "Please enter your username";
+                    $flag = 1;
+                }
+                $space = " ";
+                $word = $_POST['username'];
+                if (strpos($word, $space) !== false) {
+                    echo "Username not space allow";
+                    $flag = 1;
+                } elseif (strlen($user_name) < 6) {
+                    echo "Username need at least 6 charecter";
+                    $flag = 1;
+                }
+
+                if ($pass_word == "") {
+                    echo "Please enter your password";
+                    $flag = 1;
+                } elseif (!preg_match('/[A-Z]/', $pass_word)) {
+                    echo "Password need include uppercase";
+                    $flag = 1;
+                } elseif (!preg_match('/[a-z]/', $pass_word)) {
+                    echo "Password need include lowercase";
+                    $flag = 1;
+                } elseif (!preg_match('/[0-9]/', $pass_word)) {
+                    echo "Password need include number";
+                    $flag = 1;
+                } elseif (strlen($pass_word) < 8) {
+                    echo "Password need at least 8 charecter";
+                    $flag = 1;
+                }
+
+                if ($comfirm_password == "") {
+                    echo "Please enter comfirm password";
+                    $flag = 1;
+                } elseif ($pass_word != $comfirm_password) {
+                    echo "Password need to same with comfirm password";
+                    $flag = 1;
+                }
+
+                if ($first_name == "") {
+                    echo "Please enter your first name";
+                    $flag = 1;
+                }
+
+                if ($last_name == "") {
+                    echo "Please enter your last name";
+                    $flag = 1;
+                }
+
+                if ($gender == "") {
+                    echo "Please select your gender";
+                    $flag = 1;
+                }
+
+                if ($date_of_birth == "") {
+                    echo "Please select your date of birth";
+                    $flag = 1;
+                }
+                $day = $_POST['date_of_birth'];
+                $today = date("Ymd");
+                $date1 = date_create($day);
+                $date2 = date_create($today);
+                $diff = date_diff($date1, $date2);
+                if ($diff->format("%y") <= "18") {
+                    echo "User need 18 years old and above";
+                    $flag =1;
+                }
+
+                if ($account_status == "") {
+                    echo "Please enter your account status";
+                    $flag = 1;
+                }
+
+                if ($flag == 0) {
 
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender,  date_of_birth=:date_of_birth, account_status=:account_status";
+                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -94,6 +167,10 @@
                     <tr>
                         <td>Password</td>
                         <td><input type='password' name='password' class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Comfirm Password</td>
+                        <td><input type='password' name='comfirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
