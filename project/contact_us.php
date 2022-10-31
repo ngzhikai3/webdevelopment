@@ -15,25 +15,32 @@
     <div class="container-fluid px-0">
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" aria-current="page" href="http://localhost/web/project/index.php">Home</a>
+                            <a class="nav-link text-white" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/product_create.php">Create Product</a>
+                            <a class="nav-link text-white" href="product_create.php">Create Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/customer_create.php">Create Customer</a>
+                            <a class="nav-link text-white" href="product_read.php">Product List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/contact_us.php">Contact Us</a>
+                            <a class="nav-link text-white" href="customer_create.php">Create Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="customer_read.php">Customer List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <div class="container my-5 bg-info w-50">
+        <div class="container my-5 bg-dark text-white w-50">
             <div>
                 <p class="text-center p-3">CONTACT US</p>
             </div>

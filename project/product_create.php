@@ -24,22 +24,28 @@
 </head>
 
 <body>
-    <div>
+    <div class="container-fluid px-0">
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" aria-current="page" href="http://localhost/web/project/index.php">Home</a>
+                            <a class="nav-link text-white" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/product_create.php">Create Product</a>
+                            <a class="nav-link text-white" href="product_create.php">Create Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/customer_create.php">Create Customer</a>
+                            <a class="nav-link text-white" href="product_read.php">Product List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="http://localhost/web/project/contact_us.php">Contact Us</a>
+                            <a class="nav-link text-white" href="customer_create.php">Create Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="customer_read.php">Customer List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
                         </li>
                     </ul>
                 </div>
@@ -47,7 +53,7 @@
         </nav>
 
         <!-- container -->
-        <div class="container">
+        <div class="container my-3">
             <div class="page-header">
                 <h1>Create Product</h1>
             </div>
@@ -90,7 +96,7 @@
 
                 if ($promotion_price == "") {
                     $promotion_price = NULL;
-                }   elseif (preg_match('/[A-Z]/', $promotion_price)) {
+                } elseif (preg_match('/[A-Z]/', $promotion_price)) {
                     echo "Please make sure price are not contain capital A-Z";
                     $flag = 1;
                 } elseif (preg_match('/[a-z]/', $promotion_price)) {
