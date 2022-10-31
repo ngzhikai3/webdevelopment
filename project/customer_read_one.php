@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Read One Product</title>
+    <title>Read One Customer</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,14 +43,14 @@
 
         <div class="container my-3">
             <div class="page-header">
-                <h1>Read Product</h1>
+                <h1>Read Customer Profile</h1>
             </div>
 
             <!-- PHP read one record will be here -->
             <?php
             // get passed parameter value, in this case, the record ID
             // isset() is a PHP function used to verify if a value is there or not
-            $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+            $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die('ERROR: Record Customer not found.');
 
             //include database connection
             include 'config/database.php';
@@ -58,11 +58,11 @@
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT id, name, description, price, promotion_price, manufacture_date, expired_date FROM products WHERE id = :id ";
+                $query = "SELECT username, first_name, last_name, gender, date_of_birth FROM customers WHERE user_id = :user_id ";
                 $stmt = $con->prepare($query);
 
                 // Bind the parameter
-                $stmt->bindParam(":id", $id);
+                $stmt->bindParam(":user_id", $user_id);
 
                 // execute our query
                 $stmt->execute();
@@ -71,12 +71,11 @@
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 // values to fill up our form
-                $name = $row['name'];
-                $description = $row['description'];
-                $price = $row['price'];
-                $promotion_price = $row['promotion_price'];
-                $manufacture_date = $row['manufacture_date'];
-                $expired_date = $row['expired_date'];
+                $username = $row['username'];
+                $first_name = $row['first_name'];
+                $last_name = $row['last_name'];
+                $gender = $row['gender'];
+                $date_of_birth = $row['date_of_birth'];
                 // shorter way to do that is extract($row)
             }
 
@@ -90,33 +89,29 @@
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Name</td>
-                    <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
+                    <td>Username</td>
+                    <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Description</td>
-                    <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                    <td>First Name</td>
+                    <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Price</td>
-                    <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                    <td>Last Name</td>
+                    <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Promotion Price</td>
-                    <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                    <td>Gender</td>
+                    <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Manufacture Date</td>
-                    <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
-                </tr>
-                <tr>
-                    <td>Expired Date</td>
-                    <td><?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?></td>
+                    <td>Date of Birth</td>
+                    <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                        <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
                     </td>
                 </tr>
             </table>

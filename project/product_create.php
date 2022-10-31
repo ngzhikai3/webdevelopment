@@ -9,18 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script>
-        $(function() {
-            $(".datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -180,17 +168,17 @@
                     </tr>
                     <tr>
                         <td>Manufacture Date</td>
-                        <td><input type='text' name='manufacture_date' class='form-control datepicker' /></td>
+                        <td><input type='date' name='manufacture_date' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Expired Date</td>
-                        <td><input type='text' name='expired_date' class='form-control datepicker' /></td>
+                        <td><input type='date' name='expired_date' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='index.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
                         </td>
                     </tr>
                 </table>
