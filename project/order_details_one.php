@@ -52,14 +52,14 @@
 
         <div class="container my-3">
             <div class="page-header">
-                <h1>Read Product</h1>
+                <h1>Read Order Details</h1>
             </div>
 
             <!-- PHP read one record will be here -->
             <?php
             // get passed parameter value, in this case, the record ID
             // isset() is a PHP function used to verify if a value is there or not
-            $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+            $order_id = isset($_GET['order_id ']) ? $_GET['order_id '] : die('ERROR: Record ID not found.');
 
             //include database connection
             include 'config/database.php';
@@ -67,11 +67,11 @@
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT id, name, description, price, promotion_price, manufacture_date, expired_date FROM products WHERE id = :id ";
+                $query = "SELECT order_id, product_1, quantity_1, price_1, product_2, quantity_2, price_2, product_3, quantity_3, price_3, total_price FROM order_details WHERE order_id  = :order_id  ";
                 $stmt = $con->prepare($query);
 
                 // Bind the parameter
-                $stmt->bindParam(":id", $id);
+                $stmt->bindParam(":order_id ", $order_id);
 
                 // execute our query
                 $stmt->execute();
@@ -80,12 +80,17 @@
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 // values to fill up our form
-                $name = $row['name'];
-                $description = $row['description'];
-                $price = $row['price'];
-                $promotion_price = $row['promotion_price'];
-                $manufacture_date = $row['manufacture_date'];
-                $expired_date = $row['expired_date'];
+                $order_id  = $row['order_id '];
+                $product_1 = $row['product_1'];
+                $quantity_1 = $row['quantity_1'];
+                $price_1 = $row['price_1'];
+                $product_2 = $row['product_2'];
+                $quantity_2 = $row['quantity_2'];
+                $price_2 = $row['price_2'];
+                $product_3 = $row['product_3'];
+                $quantity_3 = $row['quantity_3'];
+                $price_3 = $row['price_3'];
+                $total_price = $row['total_price'];
                 // shorter way to do that is extract($row)
             }
 
@@ -99,33 +104,53 @@
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Name</td>
-                    <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
+                    <td>Order ID</td>
+                    <td><?php echo htmlspecialchars($order_id, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Description</td>
-                    <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                    <td>Product 1</td>
+                    <td><?php echo htmlspecialchars($product_1, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Price</td>
-                    <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                    <td>Quantity 1</td>
+                    <td><?php echo htmlspecialchars($quantity_1, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Promotion Price</td>
-                    <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                    <td>Price 1</td>
+                    <td><?php echo htmlspecialchars($price_1, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Manufacture Date</td>
-                    <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
+                    <td>Product 2</td>
+                    <td><?php echo htmlspecialchars($product_2, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Expired Date</td>
-                    <td><?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?></td>
+                    <td>Quantity 2</td>
+                    <td><?php echo htmlspecialchars($quantity_2, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Price 2</td>
+                    <td><?php echo htmlspecialchars($price_2, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Product 3</td>
+                    <td><?php echo htmlspecialchars($product_3, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Quantity 3</td>
+                    <td><?php echo htmlspecialchars($quantity_3, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Price 3</td>
+                    <td><?php echo htmlspecialchars($price_3, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Total Price</td>
+                    <td><?php echo htmlspecialchars($total_price, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                        <a href='order_details.php' class='btn btn-danger'>Back to read order details</a>
                     </td>
                 </tr>
             </table>

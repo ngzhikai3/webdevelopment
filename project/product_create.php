@@ -33,6 +33,15 @@
                             <a class="nav-link text-white" href="customer_read.php">Customer List</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="order_summary.php">Order Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="order_details.php">Order Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="order_create.php">Order Form</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
                         </li>
                     </ul>
@@ -107,7 +116,7 @@
                     $expired_date = NULL;
                 }
 
-                if ($diff->format("%R%a") <= "0") {
+                if ($diff->format("%R%a") < "0") {
                     echo "Expired date must be after the manufacture date";
                 }
 
