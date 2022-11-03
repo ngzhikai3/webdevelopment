@@ -62,7 +62,7 @@
             // delete message prompt will be here
 
             // select all data
-            $query = "SELECT order_sid, order_date, username, product_1, quantity_1, product_2, quantity_2, product_3, quantity_3, total_price FROM order_summary ORDER BY order_sid DESC";
+            $query = "SELECT order_id, order_date, username FROM order_summary ORDER BY order_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -89,13 +89,6 @@
             echo "<th>Order ID</th>";
             echo "<th>Order Date</th>";
             echo "<th>Username</th>";
-            echo "<th>Product 1</th>";
-            echo "<th>Quantity 1</th>";
-            echo "<th>Product 2</th>";
-            echo "<th>Quantity 2</th>";
-            echo "<th>Product 3</th>";
-            echo "<th>Quantity 3</th>";
-            echo "<th>Total Price</th>";
             echo "</tr>";
 
             // table body will be here
@@ -106,16 +99,9 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$order_sid}</td>";
+                echo "<td>{$order_id}</td>";
                 echo "<td>{$order_date}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$product_1}</td>";
-                echo "<td>{$quantity_1}</td>";
-                echo "<td>{$product_2}</td>";
-                echo "<td>{$quantity_2}</td>";
-                echo "<td>{$product_3}</td>";
-                echo "<td>{$quantity_3}</td>";
-                echo "<td>{$total_price}</td>";
                 echo "</tr>";
             }
 
