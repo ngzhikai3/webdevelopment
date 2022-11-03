@@ -165,7 +165,7 @@
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO order_summary SET order_date=:order_date, username=:username, product_1=:product_1, quantity_1=:quantity_1, product_2=:product_2, quantity_2=:quantity_2, product_3=:product_3, quantity_3=:quantity_3";
+                        $query = "INSERT INTO order_summary SET order_date=:order_date, username=:username, product_1=:product_1, quantity_1=:quantity_1, product_2=:product_2, quantity_2=:quantity_2, product_3=:product_3, quantity_3=:quantity_3, total_price=:total_price";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -179,8 +179,10 @@
                         $stmt->bindParam(':quantity_2', $quantity_2);
                         $stmt->bindParam(':product_3', $product_3);
                         $stmt->bindParam(':quantity_3', $quantity_3);
+                        $stmt->bindParam(':total_price', $total_price);
                         // Execute the query
                         if ($stmt->execute()) {
+                            echo "<div class='alert alert-success'>Total price of your order is RM$total_price</div>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
@@ -192,7 +194,7 @@
                     }
                     try {
                         // insert query
-                        $query = "INSERT INTO order_details SET order_id=:order_id, product_1=:product_1, quantity_1=:quantity_1, price_1=:price_1, product_2=:product_2, quantity_2=:quantity_2, price_2=:price_2, product_3=:product_3, quantity_3=:quantity_3, price_3=:price_3, total_price=:total_price";
+                        $query = "INSERT INTO order_details SET order_id=:order_id, product_1=:product_1, quantity_1=:quantity_1, price_1=:price_1, product_2=:product_2, quantity_2=:quantity_2, price_2=:price_2, product_3=:product_3, quantity_3=:quantity_3, price_3=:price_3";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -208,10 +210,9 @@
                         $stmt->bindParam(':product_3', $product_3);
                         $stmt->bindParam(':quantity_3', $quantity_3);
                         $stmt->bindParam(':price_3', $price_3);
-                        $stmt->bindParam(':total_price', $total_price);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Total price of your order is RM$total_price</div>";
+                            echo "<div class='alert alert-success'>Your order is successful</div>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
@@ -372,6 +373,7 @@
                     <tr class="text-end">
                         <td colspan=4>
                             <input type='submit' value='Save' class='btn btn-primary' />
+                            <a href='order_summary.php' class='btn btn-danger'>Back to Order Summary</a>
                             <a href='order_details.php' class='btn btn-danger'>Back to Order Details</a>
                         </td>
                     </tr>

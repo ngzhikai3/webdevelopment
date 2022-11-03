@@ -62,7 +62,7 @@
             // delete message prompt will be here
 
             // select all data
-            $query = "SELECT order_id, product_1, quantity_1, price_1, product_2, quantity_2, price_2, product_3, quantity_3, price_3, total_price FROM order_details ORDER BY order_id DESC";
+            $query = "SELECT order_id, product_1, quantity_1, price_1, product_2, quantity_2, price_2, product_3, quantity_3, price_3 FROM order_details ORDER BY order_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -96,8 +96,6 @@
             echo "<th>Product 3</th>";
             echo "<th>Quantity 3</th>";
             echo "<th>Price 3</th>";
-            echo "<th>Total Price</th>";
-            echo "<th>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -118,17 +116,6 @@
                 echo "<td>{$product_3}</td>";
                 echo "<td>{$quantity_3}</td>";
                 echo "<td>{$price_3}</td>";
-                echo "<td>{$total_price}</td>";
-                echo "<td>";
-                // read one record
-                echo "<a href='order_details_one.php?order_id={$order_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_order({$order_id});' class='btn btn-danger mx-2'>Delete</a>";
-                echo "</td>";
                 echo "</tr>";
             }
 
