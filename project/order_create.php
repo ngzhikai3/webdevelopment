@@ -181,7 +181,6 @@
                         $stmt->bindParam(':quantity_3', $quantity_3);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Order Summary Record was saved.</div>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
@@ -212,7 +211,7 @@
                         $stmt->bindParam(':total_price', $total_price);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Order Details Record was saved.</div>";
+                            echo "<div class='alert alert-success'>Total price of your order is RM$total_price</div>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
