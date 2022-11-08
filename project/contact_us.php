@@ -33,12 +33,6 @@
                             <a class="nav-link text-white" href="customer_read.php">Customer List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="order_summary.php">Order Summary</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="order_details.php">Order Details</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-white" href="order_create.php">Order Form</a>
                         </li>
                         <li class="nav-item">
