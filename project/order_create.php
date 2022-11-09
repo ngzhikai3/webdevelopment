@@ -37,6 +37,9 @@
                             <a class="nav-link text-white" href="order_create.php">Order Form</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="order_read.php">Order List</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
                         </li>
                     </ul>
@@ -204,9 +207,7 @@
                         </td>
                         <td colspan=4 class="text-end">
                             <input type='submit' value='Save' class='btn btn-primary' />
-
-                            <a href='order_summary.php' class='btn btn-danger'>Back to Order Summary</a>
-                            <a href='order_details.php' class='btn btn-danger'>Back to Order Details</a>
+                            <a href='order_read.php' class='btn btn-danger'>Back to Order Details</a>
                         </td>
                     </tr>
                 </table>
@@ -237,6 +238,8 @@
             }*/
         }, false);
     </script>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

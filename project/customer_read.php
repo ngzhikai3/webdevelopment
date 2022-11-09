@@ -36,6 +36,9 @@
                             <a class="nav-link text-white" href="order_create.php">Order Form</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="order_read.php">Order List</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
                         </li>
                     </ul>

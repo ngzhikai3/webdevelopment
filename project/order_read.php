@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Read Product List</title>
+    <title>Read Order List</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,7 +49,7 @@
         <!-- container -->
         <div class="container my-3">
             <div class="page-header">
-                <h1>Read Products List</h1>
+                <h1>Read Order Details</h1>
             </div>
 
             <?php
@@ -59,7 +59,7 @@
             // delete message prompt will be here
 
             // select all data
-            $query = "SELECT id, name, description, price FROM products ORDER BY id DESC";
+            $query = "SELECT order_id, product_id, quantity FROM order_details ORDER BY order_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -67,7 +67,7 @@
             $num = $stmt->rowCount();
 
             // link to create record form
-            echo "<a href='product_create.php' class='btn btn-primary m-b-1em my-3'>Create New Product</a>";
+            echo "<a href='order_create.php' class='btn btn-primary m-b-1em my-3'>Create New Order</a>";
 
             //check if more than 0 record found
             if ($num > 0) {
@@ -83,11 +83,9 @@
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Name</th>";
-            echo "<th>Description</th>";
-            echo "<th>Price</th>";
-            echo "<th>Action</th>";
+            echo "<th>Order ID</th>";
+            echo "<th>Product ID</th>";
+            echo "<th>Quantity</th>";
             echo "</tr>";
 
             // table body will be here
@@ -98,19 +96,18 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
-                echo "<td>{$name}</td>";
-                echo "<td>{$description}</td>";
-                echo "<td>{$price}</td>";
+                echo "<td>{$order_id}</td>";
+                echo "<td>{$product_id}</td>";
+                echo "<td>{$quantity}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
+                echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});' class='btn btn-danger mx-2'>Delete</a>";
+                echo "<a href='#' onclick='delete_order({$order_id});' class='btn btn-danger mx-2'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -120,8 +117,7 @@
 
             ?>
 
-        </div>
-        <!-- end .container -->
+        </div> <!-- end .container -->
 
         <!-- confirm delete record will be here -->
 
