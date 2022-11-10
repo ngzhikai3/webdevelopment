@@ -12,39 +12,14 @@
 </head>
 
 <body>
+
+    <?php
+    include 'check.php';
+    ?>
+
     <div class="container-fluid px-0">
-        <nav class="navbar navbar-expand-lg bg-dark">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" aria-current="page" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="product_create.php">Create Product</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="product_read.php">Product List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="customer_create.php">Create Customer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="customer_read.php">Customer List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="order_create.php">Order Form</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="order_read.php">Order List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+        <?php include 'topnav.html'; ?>
 
         <!-- container -->
         <div class="container my-3">
