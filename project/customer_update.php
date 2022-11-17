@@ -37,7 +37,7 @@ include 'check.php';
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT username, first_name, last_name, gender, date_of_birth FROM customers WHERE user_id = ? LIMIT 0,1";
+                $query = "SELECT username, password, first_name, last_name, gender, date_of_birth FROM customers WHERE user_id = ? LIMIT 0,1";
                 $stmt = $con->prepare($query);
 
                 // this is the first question mark
@@ -51,6 +51,7 @@ include 'check.php';
 
                 // values to fill up our form
                 $username = $row['username'];
+                $password = $row['password'];
                 $first_name = $row['first_name'];
                 $last_name = $row['last_name'];
                 $gender = $row['gender'];
@@ -66,36 +67,128 @@ include 'check.php';
             <?php
             // check if form was submitted
             if ($_POST) {
-                try {
-                    // write update query
-                    // in this case, it seemed like we have so many fields to pass and
-                    // it is better to label them and not use question marks
-                    $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth WHERE user_id = :user_id";
-                    // prepare query for excecution
-                    $stmt = $con->prepare($query);
-                    // posted values
-                    $username = htmlspecialchars(strip_tags($_POST['username']));
-                    $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
-                    $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
-                    $gender = htmlspecialchars(strip_tags($_POST['gender']));
-                    $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
-                    // bind the parameters
-                    $stmt->bindParam(':username', $username);
-                    $stmt->bindParam(':first_name', $first_name);
-                    $stmt->bindParam(':last_name', $last_name);
-                    $stmt->bindParam(':gender', $gender);
-                    $stmt->bindParam(':date_of_birth', $date_of_birth);
-                    $stmt->bindParam(':user_id', $user_id);
-                    // Execute the query
-                    if ($stmt->execute()) {
-                        echo "<div class='alert alert-success'>Record was updated.</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
-                    }
+
+                $user_name = $_POST['username'];
+                $pass_word = $_POST['password'];
+                $old_password = $_POST['old_password'];
+                $comfirm_password = $_POST['comfirm_password'];
+                $first_name = $_POST['first_name'];
+                $last_name = $_POST['last_name'];
+                $gender = $_POST['gender'];
+                $date_of_birth = $_POST['date_of_birth'];
+
+                $flag = 0;
+                if ($user_name == "") {
+                    echo "<div class='alert alert-danger'>Please enter your username</div>";
+                    $flag = 1;
                 }
-                // show errors
-                catch (PDOException $exception) {
-                    die('ERROR: ' . $exception->getMessage());
+                $space = " ";
+                $word = $_POST['username'];
+                if (strpos($word, $space) !== false) {
+                    echo "<div class='alert alert-danger'>Username not space allow</div>";
+                    $flag = 1;
+                } elseif (strlen($user_name) < 6) {
+                    echo "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
+                    $flag = 1;
+                }
+
+                if ($old_password != htmlspecialchars($password, ENT_QUOTES)) {
+                    echo "<div class='alert alert-danger'>Password incorrect</div>";
+                    $flag = 1;
+                }
+
+                if ($pass_word == "") {
+                    echo "<div class='alert alert-danger'>Please enter your password</div>";
+                    $flag = 1;
+                } elseif ($pass_word == htmlspecialchars($password, ENT_QUOTES)) {
+                    echo "<div class='alert alert-danger'>New password cannot same with old password</div>";
+                    $flag = 1;
+                } elseif (!preg_match('/[A-Z]/', $pass_word)) {
+                    echo "<div class='alert alert-danger'>Password need include uppercase</div>";
+                    $flag = 1;
+                } elseif (!preg_match('/[a-z]/', $pass_word)) {
+                    echo "<div class='alert alert-danger'>Password need include lowercase</div>";
+                    $flag = 1;
+                } elseif (!preg_match('/[0-9]/', $pass_word)) {
+                    echo "<div class='alert alert-danger'>Password need include number</div>";
+                    $flag = 1;
+                } elseif (strlen($pass_word) < 8) {
+                    echo "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
+                    $flag = 1;
+                }
+
+                if ($comfirm_password == "") {
+                    echo "<div class='alert alert-danger'>Please enter comfirm password</div>";
+                    $flag = 1;
+                } elseif ($pass_word != $comfirm_password) {
+                    echo "<div class='alert alert-danger'>Comfirm password need to same with password</div>";
+                    $flag = 1;
+                }
+
+                if ($first_name == "") {
+                    echo "<div class='alert alert-danger'>Please enter your first name</div>";
+                    $flag = 1;
+                }
+
+                if ($last_name == "") {
+                    echo "<div class='alert alert-danger'>Please enter your last name</div>";
+                    $flag = 1;
+                }
+
+                if ($gender == "") {
+                    echo "<div class='alert alert-danger'>Please select your gender</div>";
+                    $flag = 1;
+                }
+
+                if ($date_of_birth == "") {
+                    echo "<div class='alert alert-danger'>Please select your date of birth</div>";
+                    $flag = 1;
+                }
+                $day = $_POST['date_of_birth'];
+                $today = date("Ymd");
+                $date1 = date_create($day);
+                $date2 = date_create($today);
+                $diff = date_diff($date1, $date2);
+                if ($diff->format("%y") <= "18") {
+                    echo "<div class='alert alert-danger'>User need 18 years old and above</div>";
+                    $flag = 1;
+                }
+
+                if ($flag == 0) {
+
+                    try {
+                        // write update query
+                        // in this case, it seemed like we have so many fields to pass and
+                        // it is better to label them and not use question marks
+                        $query = "UPDATE customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth WHERE user_id = :user_id";
+                        // prepare query for excecution
+                        $stmt = $con->prepare($query);
+                        // posted values
+                        $username = htmlspecialchars(strip_tags($_POST['username']));
+                        $password = htmlspecialchars(strip_tags($_POST['password']));
+                        $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
+                        $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
+                        $gender = htmlspecialchars(strip_tags($_POST['gender']));
+                        $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
+                        // bind the parameters
+                        $stmt->bindParam(':username', $username);
+                        $stmt->bindParam(':password', $password);
+                        $stmt->bindParam(':first_name', $first_name);
+                        $stmt->bindParam(':last_name', $last_name);
+                        $stmt->bindParam(':gender', $gender);
+                        $stmt->bindParam(':date_of_birth', $date_of_birth);
+                        $stmt->bindParam(':user_id', $user_id);
+                        // Execute the query
+                        if ($stmt->execute()) {
+                            echo "<div class='alert alert-success'>Record was updated.</div>";
+                        } else {
+                            echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                        }
+                    }
+                    // show errors
+                    catch (PDOException $exception) {
+                        die('ERROR: ' . $exception->getMessage());
+                    }
                 }
             } ?>
 
@@ -105,6 +198,18 @@ include 'check.php';
                     <tr>
                         <td>Username</td>
                         <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Old Password</td>
+                        <td><input type='password' name='old_password' class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type='password' name='password' class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Comfirm Password</td>
+                        <td><input type='password' name='comfirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
@@ -126,7 +231,7 @@ include 'check.php';
                         <td></td>
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='customer_read.php' class='btn btn-danger'>Back to read products</a>
                         </td>
                     </tr>
                 </table>

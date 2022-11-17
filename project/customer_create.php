@@ -191,7 +191,13 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>Account Status</td>
-                        <td><textarea type='text' name='account_status' class='form-control'></textarea></td>
+                        <td>
+
+                            <input class="form-check-input" type="radio" name="account_status" value="active">
+                            <label class="form-check-label" for="active">
+                                Active
+                            </label>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
