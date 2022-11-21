@@ -28,6 +28,7 @@ include 'check.php';
             </div>
 
             <?php
+
             // include database connection
             include 'config/database.php';
 

@@ -31,7 +31,7 @@ include 'check.php';
                 // include database connection
                 $user_name = $_POST['username'];
                 $pass_word = $_POST['password'];
-                $comfirm_password = $_POST['comfirm_password'];
+                $confirm_password = $_POST['confirm_password'];
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
@@ -70,11 +70,11 @@ include 'check.php';
                     $flag = 1;
                 }
 
-                if ($comfirm_password == "") {
-                    echo "Please enter comfirm password";
+                if ($confirm_password == "") {
+                    echo "Please enter confirm password";
                     $flag = 1;
-                } elseif ($pass_word != $comfirm_password) {
-                    echo "Password need to same with comfirm password";
+                } elseif ($pass_word != $confirm_password) {
+                    echo "Password need to same with confirm password";
                     $flag = 1;
                 }
 
@@ -157,8 +157,8 @@ include 'check.php';
                         <td><input type='password' name='password' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Comfirm Password</td>
-                        <td><input type='password' name='comfirm_password' class='form-control' /></td>
+                        <td>confirm Password</td>
+                        <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>

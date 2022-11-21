@@ -71,17 +71,18 @@ include 'check.php';
                 $user_name = $_POST['username'];
                 $pass_word = $_POST['password'];
                 $old_password = $_POST['old_password'];
-                $comfirm_password = $_POST['comfirm_password'];
+                $confirm_password = $_POST['confirm_password'];
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
-
                 $flag = 0;
+
                 if ($user_name == "") {
                     echo "<div class='alert alert-danger'>Please enter your username</div>";
                     $flag = 1;
                 }
+                
                 $space = " ";
                 $word = $_POST['username'];
                 if (strpos($word, $space) !== false) {
@@ -92,15 +93,13 @@ include 'check.php';
                     $flag = 1;
                 }
 
-                if ($old_password != htmlspecialchars($password, ENT_QUOTES)) {
+                if ($old_password != "" && $old_password != htmlspecialchars($password, ENT_QUOTES)) {
                     echo "<div class='alert alert-danger'>Password incorrect</div>";
                     $flag = 1;
-                }
-
-                if ($pass_word == "") {
+                } elseif ($old_password != "" && $pass_word == "") {
                     echo "<div class='alert alert-danger'>Please enter your password</div>";
                     $flag = 1;
-                } elseif ($pass_word == htmlspecialchars($password, ENT_QUOTES)) {
+                } elseif ($old_password != "" && $pass_word == htmlspecialchars($password, ENT_QUOTES)) {
                     echo "<div class='alert alert-danger'>New password cannot same with old password</div>";
                     $flag = 1;
                 } elseif (!preg_match('/[A-Z]/', $pass_word)) {
@@ -115,15 +114,14 @@ include 'check.php';
                 } elseif (strlen($pass_word) < 8) {
                     echo "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
                     $flag = 1;
+                } elseif ($password != "" && $confirm_password == "") {
+                    echo "<div class='alert alert-danger'>Please enter confirm password</div>";
+                    $flag = 1;
+                } elseif ($pass_word != $confirm_password) {
+                    echo "<div class='alert alert-danger'>confirm password need to same with password</div>";
+                    $flag = 1;
                 }
 
-                if ($comfirm_password == "") {
-                    echo "<div class='alert alert-danger'>Please enter comfirm password</div>";
-                    $flag = 1;
-                } elseif ($pass_word != $comfirm_password) {
-                    echo "<div class='alert alert-danger'>Comfirm password need to same with password</div>";
-                    $flag = 1;
-                }
 
                 if ($first_name == "") {
                     echo "<div class='alert alert-danger'>Please enter your first name</div>";
@@ -204,16 +202,16 @@ include 'check.php';
                         <td><input type='password' name='old_password' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Password</td>
-                        <td><input type='password' name='password' class='form-control' /></td>
+                        <td>New Password</td>
+                        <td><input type='password' name='password' value="<?php echo htmlspecialchars($password, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Comfirm Password</td>
-                        <td><input type='password' name='comfirm_password' class='form-control' /></td>
+                        <td>confirm Password</td>
+                        <td><input type='password' name='confirm_password' value="<?php echo htmlspecialchars($password, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
-                        <td><textarea name='first_name' class='form-control'><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></textarea></td>
+                        <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Last Name</td>
@@ -231,7 +229,7 @@ include 'check.php';
                         <td></td>
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
                         </td>
                     </tr>
                 </table>
