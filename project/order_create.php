@@ -59,7 +59,7 @@ include 'check.php';
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
-                        $stmt->bindParam(':username', $username);
+                        $stmt->bindParam(':username', $user_name);
                         $order_date = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':order_date', $order_date);
 

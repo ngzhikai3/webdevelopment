@@ -77,7 +77,7 @@ include 'check.php';
                 echo "<td>{$quantity}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='order_read_one.php?order_id={$order_id}&&product_id={$product_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
