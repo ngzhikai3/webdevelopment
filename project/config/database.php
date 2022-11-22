@@ -5,7 +5,6 @@
     $db_name = "eshop";
     $username = "eshop";
     $password = "eshop2250168";
-    $mysqli = new mysqli($host, $username, $password,$db_name);
 
     try {
         $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);

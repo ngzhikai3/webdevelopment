@@ -39,10 +39,12 @@ session_start();
                 $password = ($_POST['password']);
 
                 $query = "SELECT username, password, account_status FROM customers WHERE username = '$username'";
-                $result = mysqli_query($mysqli, $query);
-                $row = mysqli_fetch_assoc($result);
+                $stmt = $con->prepare($query);
+                $stmt->execute();
+                $num = $stmt->rowCount();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (mysqli_num_rows($result) == 1) {
+                if ($num == 1) {
                     if ($row['password'] != $password) {
                         echo "<h3 class='alert alert-danger'>Your password is incorrect.</h3>";
                     } elseif ($row['account_status'] != "active") {
@@ -73,7 +75,7 @@ session_start();
                     <div class="text-center my-3">
                         <button class="w-50 btn btn-lg btn-primary" type="submit">Sign in</button>
                     </div>
-                    
+
             </form>
         </div>
 
