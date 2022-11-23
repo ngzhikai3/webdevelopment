@@ -82,7 +82,7 @@ include 'check.php';
                     echo "<div class='alert alert-danger'>Please enter your username</div>";
                     $flag = 1;
                 }
-                
+
                 $space = " ";
                 $word = $_POST['username'];
                 if (strpos($word, $space) !== false) {
@@ -93,35 +93,41 @@ include 'check.php';
                     $flag = 1;
                 }
 
-                if ($old_password != "" && $old_password != htmlspecialchars($password, ENT_QUOTES)) {
-                    echo "<div class='alert alert-danger'>Password incorrect</div>";
-                    $flag = 1;
-                } elseif ($old_password != "" && $pass_word == "") {
-                    echo "<div class='alert alert-danger'>Please enter your password</div>";
-                    $flag = 1;
-                } elseif ($old_password != "" && $pass_word == htmlspecialchars($password, ENT_QUOTES)) {
-                    echo "<div class='alert alert-danger'>New password cannot same with old password</div>";
-                    $flag = 1;
-                } elseif (!preg_match('/[A-Z]/', $pass_word)) {
-                    echo "<div class='alert alert-danger'>Password need include uppercase</div>";
-                    $flag = 1;
-                } elseif (!preg_match('/[a-z]/', $pass_word)) {
-                    echo "<div class='alert alert-danger'>Password need include lowercase</div>";
-                    $flag = 1;
-                } elseif (!preg_match('/[0-9]/', $pass_word)) {
-                    echo "<div class='alert alert-danger'>Password need include number</div>";
-                    $flag = 1;
-                } elseif (strlen($pass_word) < 8) {
-                    echo "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
-                    $flag = 1;
-                } elseif ($password != "" && $confirm_password == "") {
-                    echo "<div class='alert alert-danger'>Please enter confirm password</div>";
-                    $flag = 1;
-                } elseif ($pass_word != $confirm_password) {
-                    echo "<div class='alert alert-danger'>confirm password need to same with password</div>";
-                    $flag = 1;
+                $emptypass = false;
+                if ($old_password == "" && $pass_word == "" && $confirm_password == "") {
+                    $emptypass = true;
+                } else {
+                    if ($row['password'] == $old_password) {
+                        if (!preg_match('/[A-Z]/', $pass_word)) {
+                            echo "<div class='alert alert-danger'>Password need include uppercase</div>";
+                            $flag = 1;
+                        } elseif (!preg_match('/[a-z]/', $pass_word)) {
+                            echo "<div class='alert alert-danger'>Password need include lowercase</div>";
+                            $flag = 1;
+                        } elseif (!preg_match('/[0-9]/', $pass_word)) {
+                            echo "<div class='alert alert-danger'>Password need include number</div>";
+                            $flag = 1;
+                        } elseif (strlen($pass_word) < 8) {
+                            echo "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
+                            $flag = 1;
+                        }
+                        if ($old_password == $pass_word) {
+                            echo "<div class='alert alert-danger'>New password cannot same with old password</div>";
+                            $flag = 1;
+                        }
+                        if ($old_password != "" && $password != "" && $confirm_password == "") {
+                            echo "<div class='alert alert-danger'>Please enter confirm password</div>";
+                            $flag = 1;
+                        }
+                        if ($old_password != "" && $password != "" && $confirm_password != "" && $pass_word != $confirm_password) {
+                            echo "<div class='alert alert-danger'>confirm password need to same with password</div>";
+                            $flag = 1;
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger'>Password incorrect</div>";
+                        $flag = 1;
+                    }
                 }
-
 
                 if ($first_name == "") {
                     echo "<div class='alert alert-danger'>Please enter your first name</div>";
@@ -163,7 +169,11 @@ include 'check.php';
                         $stmt = $con->prepare($query);
                         // posted values
                         $username = htmlspecialchars(strip_tags($_POST['username']));
-                        $password = htmlspecialchars(strip_tags($_POST['password']));
+                        if ($emptypass == true) {
+                            $password = $row['password'];
+                        } else {
+                            $password = htmlspecialchars(strip_tags($_POST['password']));
+                        }
                         $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                         $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                         $gender = htmlspecialchars(strip_tags($_POST['gender']));
@@ -203,11 +213,11 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>New Password</td>
-                        <td><input type='password' name='password' value="<?php echo htmlspecialchars($password, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td><input type='password' name='password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>confirm Password</td>
-                        <td><input type='password' name='confirm_password' value="<?php echo htmlspecialchars($password, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
