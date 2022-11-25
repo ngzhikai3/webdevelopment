@@ -33,6 +33,12 @@ include 'check.php';
             include 'config/database.php';
 
             // delete message prompt will be here
+            $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+            // if it was redirected from delete.php
+            if ($action == 'deleted') {
+                echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
 
             // select all data
             $query = "SELECT order_id, product_id, quantity FROM order_details ORDER BY order_id DESC";
@@ -96,6 +102,17 @@ include 'check.php';
         </div> <!-- end .container -->
 
         <!-- confirm delete record will be here -->
+        <script type='text/javascript'>
+            // confirm record deletion
+            function delete_order(order_id) {
+
+                if (confirm('Are you sure?')) {
+                    // if user clicked ok,
+                    // pass the id to delete.php and execute the delete query
+                    window.location = 'order_delete.php?order_id=' + order_id;
+                }
+            }
+        </script>
 
     </div>
 
