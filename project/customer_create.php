@@ -30,8 +30,8 @@ include 'check.php';
             if ($_POST) {
                 // include database connection
                 $user_name = $_POST['username'];
-                $pass_word = $_POST['password'];
-                $confirm_password = $_POST['confirm_password'];
+                $pass_word = md5($_POST['password']);
+                $confirm_password = md5($_POST['confirm_password']);
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];

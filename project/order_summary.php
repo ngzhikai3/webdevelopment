@@ -24,7 +24,7 @@ include 'check.php';
         <!-- container -->
         <div class="container my-3">
             <div class="page-header">
-                <h1>Read Order Details</h1>
+                <h1>Read Order Summary</h1>
             </div>
 
             <?php
@@ -41,7 +41,7 @@ include 'check.php';
             }
 
             // select all data
-            $query = "SELECT * FROM order_details ORDER BY order_id DESC";
+            $query = "SELECT * FROM order_summary ORDER BY order_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -53,7 +53,7 @@ include 'check.php';
 
             //check if more than 0 record found
             if ($num > 0) {
-
+                
                 // data from database will be here
 
             } else {
@@ -66,8 +66,8 @@ include 'check.php';
             //creating our table heading
             echo "<tr>";
             echo "<th>Order ID</th>";
-            echo "<th>Product ID</th>";
-            echo "<th>Quantity</th>";
+            echo "<th>Order Date</th>";
+            echo "<th>Username</th>";
             echo "</tr>";
 
             // table body will be here
@@ -80,11 +80,11 @@ include 'check.php';
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
-                echo "<td>{$product_id}</td>";
-                echo "<td>{$quantity}</td>";
+                echo "<td>{$order_date}</td>";
+                echo "<td>{$username}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_read_one.php?order_id={$order_id}&&product_id={$product_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='order_summary_one.php?order_id={$order_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";

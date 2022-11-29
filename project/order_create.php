@@ -183,6 +183,7 @@ include 'check.php';
                         </td>
                         <td colspan=4 class="text-end">
                             <input type='submit' value='Save' class='btn btn-primary' />
+                            <a href='order_summary.php' class='btn btn-danger'>Back to Order Summary</a>
                             <a href='order_read.php' class='btn btn-danger'>Back to Order Details</a>
                         </td>
                     </tr>
