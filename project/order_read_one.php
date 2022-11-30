@@ -22,9 +22,8 @@
         <?php
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        if (isset($_GET['order_id']) && isset($_GET['product_id'])) {
-            $order_id = $_GET['order_id'];
-            $product_id = $_GET['product_id'];
+        if (isset($_GET['details_id'])) {
+            $details_id = $_GET['details_id'];
         } else {
             die('ERROR: Record ID not found.');
         }
@@ -34,12 +33,11 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT * FROM order_details INNER JOIN products ON order_details.product_id = products.id WHERE order_id = ? && product_id = ?";
+            $query = "SELECT * FROM order_details INNER JOIN products ON order_details.product_id = products.id WHERE details_id = ?";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
-            $stmt->bindParam(1, $order_id);
-            $stmt->bindParam(2, $product_id);
+            $stmt->bindParam(1, $details_id);
 
             // execute our query
             $stmt->execute();
@@ -48,13 +46,6 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // values to fill up our form
-            extract($row);
-
-            $query = "SELECT username, order_date FROM order_summary WHERE order_id = :order_id ";
-            $stmt = $con->prepare($query);
-            $stmt->bindParam(":order_id", $order_id);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             extract($row);
         }
 
@@ -68,16 +59,8 @@
         <!--we have our html table here where the record will be displayed-->
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
-                <td>Order Date</td>
-                <td><?php echo htmlspecialchars($order_date, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
                 <td>Order ID</td>
                 <td><?php echo htmlspecialchars($order_id, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Username</td>
-                <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td>Product Name</td>
@@ -104,7 +87,7 @@
         </table>
 
     </div> <!-- end .container -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
 </body>

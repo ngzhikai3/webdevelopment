@@ -41,7 +41,7 @@ include 'check.php';
             }
 
             // select all data
-            $query = "SELECT * FROM order_details ORDER BY order_id DESC";
+            $query = "SELECT * FROM order_details ORDER BY details_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -66,6 +66,7 @@ include 'check.php';
             //creating our table heading
             echo "<tr>";
             echo "<th>Order ID</th>";
+            echo "<th>Details ID</th>";
             echo "<th>Product ID</th>";
             echo "<th>Quantity</th>";
             echo "</tr>";
@@ -80,17 +81,18 @@ include 'check.php';
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
+                echo "<td>{$details_id}</td>";
                 echo "<td>{$product_id}</td>";
                 echo "<td>{$quantity}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_read_one.php?order_id={$order_id}&&product_id={$product_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='order_read_one.php?details_id={$details_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
+                echo "<a href='order_update.php?details_id={$details_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_order({$order_id});' class='btn btn-danger mx-2'>Delete</a>";
+                echo "<a href='#' onclick='delete_details({$details_id});' class='btn btn-danger mx-2'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -105,12 +107,12 @@ include 'check.php';
         <!-- confirm delete record will be here -->
         <script type='text/javascript'>
             // confirm record deletion
-            function delete_order(order_id) {
+            function delete_details(details_id) {
 
                 if (confirm('Are you sure?')) {
                     // if user clicked ok,
                     // pass the id to delete.php and execute the delete query
-                    window.location = 'order_delete.php?order_id=' + order_id;
+                    window.location = 'order_detail_delete.php?details_id=' + details_id;
                 }
             }
         </script>

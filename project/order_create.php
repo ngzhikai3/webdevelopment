@@ -17,8 +17,6 @@ include 'check.php';
 
 <body>
 
-
-
     <div class="container-fluid px-0">
 
         <?php include 'topnav.html'; ?>

@@ -90,7 +90,7 @@ include 'check.php';
                 echo "<a href='order_update.php?order_id={$order_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_order({$order_id});' class='btn btn-danger mx-2'>Delete</a>";
+                echo "<a href='#' onclick='delete_summary({$order_id});' class='btn btn-danger mx-2'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -105,7 +105,7 @@ include 'check.php';
         <!-- confirm delete record will be here -->
         <script type='text/javascript'>
             // confirm record deletion
-            function delete_order(order_id) {
+            function delete_summary(order_id) {
 
                 if (confirm('Are you sure?')) {
                     // if user clicked ok,
