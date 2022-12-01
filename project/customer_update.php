@@ -16,7 +16,7 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
@@ -202,7 +202,7 @@ include 'check.php';
 
             <!--we have our html form here where new record information can be updated-->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post">
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
                         <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' /></td>

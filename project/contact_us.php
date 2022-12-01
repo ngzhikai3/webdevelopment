@@ -17,7 +17,7 @@ include 'check.php';
 
 <body>
 
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0 bg-warning">
         
         <?php include 'topnav.html'; ?>
 
@@ -54,15 +54,15 @@ include 'check.php';
         </div>
 
         <div class="container-fluid">
-            <div class="row d-flex justify-content-between">
-                <div class="col bg-warning text-center mx-3">
+            <div class="row d-flex justify-content-between p-3">
+                <div class="col text-center text-white mx-3 bg-dark">
                     <h1>EMAIL</h1>
-                    <a href="mailto:ngzhikai0308@e.newera.edu.my" class="text-black text-decoration-none">ngzhikai0308@e.newera.edu.my</a>
+                    <a href="mailto:ngzhikai0308@e.newera.edu.my" class="text-white text-decoration-none">ngzhikai0308@e.newera.edu.my</a>
                 </div>
 
-                <div class="col bg-warning text-center mx-3">
+                <div class="col text-center text-white mx-3 bg-dark">
                     <h1>PHONE</h1>
-                    <a href="tel:017-6557328" class="text-black text-decoration-none">017-6557328</a>
+                    <a href="tel:017-6557328" class="text-white text-decoration-none">017-6557328</a>
                 </div>
             </div>
         </div>

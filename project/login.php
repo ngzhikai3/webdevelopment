@@ -12,13 +12,12 @@ session_start();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link href="signin.css" rel="stylesheet">
 
 </head>
 
-<body>
+<body class="bg-warning">
 
-    <div class="container px-0 w-50">
+    <div class="container w-50 bg-dark p-3 pt-1 my-5">
 
         <?php
         if ($_GET) {
@@ -26,7 +25,7 @@ session_start();
         }
         ?>
 
-        <h1 class="text-center my-5">Please sign in</h1>
+        <h1 class="text-center my-5 text-white">Please sign in</h1>
 
         <div class="container mt-5">
 
@@ -75,11 +74,11 @@ session_start();
                     <div class="text-center my-3">
                         <button class="w-50 btn btn-lg btn-primary" type="submit">Sign in</button>
                     </div>
-
+                </table>
             </form>
         </div>
-
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

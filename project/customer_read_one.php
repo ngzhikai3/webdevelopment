@@ -15,7 +15,7 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
@@ -67,7 +67,7 @@ include 'check.php';
 
             <!-- HTML read one record table will be here -->
             <!--we have our html table here where the record will be displayed-->
-            <table class='table table-hover table-responsive table-bordered'>
+            <table class='table table-hover table-dark table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
                     <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>

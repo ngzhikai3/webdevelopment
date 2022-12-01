@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <?php
     include 'check.php';
@@ -60,7 +60,7 @@
             }
 
             //new
-            echo "<table class='table table-hover table-responsive table-bordered'>"; //start table
+            echo "<table class='table table-hover table-dark table-responsive table-bordered'>"; //start table
 
             //creating our table heading
             echo "<tr>";

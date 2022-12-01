@@ -15,7 +15,7 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
@@ -105,7 +105,7 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
                         <td colspan=3>
@@ -176,8 +176,8 @@ include 'check.php';
                     ?>
                     <tr>
                         <td>
-                            <input type="button" value="Add More Product" class="add_one btn btn-warning" />
-                            <input type="button" value="Delete" class="delete_one btn btn-warning" />
+                            <input type="button" value="Add More Product" class="add_one btn btn-secondary" />
+                            <input type="button" value="Delete" class="delete_one btn btn-secondary" />
                         </td>
                         <td colspan=4 class="text-end">
                             <input type='submit' value='Save' class='btn btn-primary' />

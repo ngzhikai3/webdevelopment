@@ -21,7 +21,11 @@ include 'check.php';
     <div class="container-fluid px-0">
         <?php include 'topnav.html'; ?>
 
-        <div class="container-fluid row m-0 bg-warning d-flex justify-content-between align-items-center">
+        <div class="container-fluid p-0">
+            <img src="images/index.jpg" class="img-fluid w-100">
+        </div>
+
+        <div class="container-fluid row m-0 pt-5 bg-warning d-flex justify-content-between align-items-center">
             <div class="col-5">
                 <?php
                 include 'config/database.php';
@@ -182,6 +186,18 @@ include 'check.php';
                     </table>";
                     }
                     ?>
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+                <div class="row border-top border-2 d-flex justify-content-between">
+                    <div class="col-xxl-3 col-xl-4 py-3">
+                        <p class="m-0">Copyright 2019 Tutorial Republic</p>
+                    </div>
+                    <div class="col-xxl-3 col-4 py-3">
+                        <p class="m-0 text-xl-end">Term of Use | Privacy Policy</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,14 +15,14 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
         <?php include 'topnav.html'; ?>
 
-        <div class="container my-3">
-            <div class="page-header">
+        <div class="container my-3 py-2">
+            <div class="page-header text-center">
                 <h1>Create profile</h1>
             </div>
 
@@ -147,7 +147,7 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class='table table-dark table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
                         <td><input type='text' name='username' class='form-control' /></td>

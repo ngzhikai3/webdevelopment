@@ -7,7 +7,7 @@
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <?php include 'topnav.html'; ?>
 
@@ -43,7 +43,7 @@
             $stmt->execute();
             $count = $stmt->rowCount();
             if ($count > 0) {
-                echo "<table class='table table-hover table-responsive table-borderless w-50 border border-3'>";
+                echo "<table class='table table-hover table-dark table-responsive table-borderless w-50 border border-3'>";
                 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     extract($row);

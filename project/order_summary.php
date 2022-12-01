@@ -15,7 +15,7 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
@@ -61,13 +61,14 @@ include 'check.php';
             }
 
             //new
-            echo "<table class='table table-hover table-responsive table-bordered'>"; //start table
+            echo "<table class='table table-hover table-dark table-responsive table-bordered'>"; //start table
 
             //creating our table heading
             echo "<tr>";
             echo "<th>Order ID</th>";
             echo "<th>Order Date</th>";
             echo "<th>Username</th>";
+            echo "<th></th>";
             echo "</tr>";
 
             // table body will be here

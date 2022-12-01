@@ -15,7 +15,7 @@ include 'check.php';
 
 </head>
 
-<body>
+<body class="bg-warning">
 
     <div class="container-fluid px-0">
 
@@ -129,7 +129,7 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Name</td>
                         <td><input type='text' name='name' class='form-control' /></td>
