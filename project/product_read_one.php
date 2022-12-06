@@ -38,7 +38,7 @@
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT id, name, description, price, promotion_price, manufacture_date, expired_date FROM products WHERE id = :id ";
+                $query = "SELECT * FROM products WHERE id = :id ";
                 $stmt = $con->prepare($query);
 
                 // Bind the parameter
@@ -55,6 +55,7 @@
                 $description = $row['description'];
                 $price = $row['price'];
                 $promotion_price = $row['promotion_price'];
+                $image = $row['image'];
                 $manufacture_date = $row['manufacture_date'];
                 $expired_date = $row['expired_date'];
                 // shorter way to do that is extract($row)
@@ -84,6 +85,10 @@
                 <tr>
                     <td>Promotion Price</td>
                     <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25"></td>
                 </tr>
                 <tr>
                     <td>Manufacture Date</td>
