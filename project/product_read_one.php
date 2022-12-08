@@ -88,7 +88,7 @@
                 </tr>
                 <tr>
                     <td>Photo</td>
-                    <td><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25"></td>
+                    <td><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>"></td>
                 </tr>
                 <tr>
                     <td>Manufacture Date</td>
