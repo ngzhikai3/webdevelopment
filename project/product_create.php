@@ -37,9 +37,7 @@ include 'check.php';
                 $promotion_price = $_POST['promotion_price'];
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
-                $date1 = date_create($manufacture_date);
-                $date2 = date_create($expired_date);
-                $diff = date_diff($date1, $date2);
+
                 $image = !empty($_FILES["image"]["name"])
                     ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
                     : "";
@@ -52,38 +50,27 @@ include 'check.php';
 
                 if ($price == "") {
                     $error_message .= "<div class='alert alert-danger'>Please make sure price are not empty</div>";
-                } elseif (preg_match('/[A-Z]/', $price)) {
+                } elseif (!is_numeric($price)) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure price are not contain capital A-Z</div>";
-                } elseif (preg_match('/[a-z]/', $price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not contain capital a-z</div>";
-                } elseif ($price < 0) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not negative</div>";
-                } elseif ($price > 1000) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not more than RM1000</div>";
                 }
 
                 if ($promotion_price == "") {
                     $promotion_price = NULL;
-                } elseif (preg_match('/[A-Z]/', $promotion_price)) {
+                } elseif (!is_numeric($promotion_price)) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not contain capital A-Z</div>";
-                } elseif (preg_match('/[a-z]/', $promotion_price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not contain capital a-z</div>";
-                } elseif ($promotion_price < 0) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not negative</div>";
-                } elseif ($promotion_price > 1000) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not more than RM1000</div>";
-                }
-
-                if ($promotion_price > $price) {
+                } elseif ($promotion_price > $price) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price is not more than normal price</div>";
                 }
 
                 if ($expired_date == "") {
                     $expired_date = NULL;
-                }
-
-                if ($diff->format("%R%a") < "0") {
-                    $error_message .= "<div class='alert alert-danger'>Expired date must be after the manufacture date</div>";
+                } else {
+                    $date1 = date_create($manufacture_date);
+                    $date2 = date_create($expired_date);
+                    $diff = date_diff($date1, $date2);
+                    if ($diff->format("%R%a") < "0") {
+                        $error_message .= "<div class='alert alert-danger'>Expired date must be after the manufacture date</div>";
+                    }
                 }
 
                 // now, if image is not empty, try to upload the image
@@ -98,7 +85,7 @@ include 'check.php';
                     $check = getimagesize($_FILES["image"]["tmp_name"]);
                     if ($check === false) {
                         $error_message .= "<div class='alert alert-danger'>Submitted file is not an image.</div>";
-                    } 
+                    }
                     // make sure certain file types are allowed
                     $allowed_file_types = array("jpg", "jpeg", "png", "gif");
                     if (!in_array($file_type, $allowed_file_types)) {
@@ -121,8 +108,8 @@ include 'check.php';
                     if (empty($error_message)) {
                         // it means there are no errors, so try to upload the file
                         if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                            echo "<div class='alert alert-danger>Unable to upload photo.</div>";
-                            echo "<div class='alert alert-danger>Update the record to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Unable to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
                         }
                     }
                 }
