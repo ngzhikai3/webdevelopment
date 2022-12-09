@@ -37,82 +37,48 @@ include 'check.php';
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
                 $account_status = $_POST['account_status'];
+                $error_message = "";
 
-                $flag = 0;
-                if ($user_name == "") {
-                    echo "Please enter your username";
-                    $flag = 1;
+                if ($user_name == "" || $pass_word == "" || $confirm_password == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
+                    $error_message .= "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
                 }
+
                 $space = " ";
                 $word = $_POST['username'];
                 if (strpos($word, $space) !== false) {
-                    echo "Username not space allow";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
                 } elseif (strlen($user_name) < 6) {
-                    echo "Username need at least 6 charecter";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
                 }
 
-                if ($pass_word == "") {
-                    echo "Please enter your password";
-                    $flag = 1;
-                } elseif (!preg_match('/[A-Z]/', $pass_word)) {
-                    echo "Password need include uppercase";
-                    $flag = 1;
+                if (!preg_match('/[A-Z]/', $pass_word)) {
+                    $error_message .= "<div class='alert alert-danger'>Password need include uppercase</div>";
                 } elseif (!preg_match('/[a-z]/', $pass_word)) {
-                    echo "Password need include lowercase";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Password need include lowercase</div>";
                 } elseif (!preg_match('/[0-9]/', $pass_word)) {
-                    echo "Password need include number";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Password need include number</div>";
                 } elseif (strlen($pass_word) < 8) {
-                    echo "Password need at least 8 charecter";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
                 }
 
-                if ($confirm_password == "") {
-                    echo "Please enter confirm password";
-                    $flag = 1;
-                } elseif ($pass_word != $confirm_password) {
-                    echo "Password need to same with confirm password";
-                    $flag = 1;
+                if ($pass_word != $confirm_password) {
+                    $error_message .= "<div class='alert alert-danger'>Password need to same with confirm password</div>";
                 }
 
-                if ($first_name == "") {
-                    echo "Please enter your first name";
-                    $flag = 1;
+                if ($date_of_birth != "") {
+                    $day = $_POST['date_of_birth'];
+                    $today = date("Ymd");
+                    $date1 = date_create($day);
+                    $date2 = date_create($today);
+                    $diff = date_diff($date1, $date2);
+                    if ($diff->format("%y") <= "18") {
+                        $error_message .= "<div class='alert alert-danger'>User need 18 years old and above</div>";
+                    }
                 }
 
-                if ($last_name == "") {
-                    echo "Please enter your last name";
-                    $flag = 1;
-                }
-
-                if ($gender == "") {
-                    echo "Please select your gender";
-                    $flag = 1;
-                }
-
-                if ($date_of_birth == "") {
-                    echo "Please select your date of birth";
-                    $flag = 1;
-                }
-                $day = $_POST['date_of_birth'];
-                $today = date("Ymd");
-                $date1 = date_create($day);
-                $date2 = date_create($today);
-                $diff = date_diff($date1, $date2);
-                if ($diff->format("%y") <= "18") {
-                    echo "User need 18 years old and above";
-                    $flag = 1;
-                }
-
-                if ($account_status == "") {
-                    echo "Please enter your account status";
-                    $flag = 1;
-                }
-
-                if ($flag == 0) {
+                if (!empty($error_message)) {
+                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                } else {
 
                     include 'config/database.php';
                     try {
@@ -173,13 +139,13 @@ include 'check.php';
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" value="male">
-                                <label class="form-check-label" for="gender1">
+                                <label class="form-check-label">
                                     Male
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" value="female">
-                                <label class="form-check-label" for="gender2">
+                                <label class="form-check-label">
                                     Female
                                 </label>
                             </div>
@@ -192,9 +158,8 @@ include 'check.php';
                     <tr>
                         <td>Account Status</td>
                         <td>
-
                             <input class="form-check-input" type="radio" name="account_status" value="active">
-                            <label class="form-check-label" for="active">
+                            <label class="form-check-label">
                                 Active
                             </label>
                         </td>

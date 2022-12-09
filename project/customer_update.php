@@ -76,21 +76,18 @@ include 'check.php';
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
-                $flag = 0;
+                $error_message = "";
 
                 if ($user_name == "") {
-                    echo "<div class='alert alert-danger'>Please enter your username</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please enter your username</div>";
                 }
 
                 $space = " ";
                 $word = $_POST['username'];
                 if (strpos($word, $space) !== false) {
-                    echo "<div class='alert alert-danger'>Username not space allow</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
                 } elseif (strlen($user_name) < 6) {
-                    echo "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
                 }
 
                 $emptypass = false;
@@ -99,54 +96,42 @@ include 'check.php';
                 } else {
                     if ($row['password'] == $old_password) {
                         if (!preg_match('/[A-Z]/', $pass_word)) {
-                            echo "<div class='alert alert-danger'>Password need include uppercase</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>Password need include uppercase</div>";
                         } elseif (!preg_match('/[a-z]/', $pass_word)) {
-                            echo "<div class='alert alert-danger'>Password need include lowercase</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>Password need include lowercase</div>";
                         } elseif (!preg_match('/[0-9]/', $pass_word)) {
-                            echo "<div class='alert alert-danger'>Password need include number</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>Password need include number</div>";
                         } elseif (strlen($pass_word) < 8) {
-                            echo "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
                         }
                         if ($old_password == $pass_word) {
-                            echo "<div class='alert alert-danger'>New password cannot same with old password</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>New password cannot same with old password</div>";
                         }
                         if ($old_password != "" && $password != "" && $confirm_password == "") {
-                            echo "<div class='alert alert-danger'>Please enter confirm password</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>Please enter confirm password</div>";
                         }
                         if ($old_password != "" && $password != "" && $confirm_password != "" && $pass_word != $confirm_password) {
-                            echo "<div class='alert alert-danger'>confirm password need to same with password</div>";
-                            $flag = 1;
+                            $error_message .= "<div class='alert alert-danger'>confirm password need to same with password</div>";
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>Password incorrect</div>";
-                        $flag = 1;
+                        $error_message .= "<div class='alert alert-danger'>Password incorrect</div>";
                     }
                 }
 
                 if ($first_name == "") {
-                    echo "<div class='alert alert-danger'>Please enter your first name</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please enter your first name</div>";
                 }
 
                 if ($last_name == "") {
-                    echo "<div class='alert alert-danger'>Please enter your last name</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please enter your last name</div>";
                 }
 
                 if ($gender == "") {
-                    echo "<div class='alert alert-danger'>Please select your gender</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please select your gender</div>";
                 }
 
                 if ($date_of_birth == "") {
-                    echo "<div class='alert alert-danger'>Please select your date of birth</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please select your date of birth</div>";
                 }
                 $day = $_POST['date_of_birth'];
                 $today = date("Ymd");
@@ -154,11 +139,12 @@ include 'check.php';
                 $date2 = date_create($today);
                 $diff = date_diff($date1, $date2);
                 if ($diff->format("%y") <= "18") {
-                    echo "<div class='alert alert-danger'>User need 18 years old and above</div>";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>User need 18 years old and above</div>";
                 }
 
-                if ($flag == 0) {
+                if (!empty($error_message)) {
+                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                } else {
 
                     try {
                         // write update query
@@ -188,7 +174,7 @@ include 'check.php';
                         $stmt->bindParam(':user_id', $user_id);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was updated.</div>";
+                            header("Location: customer_read.php?update={$user_id}");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                         }

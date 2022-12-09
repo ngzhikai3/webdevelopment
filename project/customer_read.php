@@ -28,6 +28,9 @@ include 'check.php';
             </div>
 
             <?php
+            if (isset($_GET['update'])) {
+                echo "<div class='alert alert-success'>Record was updated.</div>";
+            }
             // include database connection
             include 'config/database.php';
 

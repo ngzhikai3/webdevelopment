@@ -69,57 +69,44 @@ include 'check.php';
             // check if form was submitted
             if ($_POST) {
 
+                $name = $_POST['name'];
+                $description = $_POST['description'];
                 $price = $_POST['price'];
                 $promotion_price = $_POST['promotion_price'];
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
-                $date1 = date_create($manufacture_date);
-                $date2 = date_create($expired_date);
-                $diff = date_diff($date1, $date2);
                 $image = !empty($_FILES["image"]["name"])
                     ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
-                    : "";
-                $image = htmlspecialchars(strip_tags($image));
+                    : htmlspecialchars($image, ENT_QUOTES);
                 $error_message = "";
 
                 if ($price == "") {
                     $error_message .= "<div class='alert alert-danger'>Please make sure price are not empty</div>";
-                } elseif (preg_match('/[A-Z]/', $price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not contain capital A-Z</div>";
-                } elseif (preg_match('/[a-z]/', $price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not contain capital a-z</div>";
-                } elseif ($price < 0) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not negative</div>";
-                } elseif ($price > 1000) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not more than RM1000</div>";
+                } elseif (!is_numeric($price)) {
+                    $error_message .= "<div class='alert alert-danger'>Please make sure price only have number</div>";
                 }
 
                 if ($promotion_price == "") {
                     $promotion_price = NULL;
-                } elseif (preg_match('/[A-Z]/', $promotion_price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not contain capital A-Z</div>";
-                } elseif (preg_match('/[a-z]/', $promotion_price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not contain capital a-z</div>";
-                } elseif ($promotion_price < 0) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not negative</div>";
-                } elseif ($promotion_price > 1000) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not more than RM1000</div>";
-                }
-
-                if ($promotion_price > $price) {
+                } elseif (!is_numeric($promotion_price)) {
+                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price only have number</div>";
+                } elseif ($promotion_price > $price) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price is not more than normal price</div>";
                 }
 
                 if ($expired_date == "") {
                     $expired_date = NULL;
-                }
-
-                if ($diff->format("%R%a") < "0") {
-                    $error_message .= "<div class='alert alert-danger'>Expired date must be after the manufacture date</div>";
+                } else {
+                    $date1 = date_create($manufacture_date);
+                    $date2 = date_create($expired_date);
+                    $diff = date_diff($date1, $date2);
+                    if ($diff->format("%R%a") < "0") {
+                        $error_message .= "<div class='alert alert-danger'>Expired date must be after the manufacture date</div>";
+                    }
                 }
 
                 // now, if image is not empty, try to upload the image
-                if ($image) {
+                if ($_FILES["image"]["name"]) {
 
                     // upload to file to folder
                     $target_directory = "uploads/";
@@ -153,8 +140,8 @@ include 'check.php';
                     if (empty($error_message)) {
                         // it means there are no errors, so try to upload the file
                         if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                            echo "<div class='alert alert-danger>Unable to upload photo.</div>";
-                            echo "<div class='alert alert-danger>Update the record to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Unable to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
                         }
                     }
                 }
@@ -175,9 +162,6 @@ include 'check.php';
                         $description = htmlspecialchars(strip_tags($_POST['description']));
                         $price = htmlspecialchars(strip_tags($_POST['price']));
                         $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
-                        $image = !empty($_FILES["image"]["name"])
-                            ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
-                            : "";
                         $image = htmlspecialchars(strip_tags($image));
                         $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                         $expired_date = htmlspecialchars(strip_tags($_POST['expired_date']));
@@ -192,7 +176,7 @@ include 'check.php';
                         $stmt->bindParam(':id', $id);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was updated.</div>";
+                            header("Location: product_read.php?update={$id}");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                         }
@@ -228,7 +212,7 @@ include 'check.php';
                         <td>Photo</td>
                         <td>
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
-                            <div><input type="file" name="image" value="<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" /></div>
+                            <div><input type="file" name="image" /></div>
                         </td>
                     </tr>
                     <tr>

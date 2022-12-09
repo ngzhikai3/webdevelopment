@@ -37,7 +37,6 @@ include 'check.php';
                 $promotion_price = $_POST['promotion_price'];
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
-
                 $image = !empty($_FILES["image"]["name"])
                     ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
                     : "";
@@ -51,13 +50,13 @@ include 'check.php';
                 if ($price == "") {
                     $error_message .= "<div class='alert alert-danger'>Please make sure price are not empty</div>";
                 } elseif (!is_numeric($price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not contain capital A-Z</div>";
+                    $error_message .= "<div class='alert alert-danger'>Please make sure price only have number</div>";
                 }
 
                 if ($promotion_price == "") {
                     $promotion_price = NULL;
                 } elseif (!is_numeric($promotion_price)) {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price are not contain capital A-Z</div>";
+                    $error_message .= "<div class='alert alert-danger'>Please make sure promotion price only have number</div>";
                 } elseif ($promotion_price > $price) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price is not more than normal price</div>";
                 }

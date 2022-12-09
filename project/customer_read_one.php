@@ -91,6 +91,7 @@ include 'check.php';
                 <tr>
                     <td></td>
                     <td>
+                        <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>"; ?>
                         <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
                     </td>
                 </tr>

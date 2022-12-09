@@ -32,23 +32,23 @@ include 'check.php';
                 $user_name = $_POST['username'];
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
+                $error_message = "";
 
-                $flag = 0;
                 if ($user_name == "") {
-                    echo "Please enter your username!";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Please enter your username!</div>";
                 }
+
                 $space = " ";
                 $word = $_POST['username'];
                 if (strpos($word, $space) !== false) {
-                    echo "Username not space allow!";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username not space allow!</div>";
                 } elseif (strlen($user_name) < 6) {
-                    echo "Username need at least 6 charecter!";
-                    $flag = 1;
+                    $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter!</div>";
                 }
 
-                if ($flag == 0) {
+                if (!empty($error_message)) {
+                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                } else {
 
                     include 'config/database.php';
                     try {

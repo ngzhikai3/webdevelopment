@@ -28,6 +28,9 @@
             </div>
 
             <?php
+            if(isset($_GET['update'])){
+                echo "<div class='alert alert-success'>Record was updated.</div>";
+            }
             // include database connection
             include 'config/database.php';
 
@@ -82,6 +85,7 @@
                 echo "<td>{$id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
+                $price = number_format((float)$price, 2, '.', '');
                 echo "<td class='text-end'>{$price}</td>";
                 echo "<td>";
                 // read one record
