@@ -35,15 +35,15 @@ include 'check.php';
                 $error_message = "";
 
                 if ($user_name == "") {
-                    $error_message .= "<div class='alert alert-danger'>Please enter your username!</div>";
+                    $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
 
-                $space = " ";
-                $word = $_POST['username'];
-                if (strpos($word, $space) !== false) {
-                    $error_message .= "<div class='alert alert-danger'>Username not space allow!</div>";
-                } elseif (strlen($user_name) < 6) {
-                    $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter!</div>";
+                if ($product_id == [""]) {
+                    $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
+                }
+
+                if ($quantity == [0]) {
+                    $error_message .= "<div class='alert alert-danger'>Please select how many product you want!</div>";
                 }
 
                 if (!empty($error_message)) {
@@ -126,7 +126,7 @@ include 'check.php';
                                     echo "<div class='alert alert-danger'>No records found.</div>";
                                 }
                                 //new
-                                echo "<option selected>None</option>"; //start dropdown
+                                echo "<option selected></option>"; //start dropdown
                                 // table body will be here
                                 // retrieve our table contents
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -148,7 +148,7 @@ include 'check.php';
                         <td>Product</td>
                         <td>
                             <select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
-                            <option>None</option>";
+                            <option></option>";
                     $query = "SELECT id, name, price FROM products ORDER BY id DESC";
                     $stmt = $con->prepare($query);
                     $stmt->execute();
