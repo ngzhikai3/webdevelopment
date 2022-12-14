@@ -22,7 +22,7 @@ include 'check.php';
         <?php include 'topnav.html'; ?>
 
         <div class="container my-3">
-            <div class="page-header">
+            <div class="page-header text-center">
                 <h1>Order Form</h1>
             </div>
 

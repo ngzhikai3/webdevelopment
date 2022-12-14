@@ -23,7 +23,7 @@ include 'check.php';
 
         <!-- container -->
         <div class="container my-3">
-            <div class="page-header">
+            <div class="page-header text-center">
                 <h1>Create Product</h1>
             </div>
 

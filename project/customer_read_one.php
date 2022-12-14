@@ -38,7 +38,7 @@ include 'check.php';
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT username, first_name, last_name, gender, date_of_birth FROM customers WHERE user_id = :user_id ";
+                $query = "SELECT * FROM customers WHERE user_id = :user_id ";
                 $stmt = $con->prepare($query);
 
                 // Bind the parameter
@@ -56,6 +56,7 @@ include 'check.php';
                 $last_name = $row['last_name'];
                 $gender = $row['gender'];
                 $date_of_birth = $row['date_of_birth'];
+                $cus_image = $row['cus_image'];
                 // shorter way to do that is extract($row)
             }
 
@@ -87,6 +88,10 @@ include 'check.php';
                 <tr>
                     <td>Date of Birth</td>
                     <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><img src="uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25"></td>
                 </tr>
                 <tr>
                     <td></td>

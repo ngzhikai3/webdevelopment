@@ -12,6 +12,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -146,6 +147,28 @@ include 'check.php';
                     }
                 }
 
+                if (isset($_POST['delete'])) {
+                    $image = htmlspecialchars(strip_tags($image));
+        
+                    $image = !empty($_FILES["image"]["name"])
+                        ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
+                        : "";
+                    $target_directory = "uploads/";
+                    $target_file = $target_directory . $image;
+                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+        
+                    unlink("uploads/" . $row['image']);
+                    $_POST['image'] = null;
+                    $query = "UPDATE products
+                                SET image=:image WHERE id = :id";
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+                    $stmt->bindParam(':image', $image);
+                    $stmt->bindParam(':id', $id);
+                    // Execute the query
+                    $stmt->execute();
+                }
+
                 if (!empty($error_message)) {
                     echo "<div class='alert alert-danger'>{$error_message}</div>";
                 } else {
@@ -213,6 +236,7 @@ include 'check.php';
                         <td>
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="image" /></div>
+                            <div><?php echo "<button href='#' class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>

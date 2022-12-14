@@ -43,7 +43,7 @@ include 'check.php';
             }
 
             // select all data
-            $query = "SELECT user_id, username, gender FROM customers ORDER BY user_id DESC";
+            $query = "SELECT * FROM customers ORDER BY user_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -70,6 +70,7 @@ include 'check.php';
             echo "<th>User ID</th>";
             echo "<th>Username</th>";
             echo "<th>Gender</th>";
+            echo "<th>Photo</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -81,10 +82,11 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$user_id}</td>";
-                echo "<td>{$username}</td>";
-                echo "<td>{$gender}</td>";
-                echo "<td>";
+                echo "<td class='col-2'>{$user_id}</td>";
+                echo "<td class='col-2'>{$username}</td>";
+                echo "<td class='col-2'>{$gender}</td>";
+                echo "<td class='col-3 text-center'><img src='uploads/$cus_image' class='w-25'></td>";
+                echo "<td class='col-3'>";
                 // read one record
                 echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
 

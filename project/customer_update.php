@@ -12,6 +12,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -37,7 +38,7 @@ include 'check.php';
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT username, password, first_name, last_name, gender, date_of_birth FROM customers WHERE user_id = ? LIMIT 0,1";
+                $query = "SELECT * FROM customers WHERE user_id = ? LIMIT 0,1";
                 $stmt = $con->prepare($query);
 
                 // this is the first question mark
@@ -56,6 +57,7 @@ include 'check.php';
                 $last_name = $row['last_name'];
                 $gender = $row['gender'];
                 $date_of_birth = $row['date_of_birth'];
+                $cus_image = $row['cus_image'];
             }
 
             // show error
@@ -76,6 +78,10 @@ include 'check.php';
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
+                $cus_image = !empty($_FILES["cus_image"]["name"])
+                    ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
+                    : htmlspecialchars($cus_image, ENT_QUOTES);
+                $cus_image = htmlspecialchars(strip_tags($cus_image));
                 $error_message = "";
 
                 if ($user_name == "") {
@@ -95,9 +101,7 @@ include 'check.php';
                     $emptypass = true;
                 } else {
                     if ($row['password'] == $old_password) {
-                        if (!preg_match('/[A-Z]/', $pass_word)) {
-                            $error_message .= "<div class='alert alert-danger'>Password need include uppercase</div>";
-                        } elseif (!preg_match('/[a-z]/', $pass_word)) {
+                        if (!preg_match('/[a-z]/', $pass_word)) {
                             $error_message .= "<div class='alert alert-danger'>Password need include lowercase</div>";
                         } elseif (!preg_match('/[0-9]/', $pass_word)) {
                             $error_message .= "<div class='alert alert-danger'>Password need include number</div>";
@@ -133,6 +137,7 @@ include 'check.php';
                 if ($date_of_birth == "") {
                     $error_message .= "<div class='alert alert-danger'>Please select your date of birth</div>";
                 }
+
                 $day = $_POST['date_of_birth'];
                 $today = date("Ymd");
                 $date1 = date_create($day);
@@ -140,6 +145,68 @@ include 'check.php';
                 $diff = date_diff($date1, $date2);
                 if ($diff->format("%y") <= "18") {
                     $error_message .= "<div class='alert alert-danger'>User need 18 years old and above</div>";
+                }
+
+                if ($_FILES["cus_image"]["name"]) {
+
+                    // upload to file to folder
+                    $target_directory = "uploads/";
+                    $target_file = $target_directory . $cus_image;
+                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+
+                    // make sure that file is a real image
+                    $check = getimagesize($_FILES["cus_image"]["tmp_name"]);
+                    if ($check === false) {
+                        $error_message .= "<div class='alert alert-danger'>Submitted file is not an image.</div>";
+                    }
+                    // make sure certain file types are allowed
+                    $allowed_file_types = array("jpg", "jpeg", "png", "gif");
+                    if (!in_array($file_type, $allowed_file_types)) {
+                        $error_message .= "<div class='alert alert-danger'>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
+                    }
+                    // make sure file does not exist
+                    if (file_exists($target_file)) {
+                        $error_message .= "<div class='alert alert-danger'>Image already exists. Try to change file name.</div>";
+                    }
+                    // make sure submitted file is not too large, can't be larger than 1 MB
+                    if ($_FILES['cus_image']['size'] > (1024000)) {
+                        $error_message .= "<div class='alert alert-danger'>Image must be less than 1 MB in size.</div>";
+                    }
+                    // make sure the 'uploads' folder exists
+                    // if not, create it
+                    if (!is_dir($target_directory)) {
+                        mkdir($target_directory, 0777, true);
+                    }
+                    // if $file_upload_error_messages is still empty
+                    if (empty($error_message)) {
+                        // it means there are no errors, so try to upload the file
+                        if (!move_uploaded_file($_FILES["cus_image"]["tmp_name"], $target_file)) {
+                            $error_message .= "<div class='alert alert-danger>Unable to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
+                        }
+                    }
+                }
+
+                if (isset($_POST['delete'])) {
+                    $cus_image = htmlspecialchars(strip_tags($cus_image));
+
+                    $cus_image = !empty($_FILES["cus_image"]["name"])
+                        ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
+                        : "";
+                    $target_directory = "uploads/";
+                    $target_file = $target_directory . $cus_image;
+                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+
+                    unlink("uploads/" . $row['cus_image']);
+                    $_POST['cus_image'] = null;
+                    $query = "UPDATE customers
+                                SET cus_image=:cus_image WHERE user_id = :user_id";
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+                    $stmt->bindParam(':cus_image', $cus_image);
+                    $stmt->bindParam(':user_id', $user_id);
+                    // Execute the query
+                    $stmt->execute();
                 }
 
                 if (!empty($error_message)) {
@@ -150,7 +217,7 @@ include 'check.php';
                         // write update query
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
-                        $query = "UPDATE customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth WHERE user_id = :user_id";
+                        $query = "UPDATE customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, cus_image=:cus_image WHERE user_id = :user_id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
@@ -164,6 +231,7 @@ include 'check.php';
                         $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                         $gender = htmlspecialchars(strip_tags($_POST['gender']));
                         $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
+                        $cus_image = htmlspecialchars(strip_tags($cus_image));
                         // bind the parameters
                         $stmt->bindParam(':username', $username);
                         $stmt->bindParam(':password', $password);
@@ -171,6 +239,7 @@ include 'check.php';
                         $stmt->bindParam(':last_name', $last_name);
                         $stmt->bindParam(':gender', $gender);
                         $stmt->bindParam(':date_of_birth', $date_of_birth);
+                        $stmt->bindParam(':cus_image', $cus_image);
                         $stmt->bindParam(':user_id', $user_id);
                         // Execute the query
                         if ($stmt->execute()) {
@@ -187,7 +256,7 @@ include 'check.php';
             } ?>
 
             <!--we have our html form here where new record information can be updated-->
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
@@ -220,6 +289,14 @@ include 'check.php';
                     <tr>
                         <td>Date Of Birth</td>
                         <td><input type='date' name='date_of_birth' value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td>
+                            <div><img src="uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
+                            <div><input type="file" name="cus_image" /></div>
+                            <div><?php echo "<button href='#' class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>

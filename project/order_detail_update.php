@@ -127,7 +127,7 @@ include 'check.php';
                         <td></td>
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='order_read.php' class='btn btn-danger'>Back to read order details</a>
                         </td>
                     </tr>
                 </table>

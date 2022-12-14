@@ -37,6 +37,10 @@ include 'check.php';
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
                 $account_status = $_POST['account_status'];
+                $cus_image = !empty($_FILES["cus_image"]["name"])
+                    ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
+                    : "";
+                $cus_image = htmlspecialchars(strip_tags($cus_image));
                 $error_message = "";
 
                 if ($user_name == "" || $pass_word == "" || $confirm_password == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
@@ -51,9 +55,7 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
                 }
 
-                if (!preg_match('/[A-Z]/', $pass_word)) {
-                    $error_message .= "<div class='alert alert-danger'>Password need include uppercase</div>";
-                } elseif (!preg_match('/[a-z]/', $pass_word)) {
+                if (!preg_match('/[a-z]/', $pass_word)) {
                     $error_message .= "<div class='alert alert-danger'>Password need include lowercase</div>";
                 } elseif (!preg_match('/[0-9]/', $pass_word)) {
                     $error_message .= "<div class='alert alert-danger'>Password need include number</div>";
@@ -76,6 +78,46 @@ include 'check.php';
                     }
                 }
 
+                if ($cus_image) {
+
+                    // upload to file to folder
+                    $target_directory = "uploads/";
+                    $target_file = $target_directory . $cus_image;
+                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+
+                    // make sure that file is a real image
+                    $check = getimagesize($_FILES["cus_image"]["tmp_name"]);
+                    if ($check === false) {
+                        $error_message .= "<div class='alert alert-danger'>Submitted file is not an image.</div>";
+                    }
+                    // make sure certain file types are allowed
+                    $allowed_file_types = array("jpg", "jpeg", "png", "gif");
+                    if (!in_array($file_type, $allowed_file_types)) {
+                        $error_message .= "<div class='alert alert-danger'>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
+                    }
+                    // make sure file does not exist
+                    if (file_exists($target_file)) {
+                        $error_message .= "<div class='alert alert-danger'>Image already exists. Try to change file name.</div>";
+                    }
+                    // make sure submitted file is not too large, can't be larger than 1 MB
+                    if ($_FILES['cus_image']['size'] > (1024000)) {
+                        $error_message .= "<div class='alert alert-danger'>Image must be less than 1 MB in size.</div>";
+                    }
+                    // make sure the 'uploads' folder exists
+                    // if not, create it
+                    if (!is_dir($target_directory)) {
+                        mkdir($target_directory, 0777, true);
+                    }
+                    // if $file_upload_error_messages is still empty
+                    if (empty($error_message)) {
+                        // it means there are no errors, so try to upload the file
+                        if (!move_uploaded_file($_FILES["cus_image"]["tmp_name"], $target_file)) {
+                            $error_message .= "<div class='alert alert-danger>Unable to upload photo.</div>";
+                            $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
+                        }
+                    }
+                }
+
                 if (!empty($error_message)) {
                     echo "<div class='alert alert-danger'>{$error_message}</div>";
                 } else {
@@ -83,7 +125,7 @@ include 'check.php';
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status";
+                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status, cus_image=:cus_image";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -94,6 +136,7 @@ include 'check.php';
                         $stmt->bindParam(':gender', $gender);
                         $stmt->bindParam(':date_of_birth', $date_of_birth);
                         $stmt->bindParam(':account_status', $account_status);
+                        $stmt->bindParam(':cus_image', $cus_image);
                         // Execute the query
                         if ($stmt->execute()) {
                             echo "<div class='alert alert-success'>Record was saved.</div>";
@@ -108,11 +151,10 @@ include 'check.php';
                     }
                 }
             }
-
             ?>
 
             <!-- html form here where the product information will be entered -->
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-dark table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
@@ -163,6 +205,10 @@ include 'check.php';
                                 Active
                             </label>
                         </td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td><input type="file" name="cus_image" /></td>
                     </tr>
                     <tr>
                         <td></td>
