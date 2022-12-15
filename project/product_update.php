@@ -149,18 +149,17 @@ include 'check.php';
 
                 if (isset($_POST['delete'])) {
                     $image = htmlspecialchars(strip_tags($image));
-        
+
                     $image = !empty($_FILES["image"]["name"])
                         ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
                         : "";
                     $target_directory = "uploads/";
                     $target_file = $target_directory . $image;
                     $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
-        
+                
                     unlink("uploads/" . $row['image']);
                     $_POST['image'] = null;
-                    $query = "UPDATE products
-                                SET image=:image WHERE id = :id";
+                    $query = "UPDATE products SET image=:image WHERE id = :id";
                     // prepare query for excecution
                     $stmt = $con->prepare($query);
                     $stmt->bindParam(':image', $image);
@@ -236,7 +235,7 @@ include 'check.php';
                         <td>
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="image" /></div>
-                            <div><?php echo "<button href='#' class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
+                            <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>

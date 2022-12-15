@@ -199,8 +199,7 @@ include 'check.php';
 
                     unlink("uploads/" . $row['cus_image']);
                     $_POST['cus_image'] = null;
-                    $query = "UPDATE customers
-                                SET cus_image=:cus_image WHERE user_id = :user_id";
+                    $query = "UPDATE customers SET cus_image=:cus_image WHERE user_id = :user_id";
                     // prepare query for excecution
                     $stmt = $con->prepare($query);
                     $stmt->bindParam(':cus_image', $cus_image);
@@ -295,7 +294,7 @@ include 'check.php';
                         <td>
                             <div><img src="uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="cus_image" /></div>
-                            <div><?php echo "<button href='#' class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
+                            <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>
