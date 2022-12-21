@@ -29,7 +29,7 @@
 
             <?php
             if(isset($_GET['update'])){
-                echo "<div class='alert alert-success'>Record was updated.</div>";
+                echo "<div class='alert alert-success'>Record was save.</div>";
             }
             // include database connection
             include 'config/database.php';
@@ -40,6 +40,9 @@
             // if it was redirected from delete.php
             if ($action == 'deleted') {
                 echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
+            if ($action == 'nodeleted') {
+                echo "<div class='alert alert-danger'>This product has been ordered so cannot be delete.</div>";
             }
 
             // select all data
@@ -67,12 +70,12 @@
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Name</th>";
+            echo "<th class='text-center'>ID</th>";
+            echo "<th class='text-center'>Name</th>";
             echo "<th>Description</th>";
-            echo "<th>Price</th>";
-            echo "<th>Photo</th>";
-            echo "<th>Action</th>";
+            echo "<th class='text-end'>Price</th>";
+            echo "<th class='text-center'>Photo</th>";
+            echo "<th class='text-center'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -83,21 +86,21 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-1'>{$id}</td>";
-                echo "<td class='col-2'>{$name}</td>";
+                echo "<td class='col-1 text-center'>{$id}</td>";
+                echo "<td class='col-2 text-center'>{$name}</td>";
                 echo "<td class='col-2'>{$description}</td>";
                 $price = number_format((float)$price, 2, '.', '');
                 echo "<td class='text-end col-1'>{$price}</td>";
                 echo "<td class='col-3 text-center'><img src='uploads/$image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
+                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-3'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});' class='btn btn-danger mx-2'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$id});' class='btn btn-danger mx-3'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

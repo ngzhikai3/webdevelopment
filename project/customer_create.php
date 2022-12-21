@@ -27,6 +27,8 @@ include 'check.php';
             </div>
 
             <?php
+            $user_name = $first_name = $last_name = $date_of_birth = "";
+
             if ($_POST) {
                 // include database connection
                 $user_name = $_POST['username'];
@@ -43,7 +45,7 @@ include 'check.php';
                 $cus_image = htmlspecialchars(strip_tags($cus_image));
                 $error_message = "";
 
-                if ($user_name == "" || $pass_word == "" || $confirm_password == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
+                if ($user_name == "" || $pass_word == md5("") || $confirm_password == md5("") || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
                     $error_message .= "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
                 }
 
@@ -118,6 +120,10 @@ include 'check.php';
                     }
                 }
 
+                if ($cus_image == null){
+                    $cus_image = "user.png";
+                }
+
                 if (!empty($error_message)) {
                     echo "<div class='alert alert-danger'>{$error_message}</div>";
                 } else {
@@ -139,7 +145,7 @@ include 'check.php';
                         $stmt->bindParam(':cus_image', $cus_image);
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was saved.</div>";
+                            header("Location: customer_read.php?update={save}");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
@@ -158,7 +164,7 @@ include 'check.php';
                 <table class='table table-dark table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
-                        <td><input type='text' name='username' class='form-control' /></td>
+                        <td><input type='text' name='username' value='<?php echo $user_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Password</td>
@@ -170,17 +176,17 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>First Name</td>
-                        <td><input type='text' name='first_name' class='form-control' /></td>
+                        <td><input type='text' name='first_name' value='<?php echo $first_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Last Name</td>
-                        <td><input type='text' name='last_name' class='form-control' /></td>
+                        <td><input type='text' name='last_name' value='<?php echo $last_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="male">
+                                <input class="form-check-input" type="radio" name="gender" value="male" checked>
                                 <label class="form-check-label">
                                     Male
                                 </label>
@@ -195,12 +201,12 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>Date Of Birth</td>
-                        <td><input type='date' name='date_of_birth' class='form-control' /></td>
+                        <td><input type='date' name='date_of_birth' value='<?php echo $date_of_birth ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Account Status</td>
                         <td>
-                            <input class="form-check-input" type="radio" name="account_status" value="active">
+                            <input class="form-check-input" type="radio" name="account_status" value="active" checked>
                             <label class="form-check-label">
                                 Active
                             </label>

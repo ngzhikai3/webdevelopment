@@ -29,7 +29,7 @@ include 'check.php';
 
             <?php
             if (isset($_GET['update'])) {
-                echo "<div class='alert alert-success'>Record was updated.</div>";
+                echo "<div class='alert alert-success'>Record was save.</div>";
             }
             // include database connection
             include 'config/database.php';
@@ -40,6 +40,9 @@ include 'check.php';
             // if it was redirected from delete.php
             if ($action == 'deleted') {
                 echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
+            if ($action == 'nodeleted') {
+                echo "<div class='alert alert-danger'>This customer had order placed so cannot be delete.</div>";
             }
 
             // select all data
@@ -67,11 +70,11 @@ include 'check.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>User ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>Gender</th>";
-            echo "<th>Photo</th>";
-            echo "<th>Action</th>";
+            echo "<th class='text-center'>User ID</th>";
+            echo "<th class='text-center'>Username</th>";
+            echo "<th class='text-center'>Gender</th>";
+            echo "<th class='text-center'>Photo</th>";
+            echo "<th class='text-center'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -82,19 +85,19 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-2'>{$user_id}</td>";
-                echo "<td class='col-2'>{$username}</td>";
-                echo "<td class='col-2'>{$gender}</td>";
+                echo "<td class='col-2 text-center'>{$user_id}</td>";
+                echo "<td class='col-2 text-center'>{$username}</td>";
+                echo "<td class='col-2 text-center'>{$gender}</td>";
                 echo "<td class='col-3 text-center'><img src='uploads/$cus_image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
-                echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-2'>Read</a>";
+                echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>";
+                echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-3'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_customer({$user_id});' class='btn btn-danger mx-2'>Delete</a>";
+                echo "<a href='#' onclick='delete_customer({$user_id});' class='btn btn-danger mx-3'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

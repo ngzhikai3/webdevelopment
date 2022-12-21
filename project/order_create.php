@@ -11,6 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -27,6 +28,7 @@ include 'check.php';
             </div>
 
             <?php
+
             if ($_POST) {
                 // include database connection
                 $user_name = $_POST['username'];
@@ -42,8 +44,8 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
                 }
 
-                if ($quantity == [0]) {
-                    $error_message .= "<div class='alert alert-danger'>Please select how many product you want!</div>";
+                if ($quantity == [""]) {
+                    $error_message .= "<div class='alert alert-danger'>Please enter how many product you want!</div>";
                 }
 
                 if (!empty($error_message)) {
@@ -79,6 +81,7 @@ include 'check.php';
                                     $stmt->bindParam(':order_id', $order_id);
                                     $stmt->bindParam(':product_id', $product_id[$count]);
                                     $stmt->bindParam(':quantity', $quantity[$count]);
+
                                     //echo $product_id[$count];
                                     // Execute the query
                                     if ($stmt->execute()) {
@@ -105,10 +108,10 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-                <table class='table table-hover table-dark table-responsive table-bordered'>
+                <table class='table table-hover table-dark table-responsive table-bordered' id='delete_row'>
                     <tr>
                         <td>Username</td>
-                        <td colspan=3>
+                        <td colspan=4>
                             <select class="form-select form-select" aria-label=".form-select example" name="username">
                                 <?php
 
@@ -147,9 +150,9 @@ include 'check.php';
                     echo "  <tr class=\"pRow\"> 
                         <td>Product</td>
                         <td>
-                            <select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
-                            <option></option>";
-                    $query = "SELECT id, name, price FROM products ORDER BY id DESC";
+                        <select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
+                        <option></option>";
+                    $query = "SELECT * FROM products ORDER BY id DESC";
                     $stmt = $con->prepare($query);
                     $stmt->execute();
                     $num = $stmt->rowCount();
@@ -165,31 +168,23 @@ include 'check.php';
                     echo "</select>
                         </td>
                         <td>Quantity</td>
-                        <td><select class=\"form-select form-select-lg mb-3\" name=\"quantity[]\" aria-label=\".form-select-lg example\">
-                                <option value=0>0</option>
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                            </select>
-                            </td>
+                        <td><input type='number' name='quantity[]' class='form-control' /> </td>
+                        <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td>
                     </tr>";
                     ?>
                     <tr>
                         <td>
-                            <input type="button" value="Add More Product" class="add_one btn btn-secondary" />
-                            <input type="button" value="Delete" class="delete_one btn btn-secondary" />
+                            <input type="button" value="Add More Product" class="add_one btn btn-success" />
                         </td>
                         <td colspan=4 class="text-end">
-                            <input type='submit' value='Save' class='btn btn-primary' />
+                            <input type='submit' value='Save Changes' class='btn btn-primary' onclick="checkDuplicate(event)" />
                             <a href='order_summary.php' class='btn btn-danger'>Back to Order Summary</a>
-                            <a href='order_read.php' class='btn btn-danger'>Back to Order Details</a>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
         <!-- end .container -->
-
     </div>
 
     <script>
@@ -199,22 +194,32 @@ include 'check.php';
                 var clone = element.cloneNode(true);
                 element.after(clone);
             }
-            if (event.target.matches('.delete_one')) {
-                var total = document.querySelectorAll('.pRow').length;
-                if (total > 1) {
-                    var element = document.querySelector('.pRow');
-                    element.remove(element);
-                }
-            }
-            /*var total = document.querySelectorAll('.pRow').length;
-            var row = document.grtElementById('order').rows
-            for (var i = 1; i <= total; i++) {
-                row[i].cells[0].innerHTML = "#" + i;
-            }*/
         }, false);
     </script>
 
+    <script>
+        function deleteRow(r) {
+            var total = document.querySelectorAll('.pRow').length;
+            if (total > 1) {
+                var i = r.parentNode.parentNode.rowIndex;
+                document.getElementById("delete_row").deleteRow(i);
+            }
+        }
+    </script>
 
+    <script>
+        function checkDuplicate(event) {
+            var newarray = [];
+            var selects = document.getElementsByTagName('select');
+            for (var i = 0; i < selects.length; i++) {
+                newarray.push(selects[i].value);
+            }
+            if (newarray.length !== new Set(newarray).size) {
+                alert("There are duplicate item in the your order <br> Please select again!");
+                event.preventDefault();
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

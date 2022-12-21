@@ -20,7 +20,8 @@ try {
     $count = $stmt->rowCount();
 
     if ($count > 0) {
-        echo "This customer had order placed so cannot be delete.";
+        header('Location: customer_read.php?action=nodeleted');
+        //echo "This customer had order placed so cannot be delete.";
     } else {
         // delete query
         $query = "DELETE FROM customers WHERE user_id = ?";

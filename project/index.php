@@ -117,7 +117,7 @@ include 'check.php';
             <div class="container my-3">
                 <div class="my-3">
                     <?php
-                    $query = "SELECT *,sum(price*quantity) AS HIGHEST FROM order_summary INNER JOIN order_details ON order_details.order_id = order_summary.order_id INNER JOIN products ON products.id = order_details.product_id GROUP BY order_summary.order_id ORDER BY HIGHEST DESC";
+                    $query = "SELECT *,sum(price*quantity) AS top_price FROM order_summary INNER JOIN order_details ON order_details.order_id = order_summary.order_id INNER JOIN products ON products.id = order_details.product_id GROUP BY order_summary.order_id ORDER BY top_price DESC";
                     $stmt = $con->prepare($query);
                     $stmt->execute();
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -136,8 +136,9 @@ include 'check.php';
                             <td><?php echo htmlspecialchars($order_id, ENT_QUOTES);  ?></td>
                             <td><?php echo htmlspecialchars($order_date, ENT_QUOTES);  ?></td>
                             <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
-                            <td><?php $amount = htmlspecialchars(round($HIGHEST), ENT_QUOTES);
-                                echo "RM $HIGHEST";
+                            <td><?php $amount = htmlspecialchars(round($top_price), ENT_QUOTES);
+                                $top_price = number_format((float)$top_price, 2, '.', '');
+                                echo "RM $top_price";
                                 ?></td>
                         </tr>
                     </table>

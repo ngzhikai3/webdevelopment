@@ -20,7 +20,8 @@ try {
     $count = $stmt->rowCount();
 
     if ($count > 0) {
-        echo "This product has been ordered so cannot be delete.";
+        header('Location: product_read.php?action=nodeleted');
+        //echo "This product has been ordered so cannot be delete.";
     } else {
         // delete query
         $query = "DELETE FROM products WHERE id = ?";
