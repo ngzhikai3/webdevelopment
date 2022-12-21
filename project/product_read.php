@@ -28,7 +28,7 @@
             </div>
 
             <?php
-            if(isset($_GET['update'])){
+            if (isset($_GET['update'])) {
                 echo "<div class='alert alert-success'>Record was save.</div>";
             }
             // include database connection
@@ -112,21 +112,20 @@
 
         </div>
         <!-- end .container -->
-
-        <!-- confirm delete record will be here -->
-        <script type='text/javascript'>
-            // confirm record deletion
-            function delete_product(id) {
-
-                if (confirm('Are you sure?')) {
-                    // if user clicked ok,
-                    // pass the id to delete.php and execute the delete query
-                    window.location = 'product_delete.php?id=' + id;
-                }
-            }
-        </script>
-
     </div>
+
+    <!-- confirm delete record will be here -->
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_product(id) {
+
+            if (confirm('Are you sure?')) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'product_delete.php?id=' + id;
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

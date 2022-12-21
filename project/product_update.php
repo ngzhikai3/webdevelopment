@@ -32,6 +32,14 @@ include 'check.php';
             // isset() is a PHP function used to verify if a value is there or not
             $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
+            $action = isset($_GET['action']) ? $_GET['action'] : "";
+            if ($action == 'deleted') {
+                echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
+            if ($action == 'nodeleted') {
+                echo "<div class='alert alert-danger'>This product has been ordered so cannot be delete.</div>";
+            }
+
             //include database connection
             include 'config/database.php';
 
@@ -156,7 +164,7 @@ include 'check.php';
                     $target_directory = "uploads/";
                     $target_file = $target_directory . $image;
                     $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
-                
+
                     unlink("uploads/" . $row['image']);
                     $_POST['image'] = null;
                     $query = "UPDATE products SET image=:image WHERE id = :id";
@@ -251,6 +259,7 @@ include 'check.php';
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
                             <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                            <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em mx-2'>Delete</a>"; ?>
                         </td>
                     </tr>
                 </table>
@@ -259,6 +268,19 @@ include 'check.php';
         </div>
         <!-- end .container -->
     </div>
+
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_product(id) {
+
+            if (confirm('Are you sure?')) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'product_delete.php?id=' + id;
+            }
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 </body>

@@ -88,7 +88,7 @@ include 'check.php';
                 echo "<td class='col-2 text-center'>{$user_id}</td>";
                 echo "<td class='col-2 text-center'>{$username}</td>";
                 echo "<td class='col-2 text-center'>{$gender}</td>";
-                echo "<td class='col-3 text-center'><img src='uploads/$cus_image' class='w-25'></td>";
+                echo "<td class='col-3 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
                 echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
@@ -108,21 +108,22 @@ include 'check.php';
             ?>
 
         </div> <!-- end .container -->
-
-        <!-- confirm delete record will be here -->
-        <script type='text/javascript'>
-            // confirm record deletion
-            function delete_customer(user_id) {
-
-                if (confirm('Are you sure?')) {
-                    // if user clicked ok,
-                    // pass the id to delete.php and execute the delete query
-                    window.location = 'customer_delete.php?user_id=' + user_id;
-                }
-            }
-        </script>
-
     </div>
+    
+    <!-- confirm delete record will be here -->
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_customer(user_id) {
+
+            if (confirm('Are you sure?')) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'customer_delete.php?user_id=' + user_id;
+            }
+        }
+    </script>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

@@ -83,7 +83,7 @@ include 'check.php';
                 if ($cus_image) {
 
                     // upload to file to folder
-                    $target_directory = "uploads/";
+                    $target_directory = "cus_uploads/";
                     $target_file = $target_directory . $cus_image;
                     $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 

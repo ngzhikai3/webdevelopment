@@ -32,6 +32,14 @@ include 'check.php';
             // isset() is a PHP function used to verify if a value is there or not
             $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die('ERROR: Record ID not found.');
 
+            $action = isset($_GET['action']) ? $_GET['action'] : "";
+            if ($action == 'deleted') {
+                echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
+            if ($action == 'nodeleted') {
+                echo "<div class='alert alert-danger'>This customer had order placed so cannot be delete.</div>";
+            }
+
             //include database connection
             include 'config/database.php';
 
@@ -150,7 +158,7 @@ include 'check.php';
                 if ($_FILES["cus_image"]["name"]) {
 
                     // upload to file to folder
-                    $target_directory = "uploads/";
+                    $target_directory = "cus_uploads/";
                     $target_file = $target_directory . $cus_image;
                     $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
@@ -193,11 +201,11 @@ include 'check.php';
                     $cus_image = !empty($_FILES["cus_image"]["name"])
                         ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
                         : "";
-                    $target_directory = "uploads/";
+                    $target_directory = "cus_uploads/";
                     $target_file = $target_directory . $cus_image;
                     $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
-                    unlink("uploads/" . $row['cus_image']);
+                    unlink("cus_uploads/" . $row['cus_image']);
                     $_POST['cus_image'] = null;
                     $query = "UPDATE customers SET cus_image=:cus_image WHERE user_id = :user_id";
                     // prepare query for excecution
@@ -292,7 +300,7 @@ include 'check.php';
                     <tr>
                         <td>Photo</td>
                         <td>
-                            <div><img src="uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
+                            <div><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="cus_image" /></div>
                             <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
@@ -302,6 +310,7 @@ include 'check.php';
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
                             <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
+                            <?php echo "<a href='customer_delete.php?user_id={$user_id}' onclick='delete_customer({$user_id});' class='btn btn-danger'>Delete</a>"; ?>
                         </td>
                     </tr>
                 </table>
@@ -310,6 +319,19 @@ include 'check.php';
         </div>
         <!-- end .container -->
     </div>
+
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_customer(user_id) {
+
+            if (confirm('Are you sure?')) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'customer_delete.php?user_id=' + user_id;
+            }
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 </body>

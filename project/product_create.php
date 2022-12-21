@@ -115,6 +115,10 @@ include 'check.php';
                     }
                 }
 
+                if ($image == null){
+                    $image = "product.png";
+                }
+
                 if (!empty($error_message)) {
                     echo "<div class='alert alert-danger'>{$error_message}</div>";
                 } else {
