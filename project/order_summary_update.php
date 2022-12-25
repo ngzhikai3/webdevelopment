@@ -70,7 +70,6 @@ include 'check.php';
 
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Your order is updated.</div>";
                             $query = "DELETE FROM order_details WHERE order_id=:order_id";
                             $stmt = $con->prepare($query);
                             $stmt->bindParam(':order_id', $order_id);
@@ -216,9 +215,7 @@ include 'check.php';
                 event.preventDefault();
             }
         }
-    </script>
 
-    <script>
         document.addEventListener('click', function(event) {
             if (event.target.matches('.add_one')) {
                 var element = document.querySelector('.pRow');
@@ -231,14 +228,14 @@ include 'check.php';
                 row[i].cells[0].innerHTML = "#" + i;
             }
         }, false);
-    </script>
 
-    <script>
         function deleteRow(r) {
             var total = document.querySelectorAll('.pRow').length;
             if (total > 1) {
                 var i = r.parentNode.parentNode.rowIndex;
                 document.getElementById("delete_row").deleteRow(i);
+            } else {
+                alert("You need at at least one products");
             }
         }
     </script>

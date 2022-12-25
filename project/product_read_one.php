@@ -109,9 +109,9 @@
                 <tr>
                     <td></td>
                     <td>
-                        <?php echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>"; ?>
+                        <?php echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>"; ?>
                         <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                        <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em mx-2'>Delete</a>"; ?>
+                        <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'>Delete</a>"; ?>
                     </td>
                 </tr>
             </table>

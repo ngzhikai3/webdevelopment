@@ -113,16 +113,13 @@ include 'check.php';
                             $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
                         }
                     }
-                }
-
-                if ($image == null){
+                } elseif (empty($image)) {
                     $image = "product.png";
                 }
 
                 if (!empty($error_message)) {
                     echo "<div class='alert alert-danger'>{$error_message}</div>";
                 } else {
-
                     // include database connection
                     include 'config/database.php';
                     try {

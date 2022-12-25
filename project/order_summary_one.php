@@ -58,10 +58,17 @@
                     echo "</tr>";
                 }
             }
-            echo "<tr class='border border-3'>";
-            echo "<td class='col-2' >Total Price</td>";
+            echo "<tr class='border-top'>";
+            echo "<td class='col-2'>Subtotal</td>";
             echo "<td colspan=4 class='text-end'>";
             $total_price = number_format((float)$total_price, 2, '.', '');
+            echo "RM $total_price";
+            echo "</td></tr>";
+
+            echo "<tr>";
+            echo "<td class='col-2' >Total</td>";
+            echo "<td colspan=4 class='text-end'>";
+            $total_price = (round($total_price, 1) . "0");
             echo "RM $total_price";
             echo "</td></tr></table>";
         } catch (PDOException $exception) {

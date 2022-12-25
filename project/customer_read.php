@@ -11,6 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -70,11 +71,12 @@ include 'check.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center'>User ID</th>";
-            echo "<th class='text-center'>Username</th>";
-            echo "<th class='text-center'>Gender</th>";
-            echo "<th class='text-center'>Photo</th>";
-            echo "<th class='text-center'>Action</th>";
+            echo "<th class='text-center col-1'>User ID</th>";
+            echo "<th class='text-center col-2'>First Name</th>";
+            echo "<th class='text-center col-2'>Last Name</th>";
+            echo "<th class='text-center col-2'>Gender</th>";
+            echo "<th class='text-center col-2'>Photo</th>";
+            echo "<th class='text-center col-3'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -85,10 +87,15 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-2 text-center'>{$user_id}</td>";
-                echo "<td class='col-2 text-center'>{$username}</td>";
-                echo "<td class='col-2 text-center'>{$gender}</td>";
-                echo "<td class='col-3 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
+                echo "<td class='col-1 text-center'>{$user_id}</td>";
+                echo "<td class='col-2 text-center text-break'>{$first_name}</td>";
+                echo "<td class='col-2 text-center text-break'>{$last_name}</td>";
+                if ($gender == "male") {
+                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person fs-1 text-primary'></i></td>";
+                } else {
+                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person-dress fs-1 text-danger'></i></td>";
+                }
+                echo "<td class='col-2 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
                 echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
@@ -109,7 +116,7 @@ include 'check.php';
 
         </div> <!-- end .container -->
     </div>
-    
+
     <!-- confirm delete record will be here -->
     <script type='text/javascript'>
         // confirm record deletion

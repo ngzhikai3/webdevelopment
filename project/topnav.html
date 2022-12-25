@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-dark">
-    <div class="container-fluid d-flex justify-content-end">
+    <div class="container-fluid">
+        <div class="justify-content-start">
+            <a href="index.php"><img src="images/logo.png" height="50px"></a>
+        </div>
         <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,16 +40,18 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item text-center" href="order_create.php">Order Form</a></li>
                         <li><a class="dropdown-item text-center" href="order_summary.php">Order Summary</a></li>
-                        <!--<li><a class="dropdown-item text-center" href="order_read.php">Order Details</a></li>-->
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="contact_us.php">Contact Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="logout.php">Logout</a>
+                <li class="nav-item d-xxl-none d-xl-none d-lg-none">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </li>
             </ul>
+        </div>
+        <div class="justify-content-end d-none d-lg-block d-xl-block d-xxl-block">
+            <a class="nav-link text-white" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
     </div>
 </nav>

@@ -29,7 +29,7 @@
 
             <?php
             if (isset($_GET['update'])) {
-                echo "<div class='alert alert-success'>Record was save.</div>";
+                echo "<div class='alert alert-success'>Record was saved.</div>";
             }
             // include database connection
             include 'config/database.php';

@@ -43,7 +43,7 @@ include 'check.php';
             }
 
             // select all data
-            $query = "SELECT * , sum(price*quantity) AS total_price FROM order_details INNER JOIN order_summary ON order_summary.order_id = order_details.order_id INNER JOIN products ON products.id = order_details.product_id GROUP BY order_summary.order_id DESC";
+            $query = "SELECT * , sum(price*quantity) AS total_price FROM order_details INNER JOIN order_summary ON order_summary.order_id = order_details.order_id INNER JOIN products ON products.id = order_details.product_id INNER JOIN customers ON customers.username = order_summary.username GROUP BY order_summary.order_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -69,7 +69,8 @@ include 'check.php';
             echo "<tr>";
             echo "<th class='text-center'>Order ID</th>";
             echo "<th class='text-center'>Order Date</th>";
-            echo "<th class='text-center'>Username</th>";
+            echo "<th class='text-center'>First Name</th>";
+            echo "<th class='text-center'>Last Name</th>";
             echo "<th class='text-end'>Total Price</th>";
             echo "<th class='text-center'>Action</th>";
             echo "</tr>";
@@ -85,7 +86,8 @@ include 'check.php';
                 echo "<tr>";
                 echo "<td class='text-center'>{$order_id}</td>";
                 echo "<td class='text-center'>{$order_date}</td>";
-                echo "<td class='text-center'>{$username}</td>";
+                echo "<td class='text-center'>{$first_name}</td>";
+                echo "<td class='text-center'>{$last_name}</td>";
                 $total_price = number_format((float)$total_price, 2, '.', '');
                 echo "<td class='text-end'>RM $total_price</td>";
                 echo "<td class='text-center'>";

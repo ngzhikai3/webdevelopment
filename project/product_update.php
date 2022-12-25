@@ -99,7 +99,7 @@ include 'check.php';
                     $promotion_price = NULL;
                 } elseif (!is_numeric($promotion_price)) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price only have number</div>";
-                } elseif ($promotion_price > $price) {
+                } elseif ($promotion_price >= $price) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure promotion price is not more than normal price</div>";
                 }
 
@@ -153,6 +153,8 @@ include 'check.php';
                             $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
                         }
                     }
+                } elseif (empty($image)) {
+                    $image = "product.png";
                 }
 
                 if (isset($_POST['delete'])) {
@@ -174,10 +176,11 @@ include 'check.php';
                     $stmt->bindParam(':id', $id);
                     // Execute the query
                     $stmt->execute();
+                    $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
                 }
 
                 if (!empty($error_message)) {
-                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                    echo "<div class='alert'>{$error_message}</div>";
                 } else {
 
                     try {
@@ -259,7 +262,7 @@ include 'check.php';
                         <td>
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
                             <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                            <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em mx-2'>Delete</a>"; ?>
+                            <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'>Delete</a>"; ?>
                         </td>
                     </tr>
                 </table>

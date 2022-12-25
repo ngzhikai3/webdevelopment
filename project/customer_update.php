@@ -78,7 +78,6 @@ include 'check.php';
             // check if form was submitted
             if ($_POST) {
 
-                $user_name = $_POST['username'];
                 $pass_word = $_POST['password'];
                 $old_password = $_POST['old_password'];
                 $confirm_password = $_POST['confirm_password'];
@@ -91,18 +90,6 @@ include 'check.php';
                     : htmlspecialchars($cus_image, ENT_QUOTES);
                 $cus_image = htmlspecialchars(strip_tags($cus_image));
                 $error_message = "";
-
-                if ($user_name == "") {
-                    $error_message .= "<div class='alert alert-danger'>Please enter your username</div>";
-                }
-
-                $space = " ";
-                $word = $_POST['username'];
-                if (strpos($word, $space) !== false) {
-                    $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
-                } elseif (strlen($user_name) < 6) {
-                    $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
-                }
 
                 $emptypass = false;
                 if ($old_password == "" && $pass_word == "" && $confirm_password == "") {
@@ -193,6 +180,8 @@ include 'check.php';
                             $error_message .= "<div class='alert alert-danger>Update the record to upload photo.</div>";
                         }
                     }
+                } elseif (empty($cus_image)) {
+                    $cus_image = "user.png";
                 }
 
                 if (isset($_POST['delete'])) {
@@ -214,6 +203,7 @@ include 'check.php';
                     $stmt->bindParam(':user_id', $user_id);
                     // Execute the query
                     $stmt->execute();
+                    $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
                 }
 
                 if (!empty($error_message)) {
@@ -224,11 +214,10 @@ include 'check.php';
                         // write update query
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
-                        $query = "UPDATE customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, cus_image=:cus_image WHERE user_id = :user_id";
+                        $query = "UPDATE customers SET password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, cus_image=:cus_image WHERE user_id = :user_id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
-                        $username = htmlspecialchars(strip_tags($_POST['username']));
                         if ($emptypass == true) {
                             $password = $row['password'];
                         } else {
@@ -240,7 +229,6 @@ include 'check.php';
                         $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                         $cus_image = htmlspecialchars(strip_tags($cus_image));
                         // bind the parameters
-                        $stmt->bindParam(':username', $username);
                         $stmt->bindParam(':password', $password);
                         $stmt->bindParam(':first_name', $first_name);
                         $stmt->bindParam(':last_name', $last_name);
@@ -266,10 +254,6 @@ include 'check.php';
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
-                        <td>Username</td>
-                        <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Old Password</td>
                         <td><input type='password' name='old_password' class='form-control' /></td>
                     </tr>
@@ -291,7 +275,37 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>gender</td>
-                        <td><input type='text' name='gender' value="<?php echo htmlspecialchars($gender, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td>
+                            <?php
+                            if ($gender == "male") {
+                                echo "<div class='form-check'>
+                                    <input class='form-check-input' type='radio' name='gender' value='male' checked>
+                                    <label class='form-check-label'>
+                                    Male
+                                    </label>
+                                </div>
+                                <div class='form-check'>
+                                    <input class='form-check-input' type='radio' name='gender' value='female'>
+                                    <label class='form-check-label'>
+                                    Female
+                                    </label>
+                                </div>";
+                            } else {
+                                echo "<div class='form-check'>
+                                        <input class='form-check-input' type='radio' name='gender' value='male'>
+                                        <label class='form-check-label'>
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class='form-check'>
+                                        <input class='form-check-input' type='radio' name='gender' value='female' checked>
+                                        <label class='form-check-label'>
+                                            Female
+                                        </label>
+                                    </div>";
+                            }
+                            ?>
+                        </td>
                     </tr>
                     <tr>
                         <td>Date Of Birth</td>
@@ -302,7 +316,7 @@ include 'check.php';
                         <td>
                             <div><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="cus_image" /></div>
-                            <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
+                            <div><?php echo "<button class='btn btn-danger' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>

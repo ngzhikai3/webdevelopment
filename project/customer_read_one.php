@@ -11,6 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -91,7 +92,11 @@ include 'check.php';
                 </tr>
                 <tr>
                     <td>Gender</td>
-                    <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
+                    <td><?php if ($gender == "male") {
+                            echo "<i class='fa-solid fa-person fs-1 text-primary ms-3'></i>";
+                        } else {
+                            echo "<i class='fa-solid fa-person-dress fs-1 text-danger ms-3'></i>";
+                        } ?></td>
                 </tr>
                 <tr>
                     <td>Date of Birth</td>
@@ -104,7 +109,7 @@ include 'check.php';
                 <tr>
                     <td></td>
                     <td>
-                        <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-2'>Edit</a>"; ?>
+                        <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em'>Edit</a>"; ?>
                         <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
                         <?php echo "<a href='customer_delete.php?user_id={$user_id}' onclick='delete_customer({$user_id});' class='btn btn-danger'>Delete</a>"; ?>
                     </td>

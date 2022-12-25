@@ -12,6 +12,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -21,12 +22,8 @@ include 'check.php';
     <div class="container-fluid px-0">
         <?php include 'topnav.html'; ?>
 
-        <div class="container-fluid p-0">
-            <img src="images/index.jpg" class="img-fluid w-100">
-        </div>
-
         <div class="container-fluid row m-0 pt-5 bg-warning d-flex justify-content-between align-items-center">
-            <div class="col-5">
+            <div class="">
                 <?php
                 include 'config/database.php';
 
@@ -45,23 +42,42 @@ include 'check.php';
                 $stmt->execute();
                 $order = $stmt->rowCount();
 
-                echo "<h1 class=\"text-center\">Summary</h1>";
-                echo "<table class='table table-dark table-hover table-bordered text-center'>";
-                echo "<tr class='table-light'>";
-                echo "<th>Total Number of Customer</th>";
-                echo "<th>Total Number of Products</th>";
-                echo "<th>Total Number of Order</th>";
-                echo "</tr>";
-                echo "<tr class='table-dark'>";
-                echo "<td>$customer</td>";
-                echo "<td>$products</td>";
-                echo "<td>$order</td>";
-                echo "</tr>";
-                echo "</table>";
+                echo "<div class='row my-3'>
+                    <div class='col-4'>
+                        <div class='card bg-info'>
+                            <div class='card-header'>
+                                <h3 class='card-title text-white'>Total $customer Customers Registered</h1>
+                            </div>
+                            <div class='card-body text-end'>
+                                <a href='customer_read.php' class='btn btn-light'>View Customer List</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-4'>
+                        <div class='card bg-light'>
+                            <div class='card-header'>
+                                <h3 class='card-title'>Total $products Products On Sale</h1>
+                            </div>
+                            <div class='card-body text-end'>
+                                <a href='product_read.php' class='btn btn-dark'>View Product List</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-4'>
+                        <div class='card bg-info'>
+                            <div class='card-header'>
+                                <h3 class='card-title text-white'>Total $order Order</h1>
+                            </div>
+                            <div class='card-body text-end'>
+                                <a href='order_summary.php' class='btn btn-light'>View Order List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>";
                 ?>
             </div>
 
-            <div class="col-5">
+            <div>
                 <?php
                 include 'config/database.php';
 
@@ -70,136 +86,141 @@ include 'check.php';
                 $stmt->execute();
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 $order_id = $row['order_id'];
-
                 isset($order_id);
                 // read current record's data
                 try {
                     // prepare select query
-                    $query = "SELECT * FROM order_summary WHERE order_id = ? ";
+                    $query = "SELECT *, sum(price*quantity) AS total_price FROM order_details INNER JOIN order_summary ON order_summary.order_id = order_details.order_id INNER JOIN products ON products.id = order_details.product_id INNER JOIN customers ON customers.username = order_summary.username WHERE order_summary.order_id = ? ";
                     $stmt = $con->prepare($query);
-
                     // Bind the parameter
                     $stmt->bindParam(1, $order_id);
-
                     // execute our query
                     $stmt->execute();
-
                     // store retrieved row to a variable
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
                     // values to fill up our form
                     extract($row);
                 }
-
                 // show error
                 catch (PDOException $exception) {
                     die('ERROR: ' . $exception->getMessage());
                 }
                 ?>
-
-                <!-- HTML read one record table will be here -->
-                <!--we have our html table here where the record will be displayed-->
                 <h1 class="text-center">Latest Order</h1>
                 <table class='table table-dark table-hover table-responsive table-bordered text-center'>
                     <tr class="table table-light">
                         <th>Order ID</th>
                         <th>Order Date</th>
-                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Total Price</th>
+                        <th>View Details</th>
                     </tr>
                     <tr class='table-dark'>
-                        <td><?php echo htmlspecialchars($order_id, ENT_QUOTES);  ?></td>
-                        <td><?php echo htmlspecialchars($order_date, ENT_QUOTES);  ?></td>
-                        <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
+                        <?php
+                        echo "<td>$order_id</td>";
+                        echo "<td>$order_date</td>";
+                        echo "<td>$first_name</td>";
+                        echo "<td>$last_name</td>";
+                        $total_price = number_format((float)$total_price, 2, '.', '');
+                        echo "<td>RM $total_price</td>";
+                        echo "<td><a href='order_summary_one.php?order_id={$order_id}' class='btn btn-light m-r-1em mx-3'><i class='fa-solid fa-circle-info'></i></a></td>";
+                        ?>
                     </tr>
                 </table>
             </div>
 
             <div class="container my-3">
-                <div class="my-3">
-                    <?php
-                    $query = "SELECT *,sum(price*quantity) AS top_price FROM order_summary INNER JOIN order_details ON order_details.order_id = order_summary.order_id INNER JOIN products ON products.id = order_details.product_id GROUP BY order_summary.order_id ORDER BY top_price DESC";
-                    $stmt = $con->prepare($query);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    extract($row);
+                <?php
+                $query = "SELECT *, sum(price*quantity) AS top_price FROM order_summary INNER JOIN order_details ON order_details.order_id = order_summary.order_id INNER JOIN products ON products.id = order_details.product_id INNER JOIN customers ON customers.username = order_summary.username GROUP BY order_summary.order_id ORDER BY top_price DESC LIMIT 1";
+                $stmt = $con->prepare($query);
+                $stmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                extract($row);
 
-                    ?>
-                    <h1 class="text-center">Highest Purchased Amount Order</h1>
-                    <table class='table table-dark table-hover table-responsive table-bordered text-center'>
-                        <tr class='table-light'>
-                            <th>Order ID</th>
-                            <th>Order Date</th>
-                            <th>Username</th>
-                            <th>Highest Amount</th>
-                        </tr>
-                        <tr class='table-dark'>
-                            <td><?php echo htmlspecialchars($order_id, ENT_QUOTES);  ?></td>
-                            <td><?php echo htmlspecialchars($order_date, ENT_QUOTES);  ?></td>
-                            <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
-                            <td><?php $amount = htmlspecialchars(round($top_price), ENT_QUOTES);
-                                $top_price = number_format((float)$top_price, 2, '.', '');
-                                echo "RM $top_price";
-                                ?></td>
-                        </tr>
-                    </table>
-                </div>
 
-                <div class="my-3">
-                    <?php
-                    $query = "SELECT name, sum(quantity) AS popular FROM products INNER JOIN order_details ON order_details.product_id = products.id group by name order by sum(quantity) desc limit 5;";
-                    $stmt = $con->prepare($query);
-                    $stmt->execute();
-                    $count = $stmt->rowCount();
-                    if ($count > 0) {
-                        echo "<h1 class=\"text-center\">Top 5 Selling Product</h1>";
-                        echo "<table class='table table-dark table-hover table-responsive table-bordered text-center'>";
-                        echo "<tr class='table-light'><th>Product Name</th>
-                 <th>Quantity</th></tr>";
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            extract($row);
-                            echo "<tr class='table-dark'>";
-                            echo "<td>{$name}</td>";
-                            echo "<td>{$popular}</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-                    } ?>
-                </div>
+                echo "<h1 class='text-center'>Highest Purchased Amount Order</h1>
+                <table class='table table-dark table-hover table-responsive table-bordered text-center'>
+                    <tr class='table-light'>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Highest Amount</th>
+                        <th>View Details</th>
+                    </tr>
+                    <tr class='table-dark'>";
 
-                <div class="my-3">
-                    <?php
-                    $nobuyitem = "SELECT * FROM products left JOIN order_details ON order_details.product_id = products.id WHERE product_id is NULL limit 3";
-                    $stmt = $con->prepare($nobuyitem);
-                    $stmt->execute();
-                    $count = $stmt->rowCount();
-                    if ($count > 0) {
-                        echo "<h1 class=\"text-center\">TOP 3 No Purchase Products</h1>";
-                        echo "<table class='table table-dark table-hover table-responsive table-bordered text-center'>";
-                        echo "<tr class='table-light'>
-                            <th>Product Name</th>";
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            extract($row);
-                            echo "<tr class='table-dark'>";
-                            echo "<td>{$name}</td>";
-                            echo "</tr>";
-                        }
-                        echo "
-                    </table>";
-                    }
-                    ?>
-                </div>
+                echo "<td>$order_id</td>";
+                echo "<td>$order_date</td>";
+                echo "<td>$first_name</td>";
+                echo "<td>$last_name</td>";
+                $top_price = number_format((float)$top_price, 2, '.', '');
+                echo "<td>RM $top_price</td>";
+                echo "<td><a href='order_summary_one.php?order_id={$order_id}' class='btn btn-light m-r-1em mx-3'><i class='fa-solid fa-circle-info'></i></a></td>";
+                ?>
+                </tr>
+                </table>
             </div>
 
+            <div class="container my-3">
+                <?php
+                $query = "SELECT id, name, price, sum(quantity) AS popular ,sum(price*quantity) AS total_sell FROM products INNER JOIN order_details ON order_details.product_id = products.id group by name order by sum(quantity) desc limit 5;";
+                $stmt = $con->prepare($query);
+                $stmt->execute();
+                $count = $stmt->rowCount();
+                if ($count > 0) {
+                    echo "<h1 class=\"text-center\">Top 5 Selling Product</h1>";
+                    echo "<table class='table table-dark table-hover table-responsive table-bordered text-center'>";
+                    echo "<tr class='table-light'><th>Product Name</th>
+                        <th>Quantity</th>
+                        <th class='text-end'>Price per unit</th>
+                        <th class='text-end'>Total Selling Price</th>
+                        <th>View Details</th></tr>";
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                        echo "<tr class='table-dark'>";
+                        echo "<td>{$name}</td>";
+                        echo "<td>{$popular}</td>";
+                        echo "<td class='text-end'>RM $price</td>";
+                        $total_sell = number_format((float)$total_sell, 2, '.', '');
+                        echo "<td class='text-end'>RM $total_sell</td>";
+                        echo "<td><a href='product_read_one.php?id={$id}' class='btn btn-light m-r-1em mx-3'><i class='fa-solid fa-circle-info'></i></a></td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                } ?>
+            </div>
 
-            <div class="container-fluid">
-                <div class="row border-top border-2 d-flex justify-content-between">
-                    <div class="col-xxl-3 col-xl-4 py-3">
-                        <p class="m-0">Copyright 2019 Tutorial Republic</p>
-                    </div>
-                    <div class="col-xxl-3 col-4 py-3">
-                        <p class="m-0 text-xl-end">Term of Use | Privacy Policy</p>
-                    </div>
-                </div>
+            <div class="container my-3">
+                <?php
+                $query = "SELECT * FROM products left JOIN order_details ON order_details.product_id = products.id WHERE product_id is NULL limit 3";
+                $stmt = $con->prepare($query);
+                $stmt->execute();
+                $count = $stmt->rowCount();
+                if ($count > 0) {
+                    echo "<h1 class=\"text-center\">TOP 3 Products That Never Purchase</h1>";
+                    echo "<table class='table table-dark table-hover table-responsive table-bordered text-center'>";
+                    echo "<tr class='table-light'>
+                            <th>Product Id</th>
+                            <th>Product Name</th>
+                            <th>Product Photo</th>
+                            <th class='text-end'>Price per unit</th>
+                            <th>View Details</th></tr>";
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                        echo "<tr class='table-dark'>";
+                        echo "<td>{$id}</td>";
+                        echo "<td>{$name}</td>";
+                        echo "<td><img src='uploads/$image' class='w-25'></td>";
+                        echo "<td class='text-end'>RM $price</td>";
+                        echo "<td><a href='product_read_one.php?id={$id}' class='btn btn-light m-r-1em mx-3'><i class='fa-solid fa-circle-info'></i></a></td>";
+                        echo "</tr>";
+                    }
+                    echo "
+                    </table>";
+                }
+                ?>
             </div>
         </div>
     </div>

@@ -1,7 +1,3 @@
-<?php
-include 'check.php';
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -18,8 +14,6 @@ include 'check.php';
 <body class="bg-warning">
 
     <div class="container-fluid px-0">
-
-        <?php include 'topnav.html'; ?>
 
         <div class="container my-3 py-2">
             <div class="page-header text-center">
@@ -143,7 +137,7 @@ include 'check.php';
                         $stmt->bindParam(':cus_image', $cus_image);
                         // Execute the query
                         if ($stmt->execute()) {
-                            header("Location: customer_read.php?update={save}");
+                            header("Location: login.php?update={save}");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
@@ -222,7 +216,6 @@ include 'check.php';
                         <td></td>
                         <td>
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-danger'>Back to read customer</a>
                         </td>
                     </tr>
                 </table>

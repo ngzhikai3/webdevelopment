@@ -36,16 +36,19 @@ include 'check.php';
                 $quantity = $_POST['quantity'];
                 $error_message = "";
 
-                if ($user_name == "") {
+                if ($user_name == "Select Username") {
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
 
-                if ($product_id == [""]) {
+                if ($product_id == ["Select Product"]) {
                     $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
                 }
 
-                if ($quantity == [""]) {
+                /*if ($quantity == [""]) {
                     $error_message .= "<div class='alert alert-danger'>Please enter how many product you want!</div>";
+                } else*/
+                if ($quantity <= [0]) {
+                    $error_message .= "<div class='alert alert-danger'>Please enter at least one!</div>";
                 }
 
                 if (!empty($error_message)) {
@@ -65,7 +68,7 @@ include 'check.php';
 
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Your order is created.</div>";
+                            header("Location: order_summary.php?update={save}");
                             $query = "SELECT MAX(order_id) as order_id FROM order_summary";
                             $stmt = $con->prepare($query);
                             $stmt->execute();
@@ -129,7 +132,7 @@ include 'check.php';
                                     echo "<div class='alert alert-danger'>No records found.</div>";
                                 }
                                 //new
-                                echo "<option selected></option>"; //start dropdown
+                                echo "<option value='Select Username' selected>Select Username</option>"; //start dropdown
                                 // table body will be here
                                 // retrieve our table contents
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -151,7 +154,7 @@ include 'check.php';
                         <td>Product</td>
                         <td>
                         <select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
-                        <option></option>";
+                        <option value='Select Product' selected>Select Product</option>";
                     $query = "SELECT * FROM products ORDER BY id DESC";
                     $stmt = $con->prepare($query);
                     $stmt->execute();
@@ -168,7 +171,7 @@ include 'check.php';
                     echo "</select>
                         </td>
                         <td>Quantity</td>
-                        <td><input type='number' name='quantity[]' class='form-control' /> </td>
+                        <td><input type='number' name='quantity[]' value='1' class='form-control' /> </td>
                         <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td>
                     </tr>";
                     ?>
@@ -195,19 +198,17 @@ include 'check.php';
                 element.after(clone);
             }
         }, false);
-    </script>
 
-    <script>
         function deleteRow(r) {
             var total = document.querySelectorAll('.pRow').length;
             if (total > 1) {
                 var i = r.parentNode.parentNode.rowIndex;
                 document.getElementById("delete_row").deleteRow(i);
+            } else {
+                alert("You need at at least one products");
             }
         }
-    </script>
 
-    <script>
         function checkDuplicate(event) {
             var newarray = [];
             var selects = document.getElementsByTagName('select');
@@ -215,7 +216,7 @@ include 'check.php';
                 newarray.push(selects[i].value);
             }
             if (newarray.length !== new Set(newarray).size) {
-                alert("There are duplicate item in the your order <br> Please select again!");
+                alert("There are duplicate item in the your order! Please select again!");
                 event.preventDefault();
             }
         }
