@@ -20,7 +20,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container my-3">
             <div class="page-header">
@@ -108,28 +108,15 @@ include 'check.php';
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
-                        <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em'>Edit</a>"; ?>
-                        <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
-                        <?php echo "<a href='customer_delete.php?user_id={$user_id}' onclick='delete_customer({$user_id});' class='btn btn-danger'>Delete</a>"; ?>
+                    <td class="text-end">
+                        <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em'><i class='fa-solid fa-pen-to-square'></i></a>"; ?>
+                        <a href='customer_read.php' class='btn btn-secondary'>Back to read customer profile</a>
+                        <?php echo "<a href='customer_delete.php?user_id={$user_id}' class='btn btn-danger'><i class='fa-solid fa-trash'></i></a>"; ?>
                     </td>
                 </tr>
             </table>
-
         </div>
         <!-- end .container -->
-
-        <script type='text/javascript'>
-            // confirm record deletion
-            function delete_customer(user_id) {
-
-                if (confirm('Are you sure?')) {
-                    // if user clicked ok,
-                    // pass the id to delete.php and execute the delete query
-                    window.location = 'customer_delete.php?user_id=' + user_id;
-                }
-            }
-        </script>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

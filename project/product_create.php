@@ -11,6 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -19,7 +20,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <!-- container -->
         <div class="container my-3">
@@ -118,7 +119,7 @@ include 'check.php';
                 }
 
                 if (!empty($error_message)) {
-                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                    echo $error_message;
                 } else {
                     // include database connection
                     include 'config/database.php';
@@ -159,44 +160,39 @@ include 'check.php';
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Name</td>
-                        <td><input type='text' name='name' value='<?php echo $name ?>' class='form-control' /></td>
+                        <td colspan="3"><input type='text' name='name' value='<?php echo $name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><textarea type='text' name='description' class='form-control'><?php echo $description ?></textarea></td>
+                        <td colspan="3"><textarea type='text' name='description' class='form-control'><?php echo $description ?></textarea></td>
                     </tr>
                     <tr>
                         <td>Price</td>
                         <td><input type='text' name='price' value='<?php echo $price ?>' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Promotion price</td>
                         <td><input type='text' name='promotion_price' value='<?php echo $promotion_price ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Photo</td>
-                        <td><input type="file" name="image" /></td>
-                    </tr>
-                    <tr>
                         <td>Manufacture Date</td>
                         <td><input type='date' name='manufacture_date' value='<?php echo $manufacture_date ?>' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Expired Date</td>
                         <td><input type='date' name='expired_date' value='<?php echo $expired_date ?>' class='form-control' /></td>
                     </tr>
                     <tr>
+                        <td>Photo</td>
+                        <td colspan="3"><input type="file" name="image" /></td>
+                    </tr>
+                    <tr>
                         <td></td>
-                        <td>
+                        <td colspan="3" class="text-end">
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
         <!-- end .container -->
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

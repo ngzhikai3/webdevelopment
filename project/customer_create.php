@@ -11,6 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -19,7 +20,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container my-3 py-2">
             <div class="page-header text-center">
@@ -162,21 +163,17 @@ include 'check.php';
                 <table class='table table-dark table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
-                        <td><input type='text' name='username' value='<?php echo $user_name ?>' class='form-control' /></td>
+                        <td colspan="3"><input type='text' name='username' value='<?php echo $user_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Password</td>
                         <td><input type='password' name='password' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>confirm Password</td>
                         <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
                         <td><input type='text' name='first_name' value='<?php echo $first_name ?>' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Last Name</td>
                         <td><input type='text' name='last_name' value='<?php echo $last_name ?>' class='form-control' /></td>
                     </tr>
@@ -196,40 +193,41 @@ include 'check.php';
                                 </label>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Date Of Birth</td>
-                        <td><input type='date' name='date_of_birth' value='<?php echo $date_of_birth ?>' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Account Status</td>
                         <td>
-                            <input class="form-check-input" type="radio" name="account_status" value="active">
-                            <label class="form-check-label">
-                                Active
-                            </label>
-                            <input class="form-check-input" type="radio" name="account_status" value="inactive">
-                            <label class="form-check-label">
-                                Inactive
-                            </label>
+                            <div>
+                                <input class="form-check-input" type="radio" name="account_status" value="active">
+                                <label class="form-check-label">
+                                    Active
+                                </label>
+                            </div>
+                            <div>
+                                <input class="form-check-input" type="radio" name="account_status" value="inactive">
+                                <label class="form-check-label">
+                                    Inactive
+                                </label>
+                            </div>
                         </td>
                     </tr>
                     <tr>
+                        <td>Date Of Birth</td>
+                        <td colspan="3"><input type='date' name='date_of_birth' value='<?php echo $date_of_birth ?>' class='form-control' /></td>
+                    </tr>
+                    <tr>
                         <td>Photo</td>
-                        <td><input type="file" name="cus_image" /></td>
+                        <td colspan="3"><input type="file" name="cus_image" /></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
+                        <td colspan="3" class="text-end">
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-danger'>Back to read customer</a>
+                            <a href='customer_read.php' class='btn btn-secondary'>Back to read customer</a>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
         <!-- end .container -->
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

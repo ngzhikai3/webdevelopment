@@ -20,7 +20,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <!-- container -->
         <div class="container my-3">
@@ -55,7 +55,7 @@ include 'check.php';
             $num = $stmt->rowCount();
 
             // link to create record form
-            echo "<a href='customer_create.php' class='btn btn-primary m-b-1em my-3'>Create New Customer</a>";
+            echo "<a href='customer_create.php' class='btn btn-success m-b-1em my-3'>Create New Customer</a>";
 
             //check if more than 0 record found
             if ($num > 0) {
@@ -98,13 +98,13 @@ include 'check.php';
                 echo "<td class='col-2 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
-                echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
+                echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-3'>Edit</a>";
+                echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em mx-3'><i class='fa-solid fa-pen-to-square'></i></a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_customer({$user_id});' class='btn btn-danger mx-3'>Delete</a>";
+                echo "<a href='#' onclick='delete_customer({$user_id});' class='btn btn-danger mx-3'><i class='fa-solid fa-trash'></a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -114,7 +114,8 @@ include 'check.php';
 
             ?>
 
-        </div> <!-- end .container -->
+        </div>
+        <!-- end .container -->
     </div>
 
     <!-- confirm delete record will be here -->

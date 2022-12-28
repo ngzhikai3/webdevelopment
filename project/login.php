@@ -11,6 +11,7 @@ session_start();
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/button.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -43,7 +44,7 @@ session_start();
             if (isset($_POST['username']) && isset($_POST['password'])) {
 
                 $username = ($_POST['username']);
-                $password = ($_POST['password']);
+                $password = md5($_POST['password']);
 
                 $query = "SELECT username, password, account_status FROM customers WHERE username = '$username'";
                 $stmt = $con->prepare($query);
@@ -80,7 +81,7 @@ session_start();
                     </div>
 
                     <div class="text-center my-4">
-                        <button class="w-50 btn btn-lg btn-primary" type="submit">Sign in</button>
+                        <button class="submitbtn w-100" role="button" type="submit"><span class="text">Sign In</span></button>
                     </div>
                     <div class="text-center my-4">
                         <a href="register.php"><i class="fa-solid fa-user-plus text-success fs-3"></i></a>
@@ -89,7 +90,6 @@ session_start();
             </form>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

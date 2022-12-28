@@ -20,7 +20,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container my-3">
             <div class="page-header text-center">
@@ -44,9 +44,6 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
                 }
 
-                /*if ($quantity == [""]) {
-                    $error_message .= "<div class='alert alert-danger'>Please enter how many product you want!</div>";
-                } else*/
                 if ($quantity <= [0]) {
                     $error_message .= "<div class='alert alert-danger'>Please enter at least one!</div>";
                 }
@@ -114,7 +111,7 @@ include 'check.php';
                 <table class='table table-hover table-dark table-responsive table-bordered' id='delete_row'>
                     <tr>
                         <td>Username</td>
-                        <td colspan=4>
+                        <td colspan=5>
                             <select class="form-select form-select" aria-label=".form-select example" name="username">
                                 <?php
 
@@ -181,7 +178,7 @@ include 'check.php';
                         </td>
                         <td colspan=4 class="text-end">
                             <input type='submit' value='Save Changes' class='btn btn-primary' onclick="checkDuplicate(event)" />
-                            <a href='order_summary.php' class='btn btn-danger'>Back to Order Summary</a>
+                            <a href='order_summary.php' class='btn btn-secondary'>Back to Order Summary</a>
                         </td>
                     </tr>
                 </table>

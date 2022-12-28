@@ -21,7 +21,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container">
             <div class="page-header">
@@ -158,26 +158,29 @@ include 'check.php';
                 }
 
                 if (isset($_POST['delete'])) {
-                    $image = htmlspecialchars(strip_tags($image));
+                    if ($image == "product.png") {
+                        $error_message .= "<div class='alert alert-danger'>This product did not have image.</div>";
+                    } else {
+                        $image = htmlspecialchars(strip_tags($image));
 
-                    $image = !empty($_FILES["image"]["name"])
-                        ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
-                        : "";
-                    $target_directory = "uploads/";
-                    $target_file = $target_directory . $image;
-                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+                        $image = !empty($_FILES["image"]["name"])
+                            ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
+                            : "";
+                        $target_directory = "uploads/";
+                        $target_file = $target_directory . $image;
+                        $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
-                    unlink("uploads/" . $row['image']);
-                    $_POST['image'] = null;
-                    $query = "UPDATE products SET image=:image WHERE id = :id";
-                    // prepare query for excecution
-                    $stmt = $con->prepare($query);
-                    $stmt->bindParam(':image', $image);
-                    $stmt->bindParam(':id', $id);
-                    // Execute the query
-                    $stmt->execute();
-                    $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
+                        unlink("uploads/" . $row['image']);
+                        $_POST['image'] = null;
+                        $query = "UPDATE products SET image=:image WHERE id = :id";
+                        $stmt = $con->prepare($query);
+                        $stmt->bindParam(':image', $image);
+                        $stmt->bindParam(':id', $id);
+                        $stmt->execute();
+                        $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
+                    }
                 }
+
 
                 if (!empty($error_message)) {
                     echo "<div class='alert'>{$error_message}</div>";
@@ -194,10 +197,10 @@ include 'check.php';
                         $name = htmlspecialchars(strip_tags($_POST['name']));
                         $description = htmlspecialchars(strip_tags($_POST['description']));
                         $price = htmlspecialchars(strip_tags($_POST['price']));
-                        $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
+                        //$promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                         $image = htmlspecialchars(strip_tags($image));
                         $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
-                        $expired_date = htmlspecialchars(strip_tags($_POST['expired_date']));
+                        //$expired_date = htmlspecialchars(strip_tags($_POST['expired_date']));
                         // bind the parameters
                         $stmt->bindParam(':name', $name);
                         $stmt->bindParam(':description', $description);
@@ -227,42 +230,38 @@ include 'check.php';
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Name</td>
-                        <td><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td colspan="3"><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
+                        <td colspan="3"><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
                     </tr>
                     <tr>
                         <td>Price</td>
                         <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Promotion Price</td>
                         <td><input type='text' name='promotion_price' value="<?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
+                        <td>Manufacture Date</td>
+                        <td><input type='date' name='manufacture_date' value="<?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td>Expired Date</td>
+                        <td><input type='date' name='expired_date' value="<?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
                         <td>Photo</td>
-                        <td>
+                        <td colspan="3">
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="image" /></div>
                             <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>Manufacture Date</td>
-                        <td><input type='date' name='manufacture_date' value="<?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
-                        <td>Expired Date</td>
-                        <td><input type='date' name='expired_date' value="<?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td></td>
-                        <td>
+                        <td colspan="3" class="text-end">
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                            <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'>Delete</a>"; ?>
+                            <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
+                            <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>
                 </table>
@@ -271,18 +270,6 @@ include 'check.php';
         </div>
         <!-- end .container -->
     </div>
-
-    <script type='text/javascript'>
-        // confirm record deletion
-        function delete_product(id) {
-
-            if (confirm('Are you sure?')) {
-                // if user clicked ok,
-                // pass the id to delete.php and execute the delete query
-                window.location = 'product_delete.php?id=' + id;
-            }
-        }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

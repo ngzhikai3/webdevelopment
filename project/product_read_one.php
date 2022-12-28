@@ -7,6 +7,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -19,7 +20,7 @@
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container my-3">
             <div class="page-header">
@@ -88,11 +89,14 @@
                 </tr>
                 <tr>
                     <td>Price</td>
-                    <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                    <td>RM <?php
+                            $price = number_format($price, 1) . "0";
+                            echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td>Promotion Price</td>
-                    <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                    <td>RM <?php $promotion_price = number_format($promotion_price, 1) . "0";
+                            echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td>Photo</td>
@@ -108,29 +112,16 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
-                        <?php echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>"; ?>
-                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                        <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'>Delete</a>"; ?>
+                    <td class="text-end">
+                        <?php echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em'><i class='fa-solid fa-pen-to-square'></i></a>"; ?>
+                        <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
+                        <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                     </td>
                 </tr>
             </table>
-
-        </div> <!-- end .container -->
-
+        </div>
+        <!-- end .container -->
     </div>
-
-    <script type='text/javascript'>
-        // confirm record deletion
-        function delete_product(id) {
-
-            if (confirm('Are you sure?')) {
-                // if user clicked ok,
-                // pass the id to delete.php and execute the delete query
-                window.location = 'product_delete.php?id=' + id;
-            }
-        }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

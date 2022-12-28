@@ -21,7 +21,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container">
             <div class="page-header">
@@ -131,7 +131,7 @@ include 'check.php';
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?order_id={$order_id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered' id='delete_row'>
                     <tr>
-                        <td>Username</td>
+                        <td class="text-center">Username</td>
                         <td colspan="4">
                             <select class="form-select form-select" name="username" aria-label=".form-select example">
                                 <option><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></option>
@@ -157,7 +157,7 @@ include 'check.php';
 
                     <?php
 
-                    $query = "SELECT * FROM order_details INNER JOIN products ON products.id = order_details.product_id WHERE order_details.order_id=:order_id";
+                    $query = "SELECT * FROM order_details INNER JOIN products ON products.id = order_details.product_id WHERE order_details.order_id=:order_id GROUP BY order_details.product_id;";
                     $stmt = $con->prepare($query);
                     $stmt->bindParam(":order_id", $order_id);
                     $stmt->execute();
@@ -166,35 +166,36 @@ include 'check.php';
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
                             echo "<tr class='pRow'>
-                            <td class='col-3'>Product</td>
+                            <td class='col-2 text-center'>Product</td>
                             <td class='col-3'><select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
                             <option value=\"$id\">$name</option>";
-                            $query = "SELECT id, name, price FROM products ORDER BY id DESC";
+                            $query = "SELECT id, name, price FROM products ORDER BY id ASC";
                             $stmt2 = $con->prepare($query);
                             $stmt2->execute();
                             $num = $stmt2->rowCount();
                             if ($num > 0) {
                                 while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                                     extract($row);
-                                    echo "<option value='$id'>$name</option>";
+                                    echo "<option value='$id'>$name </option>";
                                 }
                             }
-                            echo "<td class='col-3'>Quantity</td>
+
+                            echo "<td class='col-2 text-center'>Quantity</td>
                             <td class='col-3'>
-                            <input type='number' name='quantity[]' value='$quantity' class='form-control' /></td>
-                            <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td>
-                            </tr>";
+                            <input type='number' name='quantity[]' value='$quantity' class='form-control'/></td>
+                            <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td></tr>";
                         }
                     }
                     ?>
 
                     <tr>
-                        <td>
-                            <input type="button" value="Add More Product" class="add_one btn btn-success" />
+                        <td class="text-center">
+                            <input type="button" value="Add More Product" class="add_one btn btn-success" onclick="myFunction()" />
                         </td>
-                        <td colspan=4 class="text-end">
+                        <td colspan="4" class="text-end">
                             <input type='submit' value='Save Changes' class='btn btn-primary' onclick="checkDuplicate(event)" />
-                            <a href='order_summary.php' class='btn btn-danger'>Back to read order summary</a>
+                            <a href='order_summary.php' class='btn btn-secondary'>Back to read order summary</a>
+                            <?php echo "<a href='order_delete.php?order_id={$order_id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>
                 </table>
@@ -211,21 +212,34 @@ include 'check.php';
                 newarray.push(selects[i].value);
             }
             if (newarray.length !== new Set(newarray).size) {
-                alert("There are duplicate item in the your order <br> Please select again!");
+                alert("There are duplicate item in the your order, please select again!");
                 event.preventDefault();
             }
         }
 
-        document.addEventListener('click', function(event) {
+        /*document.addEventListener('click', function(event) {
             if (event.target.matches('.add_one')) {
                 var element = document.querySelector('.pRow');
                 var clone = element.cloneNode(true);
                 element.after(clone);
             }
-            var total = document.querySelectorAll('.pRow').length;
-            var row = document.grtElementById('order').rows
-            for (var i = 1; i <= total; i++) {
-                row[i].cells[0].innerHTML = "#" + i;
+        }, false);*/
+
+        document.addEventListener('click', function(event) {
+            if (event.target.matches('.add_one')) {
+                var rows = document.getElementsByClassName('pRow');
+                // Get the last row in the table
+                var lastRow = rows[rows.length - 1];
+                // Clone the last row
+                var clone = lastRow.cloneNode(true);
+                // Insert the clone after the last row
+                lastRow.insertAdjacentElement('afterend', clone);
+
+                // Loop through the rows
+                /*for (var i = 0; i < rows.length; i++) {
+                    // Set the inner HTML of the first cell to the current loop iteration number
+                    rows[i].cells[0].innerHTML = i + 1;
+                }*/
             }
         }, false);
 

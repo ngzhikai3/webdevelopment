@@ -6,7 +6,7 @@ try {
     // isset() is a PHP function used to verify if a value is there or not
     $id = isset($_GET['id']) ? $_GET['id'] :  die('ERROR: Record ID not found.');
 
-    $select = "SELECT id AS check_product FROM products WHERE id=:id";
+    $select = "SELECT id AS check_product, image FROM products WHERE id=:id";
     $stmt = $con->prepare($select);
     $stmt->bindParam(":id", $id);
     $stmt->execute();
@@ -28,9 +28,11 @@ try {
         $stmt = $con->prepare($query);
         $stmt->bindParam(1, $id);
 
+
         if ($stmt->execute()) {
             // redirect to read records page and
             // tell the user record was deleted
+            unlink("uploads/" . $row['image']);
             header('Location: product_read.php?action=deleted');
         } else {
             die('Unable to delete record.');

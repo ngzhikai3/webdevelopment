@@ -7,6 +7,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
@@ -19,7 +20,7 @@
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <!-- container -->
         <div class="container my-3">
@@ -54,7 +55,7 @@
             $num = $stmt->rowCount();
 
             // link to create record form
-            echo "<a href='product_create.php' class='btn btn-primary m-b-1em my-3'>Create New Product</a>";
+            echo "<a href='product_create.php' class='btn btn-success m-b-1em my-3'>Create New Product</a>";
 
             //check if more than 0 record found
             if ($num > 0) {
@@ -89,18 +90,18 @@
                 echo "<td class='col-1 text-center'>{$id}</td>";
                 echo "<td class='col-2 text-center'>{$name}</td>";
                 echo "<td class='col-2'>{$description}</td>";
-                $price = number_format((float)$price, 2, '.', '');
-                echo "<td class='text-end col-1'>{$price}</td>";
+                $price = number_format($price, 1) . "0";
+                echo "<td class='text-end col-1'>RM $price</td>";
                 echo "<td class='col-3 text-center'><img src='uploads/$image' class='w-25'></td>";
                 echo "<td class='col-3'>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-3'>Read</a>";
+                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-3'>Edit</a>";
+                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-3'><i class='fa-solid fa-pen-to-square'></i></a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});' class='btn btn-danger mx-3'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$id});' class='btn btn-danger mx-3'><i class='fa-solid fa-trash'></i></a>";
                 echo "</td>";
                 echo "</tr>";
             }

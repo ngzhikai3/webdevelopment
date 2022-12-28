@@ -21,7 +21,7 @@ include 'check.php';
 
     <div class="container-fluid px-0">
 
-        <?php include 'topnav.html'; ?>
+        <?php include 'topnav.php'; ?>
 
         <div class="container">
             <div class="page-header">
@@ -78,9 +78,9 @@ include 'check.php';
             // check if form was submitted
             if ($_POST) {
 
-                $pass_word = $_POST['password'];
-                $old_password = $_POST['old_password'];
-                $confirm_password = $_POST['confirm_password'];
+                $pass_word = md5($_POST['password']);
+                $old_password = md5($_POST['old_password']);
+                $confirm_password = md5($_POST['confirm_password']);
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
@@ -92,7 +92,7 @@ include 'check.php';
                 $error_message = "";
 
                 $emptypass = false;
-                if ($old_password == "" && $pass_word == "" && $confirm_password == "") {
+                if ($old_password == md5("") && $pass_word == md5("") && $confirm_password == md5("")) {
                     $emptypass = true;
                 } else {
                     if ($row['password'] == $old_password) {
@@ -106,10 +106,10 @@ include 'check.php';
                         if ($old_password == $pass_word) {
                             $error_message .= "<div class='alert alert-danger'>New password cannot same with old password</div>";
                         }
-                        if ($old_password != "" && $password != "" && $confirm_password == "") {
+                        if ($old_password != md5("") && $password != md5("") && $confirm_password == md5("")) {
                             $error_message .= "<div class='alert alert-danger'>Please enter confirm password</div>";
                         }
-                        if ($old_password != "" && $password != "" && $confirm_password != "" && $pass_word != $confirm_password) {
+                        if ($old_password != md5("") && $password != md5("") && $confirm_password != md5("") && $pass_word != $confirm_password) {
                             $error_message .= "<div class='alert alert-danger'>confirm password need to same with password</div>";
                         }
                     } else {
@@ -185,29 +185,33 @@ include 'check.php';
                 }
 
                 if (isset($_POST['delete'])) {
-                    $cus_image = htmlspecialchars(strip_tags($cus_image));
+                    if ($cus_image == "user.png") {
+                        $error_message .= "<div class='alert alert-danger'>This user did not have image.</div>";
+                    } else {
+                        $cus_image = htmlspecialchars(strip_tags($cus_image));
 
-                    $cus_image = !empty($_FILES["cus_image"]["name"])
-                        ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
-                        : "";
-                    $target_directory = "cus_uploads/";
-                    $target_file = $target_directory . $cus_image;
-                    $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+                        $cus_image = !empty($_FILES["cus_image"]["name"])
+                            ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
+                            : "";
+                        $target_directory = "cus_uploads/";
+                        $target_file = $target_directory . $cus_image;
+                        $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
 
-                    unlink("cus_uploads/" . $row['cus_image']);
-                    $_POST['cus_image'] = null;
-                    $query = "UPDATE customers SET cus_image=:cus_image WHERE user_id = :user_id";
-                    // prepare query for excecution
-                    $stmt = $con->prepare($query);
-                    $stmt->bindParam(':cus_image', $cus_image);
-                    $stmt->bindParam(':user_id', $user_id);
-                    // Execute the query
-                    $stmt->execute();
-                    $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
+                        unlink("cus_uploads/" . $row['cus_image']);
+                        $_POST['cus_image'] = null;
+                        $query = "UPDATE customers SET cus_image=:cus_image WHERE user_id = :user_id";
+                        // prepare query for excecution
+                        $stmt = $con->prepare($query);
+                        $stmt->bindParam(':cus_image', $cus_image);
+                        $stmt->bindParam(':user_id', $user_id);
+                        // Execute the query
+                        $stmt->execute();
+                        $error_message .= "<div class='alert alert-success'>Image was deleted.</div>";
+                    }
                 }
 
                 if (!empty($error_message)) {
-                    echo "<div class='alert alert-danger'>{$error_message}</div>";
+                    echo $error_message;
                 } else {
 
                     try {
@@ -221,7 +225,7 @@ include 'check.php';
                         if ($emptypass == true) {
                             $password = $row['password'];
                         } else {
-                            $password = htmlspecialchars(strip_tags($_POST['password']));
+                            $password = htmlspecialchars(md5(strip_tags($_POST['password'])));
                         }
                         $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                         $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
@@ -255,27 +259,23 @@ include 'check.php';
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Old Password</td>
-                        <td><input type='password' name='old_password' class='form-control' /></td>
+                        <td colspan="3"><input type='password' name='old_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>New Password</td>
                         <td><input type='password' name='password' class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>confirm Password</td>
                         <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
                         <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
                         <td>Last Name</td>
                         <td><input type='text' name='last_name' value="<?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>gender</td>
-                        <td>
+                        <td colspan="3">
                             <?php
                             if ($gender == "male") {
                                 echo "<div class='form-check'>
@@ -309,22 +309,22 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>Date Of Birth</td>
-                        <td><input type='date' name='date_of_birth' value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" /></td>
+                        <td colspan="3"><input type='date' name='date_of_birth' value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" /></td>
                     </tr>
                     <tr>
                         <td>Photo</td>
-                        <td>
+                        <td colspan="3">
                             <div><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="cus_image" /></div>
-                            <div><?php echo "<button class='btn btn-danger' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
+                            <div><?php echo "<button class='btn btn-danger mx-2 mt-2' name='delete'><i class='fa-solid fa-trash'></i></button>"; ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
+                        <td colspan="3" class="text-end">
                             <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-danger'>Back to read customer profile</a>
-                            <?php echo "<a href='customer_delete.php?user_id={$user_id}' onclick='delete_customer({$user_id});' class='btn btn-danger'>Delete</a>"; ?>
+                            <a href='customer_read.php' class='btn btn-secondary'>Back to read customer profile</a>
+                            <?php echo "<a href='customer_delete.php?user_id={$user_id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>
                 </table>
@@ -333,18 +333,6 @@ include 'check.php';
         </div>
         <!-- end .container -->
     </div>
-
-    <script type='text/javascript'>
-        // confirm record deletion
-        function delete_customer(user_id) {
-
-            if (confirm('Are you sure?')) {
-                // if user clicked ok,
-                // pass the id to delete.php and execute the delete query
-                window.location = 'customer_delete.php?user_id=' + user_id;
-            }
-        }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
