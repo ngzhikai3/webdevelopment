@@ -3,6 +3,10 @@
 
 <head>
     <title>Read Order Summary</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -71,7 +75,7 @@
                     echo "<tr>";
                     echo "<td class='col-2' >Total</td>";
                     echo "<td colspan=3 class='text-end'>";
-                    $total_price = number_format($total_price,1) . "0";
+                    $total_price = number_format($total_price, 1) . "0";
                     echo "RM $total_price";
                     echo "</td></tr></table>";
                 } catch (PDOException $exception) {
