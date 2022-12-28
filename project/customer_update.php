@@ -260,17 +260,17 @@ include 'check.php';
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
                         <td>Old Password</td>
-                        <td colspan="3"><input type='password' name='old_password' class='form-control' /></td>
+                        <td colspan="3"><input type='password' name='old_password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
                     </tr>
                     <tr>
                         <td>New Password</td>
-                        <td><input type='password' name='password' class='form-control' /></td>
+                        <td><input type='password' name='password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
                         <td>confirm Password</td>
-                        <td><input type='password' name='confirm_password' class='form-control' /></td>
+                        <td><input type='password' name='confirm_password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
-                        <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control'/></td>
                         <td>Last Name</td>
                         <td><input type='text' name='last_name' value="<?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>

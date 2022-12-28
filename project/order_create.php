@@ -11,7 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="images/icon.png"/>
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -41,12 +41,13 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
 
-                if ($product_id == ["Select Product"]) {
-                    $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
-                }
-
-                if ($quantity <= [0]) {
-                    $error_message .= "<div class='alert alert-danger'>Please enter at least one!</div>";
+                for ($i = 0; $i < count($product_id); $i++) {
+                    if (empty($product_id[$i]) || $product_id[$i] == 'Select Product') {
+                        $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
+                    }
+                    if (empty($quantity[$i]) || $quantity[$i] <= 0) {
+                        $error_message .= "<div class='alert alert-danger'>Please enter a least one!</div>";
+                    }
                 }
 
                 if (!empty($error_message)) {

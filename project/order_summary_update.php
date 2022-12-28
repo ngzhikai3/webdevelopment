@@ -46,12 +46,13 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
 
-                if ($product_id == [""]) {
-                    $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
-                }
-
-                if ($quantity == [""]) {
-                    $error_message .= "<div class='alert alert-danger'>Please enter how many product you want!</div>";
+                for ($i = 0; $i < count($product_id); $i++) {
+                    if (empty($product_id[$i]) || $product_id[$i] == 'Select Product') {
+                        $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
+                    }
+                    if (empty($quantity[$i]) || $quantity[$i] <= 0) {
+                        $error_message .= "<div class='alert alert-danger'>Please enter a least one!</div>";
+                    }
                 }
 
                 if (!empty($error_message)) {
