@@ -41,11 +41,11 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
 
-                for ($i = 0; $i < count($product_id); $i++) {
-                    if (empty($product_id[$i]) || $product_id[$i] == 'Select Product') {
+                for ($count = 0; $count < count($product_id); $count++) {
+                    if (empty($product_id[$count]) || $product_id[$count] == 'Select Product') {
                         $error_message .= "<div class='alert alert-danger'>Please select your product!</div>";
                     }
-                    if (empty($quantity[$i]) || $quantity[$i] <= 0) {
+                    if (empty($quantity[$count]) || $quantity[$count] <= 0) {
                         $error_message .= "<div class='alert alert-danger'>Please enter a least one!</div>";
                     }
                 }

@@ -33,7 +33,7 @@ include 'check.php';
             // get passed parameter value, in this case, the record ID
             // isset() is a PHP function used to verify if a value is there or not
             include 'config/database.php';
-            $error_message = "";
+
             $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
             if ($_POST) {
@@ -41,7 +41,8 @@ include 'check.php';
                 $username = $_POST['username'];
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
-
+                $error_message = "";
+                
                 if ($username == "") {
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
