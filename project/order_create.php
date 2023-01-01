@@ -194,9 +194,13 @@ include 'check.php';
     <script>
         document.addEventListener('click', function(event) {
             if (event.target.matches('.add_one')) {
-                var element = document.querySelector('.pRow');
-                var clone = element.cloneNode(true);
-                element.after(clone);
+                var rows = document.getElementsByClassName('pRow');
+                // Get the last row in the table
+                var lastRow = rows[rows.length - 1];
+                // Clone the last row
+                var clone = lastRow.cloneNode(true);
+                // Insert the clone after the last row
+                lastRow.insertAdjacentElement('afterend', clone);
             }
         }, false);
 

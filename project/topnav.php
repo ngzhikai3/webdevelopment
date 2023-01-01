@@ -47,7 +47,7 @@
             </ul>
         </div>
         <div class="d-none d-lg-block d-xl-block d-xxl-block">
-            <a class="nav-link text-white" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
+            <a class="nav-link text-white bg-danger p-2 px-3 rounded-5" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
     </div>
 </nav>
