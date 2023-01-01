@@ -46,6 +46,9 @@ include 'check.php';
             if ($action == 'nodeleted') {
                 echo "<div class='alert alert-danger'>This customer had order placed so cannot be delete.</div>";
             }
+            if ($action == 'user') {
+                echo "<div class='alert alert-danger'>Only admin can delete user.</div>";
+            }
 
             // select all data
             $query = "SELECT * FROM customers ORDER BY user_id DESC";

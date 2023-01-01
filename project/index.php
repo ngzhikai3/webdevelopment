@@ -47,30 +47,30 @@ include 'check.php';
                     <div class='col-xl-4 col-lg-6 col-md-6 my-2'>
                         <div class='card bg-light'>
                             <div class='card-header'>
-                                <h3 class='card-title'>Total <strong class='text-warning text-decoration-underline'>$products</strong> Products On Sale</h1>
+                                <h3 class='card-title'>Total <strong class='text-warning'>$products</strong> Products On Sale</h1>
                             </div>
                             <div class='card-body d-flex justify-content-end'>
-                                <a href='product_read.php' class='btn submitbtn w-50 p-2'>View Product List</a>
+                                <a href='product_read.php' class='btn submitbtn w-50 p-2'>View All</a>
                             </div>
                         </div>
                     </div>
                     <div class='col-xl-4 col-lg-6 col-md-6 my-2'>
                         <div class='card bg-light'>
                             <div class='card-header'>
-                                <h3 class='card-title'>Total <strong class='text-warning text-decoration-underline'>$customer</strong> Customers Registered</h1>
+                                <h3 class='card-title'>Total <strong class='text-warning'>$customer</strong> Customers Registered</h1>
                             </div>
                             <div class='card-body d-flex justify-content-end'>
-                                <a href='customer_read.php' class='btn submitbtn w-50 p-2'>View Customer List</a>
+                                <a href='customer_read.php' class='btn submitbtn w-50 p-2'>View All</a>
                             </div>
                         </div>
                     </div>
                     <div class='col-xl-4 col-lg-6 col-md-6 my-2'>
                         <div class='card bg-light'>
                             <div class='card-header'>
-                                <h3 class='card-title'>Total <strong class='text-warning text-decoration-underline'>$order</strong> Order</h1>
+                                <h3 class='card-title'>Total <strong class='text-warning'>$order</strong> Orders</h1>
                             </div>
                             <div class='card-body d-flex justify-content-end'>
-                                <a href='order_summary.php' class='btn submitbtn w-50 p-2'>View Order List</a>
+                                <a href='order_summary.php' class='btn submitbtn w-50 p-2'>View All</a>
                             </div>
                         </div>
                     </div>

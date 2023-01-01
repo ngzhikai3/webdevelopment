@@ -11,7 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="images/icon.png"/>
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -29,7 +29,7 @@ include 'check.php';
             </div>
 
             <?php
-            $user_name = $first_name = $last_name = $date_of_birth = "";
+            $user_name = $first_name = $last_name = $date_of_birth = $gender = $account_status = "";
 
             if ($_POST) {
                 // include database connection
@@ -44,7 +44,7 @@ include 'check.php';
                 $cus_image = !empty($_FILES["cus_image"]["name"])
                     ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
                     : "";
-                $cus_image = htmlspecialchars(strip_tags($cus_image));
+                $cus_image = (strip_tags($cus_image));
                 $error_message = "";
 
                 if ($user_name == "" || $pass_word == md5("") || $confirm_password == md5("") || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "" || $account_status == "") {
@@ -57,6 +57,8 @@ include 'check.php';
                     $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
                 } elseif (strlen($user_name) < 6) {
                     $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
+                } elseif (!preg_match('/[a-z]/', $user_name) && !preg_match('/[A-Z]/', $user_name)) {
+                    $error_message .= "<div class='alert alert-danger'>Username cannot just number</div>";
                 }
 
                 if (!preg_match('/[a-z]/', $pass_word)) {
@@ -131,7 +133,7 @@ include 'check.php';
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status, cus_image=:cus_image";
+                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status, user_type=:user_type, cus_image=:cus_image";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -142,6 +144,8 @@ include 'check.php';
                         $stmt->bindParam(':gender', $gender);
                         $stmt->bindParam(':date_of_birth', $date_of_birth);
                         $stmt->bindParam(':account_status', $account_status);
+                        $user_type = "user";
+                        $stmt->bindParam(':user_type', $user_type);
                         $stmt->bindParam(':cus_image', $cus_image);
                         // Execute the query
                         if ($stmt->execute()) {
@@ -163,26 +167,26 @@ include 'check.php';
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-dark table-hover table-responsive table-bordered'>
                     <tr>
-                        <td>Username</td>
+                        <td class="text-center">Username</td>
                         <td colspan="3"><input type='text' name='username' value='<?php echo $user_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Password</td>
+                        <td class="text-center col-3">Password</td>
                         <td><input type='password' name='password' class='form-control' /></td>
-                        <td>confirm Password</td>
+                        <td class="text-center col-3">Confirm Password</td>
                         <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>First Name</td>
+                        <td class="text-center col-3">First Name</td>
                         <td><input type='text' name='first_name' value='<?php echo $first_name ?>' class='form-control' /></td>
-                        <td>Last Name</td>
+                        <td class="text-center col-3">Last Name</td>
                         <td><input type='text' name='last_name' value='<?php echo $last_name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Gender</td>
+                        <td class="text-center">Gender</td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="male">
+                                <input class="form-check-input" type="radio" name="gender" value="male" checked>
                                 <label class="form-check-label">
                                     Male
                                 </label>
@@ -194,10 +198,10 @@ include 'check.php';
                                 </label>
                             </div>
                         </td>
-                        <td>Account Status</td>
+                        <td class="text-center">Account Status</td>
                         <td>
                             <div>
-                                <input class="form-check-input" type="radio" name="account_status" value="active">
+                                <input class="form-check-input" type="radio" name="account_status" value="active" checked>
                                 <label class="form-check-label">
                                     Active
                                 </label>
@@ -211,18 +215,20 @@ include 'check.php';
                         </td>
                     </tr>
                     <tr>
-                        <td>Date Of Birth</td>
+                        <td class="text-center">Date Of Birth</td>
                         <td colspan="3"><input type='date' name='date_of_birth' value='<?php echo $date_of_birth ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Photo</td>
+                        <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="cus_image" /></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
-                            <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-secondary'>Back to read customer</a>
+                            <button type='submit' class='btn btn-success'>
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='customer_read.php' class='btn btn-secondary'>Go to Customer Profile <i class="fa-sharp fa-solid fa-circle-arrow-right"></i></a>
                         </td>
                     </tr>
                 </table>

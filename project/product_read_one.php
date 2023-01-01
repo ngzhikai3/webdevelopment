@@ -81,41 +81,42 @@
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-dark table-responsive table-bordered'>
                 <tr>
-                    <td>Name</td>
-                    <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
+                    <td class="text-center">Name</td>
+                    <td colspan="3"><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Description</td>
-                    <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                    <td class="text-center">Description</td>
+                    <td colspan="3"><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Price</td>
-                    <td>RM <?php
-                            $price = number_format($price, 1) . "0";
-                            echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">Price</td>
+                    <td class="text-center col-3"><?php
+                                                    $price = number_format($price, 1) . "0";
+                                                    echo "RM " . htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">Promotion Price</td>
+                    <td class="text-center col-3"> <?php
+                                                    if ($promotion_price == NULL) {
+                                                        echo htmlspecialchars($promotion_price, ENT_QUOTES);
+                                                    } else {
+                                                        $promotion_price = number_format($promotion_price, 1) . "0";
+                                                        echo "RM " . htmlspecialchars($promotion_price, ENT_QUOTES);
+                                                    }  ?></td>
                 </tr>
                 <tr>
-                    <td>Promotion Price</td>
-                    <td>RM <?php $promotion_price = number_format($promotion_price, 1) . "0";
-                            echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">Manufacture Date</td>
+                    <td class="text-center col-3"><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">Expired Date</td>
+                    <td class="text-center col-3"><?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Photo</td>
-                    <td><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES); ?>"></td>
-                </tr>
-                <tr>
-                    <td>Manufacture Date</td>
-                    <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
-                </tr>
-                <tr>
-                    <td>Expired Date</td>
-                    <td><?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?></td>
+                    <td class="text-center">Photo</td>
+                    <td colspan="3"><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES); ?>"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="text-end">
+                    <td class="text-end" colspan="3">
                         <?php echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em'><i class='fa-solid fa-pen-to-square'></i></a>"; ?>
-                        <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
+                        <a href='product_read.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Product List</a>
                         <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                     </td>
                 </tr>

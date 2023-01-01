@@ -44,16 +44,14 @@ include 'check.php';
                 $image = !empty($_FILES["image"]["name"])
                     ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
                     : "";
-                $image = htmlspecialchars(strip_tags($image));
+                $image = (strip_tags($image));
                 $error_message = "";
 
                 if ($name == "" || $description == "" || $price == "" || $manufacture_date == "") {
                     $error_message .= "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
                 }
 
-                if ($price == "") {
-                    $error_message .= "<div class='alert alert-danger'>Please make sure price are not empty</div>";
-                } elseif (!is_numeric($price)) {
+                if ($price != "" && !is_numeric($price)) {
                     $error_message .= "<div class='alert alert-danger'>Please make sure price only have number</div>";
                 }
 
@@ -160,34 +158,36 @@ include 'check.php';
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
-                        <td>Name</td>
+                        <td class="text-center">Name</td>
                         <td colspan="3"><input type='text' name='name' value='<?php echo $name ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Description</td>
+                        <td class="text-center">Description</td>
                         <td colspan="3"><textarea type='text' name='description' class='form-control'><?php echo $description ?></textarea></td>
                     </tr>
                     <tr>
-                        <td>Price</td>
+                        <td class="text-center col-3">Price</td>
                         <td><input type='text' name='price' value='<?php echo $price ?>' class='form-control' /></td>
-                        <td>Promotion price</td>
+                        <td class="text-center col-3">Promotion price</td>
                         <td><input type='text' name='promotion_price' value='<?php echo $promotion_price ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Manufacture Date</td>
+                        <td class="text-center">Manufacture Date</td>
                         <td><input type='date' name='manufacture_date' value='<?php echo $manufacture_date ?>' class='form-control' /></td>
-                        <td>Expired Date</td>
+                        <td class="text-center">Expired Date</td>
                         <td><input type='date' name='expired_date' value='<?php echo $expired_date ?>' class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Photo</td>
+                        <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="image" /></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
-                            <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
+                            <button type='submit' class='btn btn-success'>
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='product_read.php' class='btn btn-secondary'>Go to Product List <i class="fa-sharp fa-solid fa-circle-arrow-right"></i></a>
                         </td>
                     </tr>
                 </table>

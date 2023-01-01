@@ -42,7 +42,7 @@ include 'check.php';
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
                 $error_message = "";
-                
+
                 if ($username == "") {
                     $error_message .= "<div class='alert alert-danger'>Please select your username!</div>";
                 }
@@ -170,7 +170,7 @@ include 'check.php';
                             extract($row);
                             echo "<tr class='pRow'>
                             <td class='col-2 text-center'>Product</td>
-                            <td class='col-3'><select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
+                            <td class='col-6'><select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
                             <option value=\"$id\">$name</option>";
                             $query = "SELECT id, name, price FROM products ORDER BY id ASC";
                             $stmt2 = $con->prepare($query);
@@ -184,20 +184,22 @@ include 'check.php';
                             }
 
                             echo "<td class='col-2 text-center'>Quantity</td>
-                            <td class='col-3'>
-                            <input type='number' name='quantity[]' value='$quantity' class='form-control'/></td>
-                            <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td></tr>";
+                            <td class='col-1'>
+                            <input type='number' name='quantity[]' value='$quantity' class='form-control text-center'/></td>
+                            <td class='text-center col-1'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td></tr>";
                         }
                     }
                     ?>
 
                     <tr>
                         <td class="text-center">
-                            <input type="button" value="Add More Product" class="add_one btn btn-success" onclick="myFunction()" />
+                            <input type="button" value="Add More Product" class="add_one btn btn-info" onclick="myFunction()" />
                         </td>
                         <td colspan="4" class="text-end">
-                            <input type='submit' value='Save Changes' class='btn btn-primary' onclick="checkDuplicate(event)" />
-                            <a href='order_summary.php' class='btn btn-secondary'>Back to read order summary</a>
+                            <button type='submit' class='btn btn-success' onclick="checkDuplicate(event)">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='order_summary.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Order Summary</a>
                             <?php echo "<a href='order_delete.php?order_id={$order_id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>
@@ -220,14 +222,6 @@ include 'check.php';
             }
         }
 
-        /*document.addEventListener('click', function(event) {
-            if (event.target.matches('.add_one')) {
-                var element = document.querySelector('.pRow');
-                var clone = element.cloneNode(true);
-                element.after(clone);
-            }
-        }, false);*/
-
         document.addEventListener('click', function(event) {
             if (event.target.matches('.add_one')) {
                 var rows = document.getElementsByClassName('pRow');
@@ -237,12 +231,6 @@ include 'check.php';
                 var clone = lastRow.cloneNode(true);
                 // Insert the clone after the last row
                 lastRow.insertAdjacentElement('afterend', clone);
-
-                // Loop through the rows
-                /*for (var i = 0; i < rows.length; i++) {
-                    // Set the inner HTML of the first cell to the current loop iteration number
-                    rows[i].cells[0].innerHTML = i + 1;
-                }*/
             }
         }, false);
 

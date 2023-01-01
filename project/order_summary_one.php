@@ -3,7 +3,7 @@
 
 <head>
     <title>Read Order Summary</title>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
@@ -113,20 +113,21 @@
                 <!--we have our html table here where the record will be displayed-->
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
-                        <td>First Name</td>
+                        <td class="text-center">First Name</td>
                         <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
                     </tr>
                     <tr>
-                        <td>Last Name</td>
+                        <td class="text-center">Last Name</td>
                         <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
                     </tr>
                     <tr>
-                        <td>Photo</td>
+                        <td class="text-center">Photo</td>
                         <td><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 m-3"></td>
                     </tr>
                 </table>
                 <div class="text-end">
-                    <a href='order_summary.php' class='btn btn-secondary'>Back to read Order Summary</a>
+                    <a href='order_summary.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Order Summary</a>
+                    <?php echo "<a href='order_delete.php?order_id={$order_id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                 </div>
             </div>
         </div>

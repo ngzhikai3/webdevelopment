@@ -26,7 +26,7 @@
         <!-- container -->
         <div class="container my-3">
             <div class="page-header">
-                <h1>Read Products List</h1>
+                <h1>Read Product List</h1>
             </div>
 
             <?php

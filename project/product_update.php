@@ -162,7 +162,7 @@ include 'check.php';
                     if ($image == "product.png") {
                         $error_message .= "<div class='alert alert-danger'>This product did not have image.</div>";
                     } else {
-                        $image = htmlspecialchars(strip_tags($image));
+                        $image = (strip_tags($image));
 
                         $image = !empty($_FILES["image"]["name"])
                             ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
@@ -195,13 +195,11 @@ include 'check.php';
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
-                        $name = htmlspecialchars(strip_tags($_POST['name']));
-                        $description = htmlspecialchars(strip_tags($_POST['description']));
-                        $price = htmlspecialchars(strip_tags($_POST['price']));
-                        //$promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
-                        $image = htmlspecialchars(strip_tags($image));
-                        $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
-                        //$expired_date = htmlspecialchars(strip_tags($_POST['expired_date']));
+                        $name = (strip_tags($_POST['name']));
+                        $description = (strip_tags($_POST['description']));
+                        $price = (strip_tags($_POST['price']));
+                        $image = (strip_tags($image));
+                        $manufacture_date = (strip_tags($_POST['manufacture_date']));
                         // bind the parameters
                         $stmt->bindParam(':name', $name);
                         $stmt->bindParam(':description', $description);
@@ -230,27 +228,27 @@ include 'check.php';
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
-                        <td>Name</td>
+                        <td class="text-center">Name</td>
                         <td colspan="3"><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Description</td>
+                        <td class="text-center">Description</td>
                         <td colspan="3"><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
                     </tr>
                     <tr>
-                        <td>Price</td>
+                        <td class="text-center col-3">Price</td>
                         <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
-                        <td>Promotion Price</td>
+                        <td class="text-center col-3">Promotion Price</td>
                         <td><input type='text' name='promotion_price' value="<?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Manufacture Date</td>
+                        <td class="text-center col-3">Manufacture Date</td>
                         <td><input type='date' name='manufacture_date' value="<?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?>" class='form-control' /></td>
-                        <td>Expired Date</td>
+                        <td class="text-center col-3">Expired Date</td>
                         <td><input type='date' name='expired_date' value="<?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Photo</td>
+                        <td class="text-center">Photo</td>
                         <td colspan="3">
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="image" /></div>
@@ -260,8 +258,10 @@ include 'check.php';
                     <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
-                            <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='product_read.php' class='btn btn-secondary'>Back to read products</a>
+                            <button type='submit' class='btn btn-success'>
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='product_read.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Product List</a>
                             <?php echo "<a href='product_delete.php?id={$id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>

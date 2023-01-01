@@ -112,7 +112,7 @@ include 'check.php';
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
                 <table class='table table-hover table-dark table-responsive table-bordered' id='delete_row'>
                     <tr>
-                        <td>Username</td>
+                        <td class="text-center">Username</td>
                         <td colspan=5>
                             <select class="form-select form-select" aria-label=".form-select example" name="username">
                                 <?php
@@ -150,8 +150,8 @@ include 'check.php';
 
                     <?php
                     echo "  <tr class=\"pRow\"> 
-                        <td>Product</td>
-                        <td>
+                        <td class='col-2 text-center'>Product</td>
+                        <td class='col-6'>
                         <select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
                         <option value='Select Product' selected>Select Product</option>";
                     $query = "SELECT * FROM products ORDER BY id DESC";
@@ -169,18 +169,20 @@ include 'check.php';
 
                     echo "</select>
                         </td>
-                        <td>Quantity</td>
-                        <td><input type='number' name='quantity[]' value='1' class='form-control' /> </td>
-                        <td class='text-center'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td>
+                        <td class='col-2 text-center'>Quantity</td>
+                        <td class='col-1'><input type='number' name='quantity[]' value='1' class='form-control text-center' /> </td>
+                        <td class='text-center col-1'><a class='btn btn-danger mx-2' name='delete' onclick='deleteRow(this)'/><i class='fa-solid fa-trash'></i></a></td>
                     </tr>";
                     ?>
                     <tr>
                         <td>
-                            <input type="button" value="Add More Product" class="add_one btn btn-success" />
+                            <input type="button" value="Add More Product" class="add_one btn btn-info" />
                         </td>
                         <td colspan=4 class="text-end">
-                            <input type='submit' value='Save Changes' class='btn btn-primary' onclick="checkDuplicate(event)" />
-                            <a href='order_summary.php' class='btn btn-secondary'>Back to Order Summary</a>
+                            <button type='submit' class='btn btn-success' onclick="checkDuplicate(event)">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='order_summary.php' class='btn btn-secondary'>Go to Order Summary <i class="fa-sharp fa-solid fa-circle-arrow-right"></i></a>
                         </td>
                     </tr>
                 </table>

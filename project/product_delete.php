@@ -32,7 +32,10 @@ try {
         if ($stmt->execute()) {
             // redirect to read records page and
             // tell the user record was deleted
-            unlink("uploads/" . $row['image']);
+            if ($row['image'] != 'product.png') {
+                unlink("uploads/" . $row['image']);
+            }
+            //unlink("uploads/" . $row['image']);
             header('Location: product_read.php?action=deleted');
         } else {
             die('Unable to delete record.');

@@ -11,7 +11,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="images/icon.png"/>
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -80,38 +80,34 @@ include 'check.php';
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-dark table-responsive table-bordered'>
                 <tr>
-                    <td>Username</td>
-                    <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
+                    <td class="text-center">Username</td>
+                    <td colspan="3"><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>First Name</td>
-                    <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">First Name</td>
+                    <td class="text-center col-3"><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
+                    <td class="text-center col-3">Last Name</td>
+                    <td class="text-center col-3"><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Last Name</td>
-                    <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
-                </tr>
-                <tr>
-                    <td>Gender</td>
-                    <td><?php if ($gender == "male") {
+                    <td class="text-center col-3">Gender</td>
+                    <td class="text-center col-3"><?php if ($gender == "male") {
                             echo "<i class='fa-solid fa-person fs-1 text-primary ms-3'></i>";
                         } else {
                             echo "<i class='fa-solid fa-person-dress fs-1 text-danger ms-3'></i>";
                         } ?></td>
+                    <td class="text-center col-3">Date of Birth</td>
+                    <td class="text-center col-3"><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Date of Birth</td>
-                    <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25"></td>
+                    <td class="text-center">Photo</td>
+                    <td colspan="3"><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="text-end">
+                    <td class="text-end" colspan="3">
                         <?php echo "<a href='customer_update.php?user_id={$user_id}' class='btn btn-primary m-r-1em'><i class='fa-solid fa-pen-to-square'></i></a>"; ?>
-                        <a href='customer_read.php' class='btn btn-secondary'>Back to read customer profile</a>
+                        <a href='customer_read.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Customer Profile</a>
                         <?php echo "<a href='customer_delete.php?user_id={$user_id}' class='btn btn-danger'><i class='fa-solid fa-trash'></i></a>"; ?>
                     </td>
                 </tr>

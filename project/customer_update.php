@@ -12,7 +12,7 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="images/icon.png"/>
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -60,8 +60,7 @@ include 'check.php';
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 // values to fill up our form
-                $username = $row['username'];
-                $password = $row['password'];
+                $pass_word = $row['password'];
                 $first_name = $row['first_name'];
                 $last_name = $row['last_name'];
                 $gender = $row['gender'];
@@ -79,9 +78,9 @@ include 'check.php';
             // check if form was submitted
             if ($_POST) {
 
-                $pass_word = md5($_POST['password']);
+                $pass_word = ($_POST['password']);
                 $old_password = md5($_POST['old_password']);
-                $confirm_password = md5($_POST['confirm_password']);
+                $confirm_password = ($_POST['confirm_password']);
                 $first_name = $_POST['first_name'];
                 $last_name = $_POST['last_name'];
                 $gender = $_POST['gender'];
@@ -89,11 +88,11 @@ include 'check.php';
                 $cus_image = !empty($_FILES["cus_image"]["name"])
                     ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
                     : htmlspecialchars($cus_image, ENT_QUOTES);
-                $cus_image = htmlspecialchars(strip_tags($cus_image));
+                $cus_image = (strip_tags($cus_image));
                 $error_message = "";
 
                 $emptypass = false;
-                if ($old_password == md5("") && $pass_word == md5("") && $confirm_password == md5("")) {
+                if ($old_password == md5("") && $pass_word == "" && $confirm_password == "") {
                     $emptypass = true;
                 } else {
                     if ($row['password'] == $old_password) {
@@ -103,20 +102,23 @@ include 'check.php';
                             $error_message .= "<div class='alert alert-danger'>Password need include number</div>";
                         } elseif (strlen($pass_word) < 8) {
                             $error_message .= "<div class='alert alert-danger'>Password need at least 8 charecter</div>";
-                        }
-                        if ($old_password == $pass_word) {
+                        } elseif ($old_password == $pass_word) {
                             $error_message .= "<div class='alert alert-danger'>New password cannot same with old password</div>";
-                        }
-                        if ($old_password != md5("") && $password != md5("") && $confirm_password == md5("")) {
+                        } elseif ($old_password != "" && $password != "" && $confirm_password == "") {
                             $error_message .= "<div class='alert alert-danger'>Please enter confirm password</div>";
-                        }
-                        if ($old_password != md5("") && $password != md5("") && $confirm_password != md5("") && $pass_word != $confirm_password) {
+                        } elseif ($old_password != "" && $password != "" && $confirm_password != "" && $pass_word != $confirm_password) {
                             $error_message .= "<div class='alert alert-danger'>confirm password need to same with password</div>";
                         }
                     } else {
                         $error_message .= "<div class='alert alert-danger'>Password incorrect</div>";
                     }
                 }
+                if ($emptypass == true) {
+                    $password = $row['password'];
+                } else {
+                    $password = md5(strip_tags($_POST['password']));
+                }
+
 
                 if ($first_name == "") {
                     $error_message .= "<div class='alert alert-danger'>Please enter your first name</div>";
@@ -189,7 +191,7 @@ include 'check.php';
                     if ($cus_image == "user.png") {
                         $error_message .= "<div class='alert alert-danger'>This user did not have image.</div>";
                     } else {
-                        $cus_image = htmlspecialchars(strip_tags($cus_image));
+                        $cus_image = (strip_tags($cus_image));
 
                         $cus_image = !empty($_FILES["cus_image"]["name"])
                             ? sha1_file($_FILES['cus_image']['tmp_name']) . "-" . basename($_FILES["cus_image"]["name"])
@@ -223,16 +225,11 @@ include 'check.php';
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
-                        if ($emptypass == true) {
-                            $password = $row['password'];
-                        } else {
-                            $password = htmlspecialchars(md5(strip_tags($_POST['password'])));
-                        }
-                        $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
-                        $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
-                        $gender = htmlspecialchars(strip_tags($_POST['gender']));
-                        $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
-                        $cus_image = htmlspecialchars(strip_tags($cus_image));
+                        $first_name = (strip_tags($_POST['first_name']));
+                        $last_name = (strip_tags($_POST['last_name']));
+                        $gender = (strip_tags($_POST['gender']));
+                        $date_of_birth = (strip_tags($_POST['date_of_birth']));
+                        $cus_image = (strip_tags($cus_image));
                         // bind the parameters
                         $stmt->bindParam(':password', $password);
                         $stmt->bindParam(':first_name', $first_name);
@@ -259,24 +256,24 @@ include 'check.php';
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
                     <tr>
-                        <td>Old Password</td>
-                        <td colspan="3"><input type='password' name='old_password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
+                        <td class="text-center">Old Password</td>
+                        <td colspan="3"><input type='password' name='old_password' class='form-control' placeholder="Leave blank if no password has been changed" /></td>
                     </tr>
                     <tr>
-                        <td>New Password</td>
-                        <td><input type='password' name='password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
-                        <td>confirm Password</td>
-                        <td><input type='password' name='confirm_password' class='form-control' placeholder="Leave blank if no password has been changed"/></td>
+                        <td class="text-center">New Password</td>
+                        <td><input type='password' name='password' class='form-control' placeholder="Leave blank if no password has been changed" /></td>
+                        <td class="text-center">Confirm Password</td>
+                        <td><input type='password' name='confirm_password' class='form-control' placeholder="Leave blank if no password has been changed" /></td>
                     </tr>
                     <tr>
-                        <td>First Name</td>
-                        <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control'/></td>
-                        <td>Last Name</td>
+                        <td class="text-center">First Name</td>
+                        <td><input type='text' name='first_name' value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control' /></td>
+                        <td class="text-center">Last Name</td>
                         <td><input type='text' name='last_name' value="<?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>gender</td>
-                        <td colspan="3">
+                        <td class="text-center">Gender</td>
+                        <td>
                             <?php
                             if ($gender == "male") {
                                 echo "<div class='form-check'>
@@ -307,13 +304,11 @@ include 'check.php';
                             }
                             ?>
                         </td>
+                        <td class="text-center">Date Of Birth</td>
+                        <td><input type='date' name='date_of_birth' value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
                     <tr>
-                        <td>Date Of Birth</td>
-                        <td colspan="3"><input type='date' name='date_of_birth' value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" /></td>
-                    </tr>
-                    <tr>
-                        <td>Photo</td>
+                        <td class="text-center">Photo</td>
                         <td colspan="3">
                             <div><img src="cus_uploads/<?php echo htmlspecialchars($cus_image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
                             <div><input type="file" name="cus_image" /></div>
@@ -323,8 +318,10 @@ include 'check.php';
                     <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
-                            <input type='submit' value='Save Changes' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-secondary'>Back to read customer profile</a>
+                            <button type='submit' class='btn btn-success'>
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                            <a href='customer_read.php' class='btn btn-secondary'><i class="fa-sharp fa-solid fa-circle-arrow-left"></i> Back to Customer Profile</a>
                             <?php echo "<a href='customer_delete.php?user_id={$user_id}' class='btn btn-danger m-r-1em'><i class='fa-solid fa-trash'></i></a>"; ?>
                         </td>
                     </tr>

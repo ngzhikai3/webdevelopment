@@ -23,7 +23,7 @@
             </div>
 
             <?php
-            $user_name = $first_name = $last_name = $date_of_birth = "";
+            $user_name = $first_name = $last_name = $date_of_birth = $gender = $account_status = "";
 
             if ($_POST) {
                 // include database connection
@@ -51,6 +51,8 @@
                     $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
                 } elseif (strlen($user_name) < 6) {
                     $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";
+                } elseif (!preg_match('/[a-z]/', $user_name) && !preg_match('/[A-Z]/', $user_name)) {
+                    $error_message .= "<div class='alert alert-danger'>Username cannot just number</div>";
                 }
 
                 if (!preg_match('/[a-z]/', $pass_word)) {
@@ -180,7 +182,7 @@
                         <td>Gender</td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="male">
+                                <input class="form-check-input" type="radio" name="gender" value="male" checked>
                                 <label class="form-check-label">
                                     Male
                                 </label>
@@ -200,7 +202,7 @@
                     <tr>
                         <td>Account Status</td>
                         <td>
-                            <input class="form-check-input" type="radio" name="account_status" value="active">
+                            <input class="form-check-input" type="radio" name="account_status" value="active" checked>
                             <label class="form-check-label">
                                 Active
                             </label>
