@@ -127,7 +127,7 @@
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status, cus_image=:cus_image";
+                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name, gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status, user_type=:user_type, cus_image=:cus_image";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
                         // bind the parameters
@@ -138,6 +138,8 @@
                         $stmt->bindParam(':gender', $gender);
                         $stmt->bindParam(':date_of_birth', $date_of_birth);
                         $stmt->bindParam(':account_status', $account_status);
+                        $user_type = "user";
+                        $stmt->bindParam(':user_type', $user_type);
                         $stmt->bindParam(':cus_image', $cus_image);
                         // Execute the query
                         if ($stmt->execute()) {

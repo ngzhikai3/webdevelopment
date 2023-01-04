@@ -46,8 +46,8 @@ include 'check.php';
             if ($action == 'nodeleted') {
                 echo "<div class='alert alert-danger'>This customer had order placed so cannot be delete.</div>";
             }
-            if ($action == 'user') {
-                echo "<div class='alert alert-danger'>Only admin can delete user.</div>";
+            if ($action == 'self') {
+                echo "<div class='alert alert-danger'>User cannot delete yourself.</div>";
             }
 
             // select all data

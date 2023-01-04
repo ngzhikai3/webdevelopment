@@ -59,8 +59,6 @@ session_start();
                     } elseif ($row['account_status'] != "active") {
                         echo "<h3 class='alert alert-danger'>Your account is suspended.</h3>";
                     } else {
-                        $user_type = $row['user_type'];
-                        $_SESSION["user_type"] = $user_type;
                         $_SESSION["login"] = $username;
                         header("Location: index.php");
                     }
