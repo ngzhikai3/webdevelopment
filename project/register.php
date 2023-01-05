@@ -46,8 +46,7 @@
                 }
 
                 $space = " ";
-                $word = $_POST['username'];
-                if (strpos($word, $space) !== false) {
+                if (strpos($user_name, $space) !== false) {
                     $error_message .= "<div class='alert alert-danger'>Username not space allow</div>";
                 } elseif (strlen($user_name) < 6) {
                     $error_message .= "<div class='alert alert-danger'>Username need at least 6 charecter</div>";

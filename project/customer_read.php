@@ -47,7 +47,7 @@ include 'check.php';
                 echo "<div class='alert alert-danger'>This customer had order placed so cannot be delete.</div>";
             }
             if ($action == 'self') {
-                echo "<div class='alert alert-danger'>User cannot delete yourself.</div>";
+                echo "<div class='alert alert-danger'>You cannot delete yourself.</div>";
             }
 
             // select all data

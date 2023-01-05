@@ -45,7 +45,7 @@ include 'check.php';
             }
 
             // select all data
-            $query = "SELECT * , sum(price*quantity) AS total_price FROM order_details INNER JOIN order_summary ON order_summary.order_id = order_details.order_id INNER JOIN products ON products.id = order_details.product_id INNER JOIN customers ON customers.username = order_summary.username GROUP BY order_summary.order_id DESC";
+            $query = "SELECT * , sum(price*quantity) AS total_price FROM order_details INNER JOIN order_summary ON order_summary.order_id = order_details.order_id INNER JOIN products ON products.id = order_details.product_id INNER JOIN customers ON customers.username = order_summary.username GROUP BY order_summary.order_id";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
