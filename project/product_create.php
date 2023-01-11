@@ -182,7 +182,7 @@ include 'check.php';
                         <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="image" /></td>
                     </tr>
-                    <tr data-aos='fade-left'>
+                    <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
                             <button type='submit' class='btn btn-success'>

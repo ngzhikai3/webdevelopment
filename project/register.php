@@ -216,7 +216,7 @@
                         <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="cus_image" /></td>
                     </tr>
-                    <tr data-aos="fade-left">
+                    <tr>
                         <td></td>
                         <td colspan="3" class="text-end">
                             <input type='submit' value='Register' class='btn btn-primary' />
