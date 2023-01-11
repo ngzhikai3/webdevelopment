@@ -14,6 +14,7 @@ include 'check.php';
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -164,25 +165,25 @@ include 'check.php';
             ?>
 
             <!-- html form here where the product information will be entered -->
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data" data-aos="fade-top">
                 <table class='table table-dark table-hover table-responsive table-bordered'>
-                    <tr>
+                    <tr data-aos="fade-left">
                         <td class="text-center">Username</td>
                         <td colspan="3"><input type='text' name='username' value='<?php echo $user_name ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-right">
                         <td class="text-center col-3">Password</td>
                         <td><input type='password' name='password' class='form-control' /></td>
                         <td class="text-center col-3">Confirm Password</td>
                         <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-left">
                         <td class="text-center col-3">First Name</td>
                         <td><input type='text' name='first_name' value='<?php echo $first_name ?>' class='form-control' /></td>
                         <td class="text-center col-3">Last Name</td>
                         <td><input type='text' name='last_name' value='<?php echo $last_name ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-right">
                         <td class="text-center">Gender</td>
                         <td>
                             <div class="form-check">
@@ -214,15 +215,15 @@ include 'check.php';
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-left">
                         <td class="text-center">Date Of Birth</td>
                         <td colspan="3"><input type='date' name='date_of_birth' value='<?php echo $date_of_birth ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-right">
                         <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="cus_image" /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos="fade-left">
                         <td></td>
                         <td colspan="3" class="text-end">
                             <button type='submit' class='btn btn-success'>
@@ -239,6 +240,11 @@ include 'check.php';
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

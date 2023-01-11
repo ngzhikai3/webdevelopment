@@ -14,6 +14,7 @@ include 'check.php';
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -157,31 +158,31 @@ include 'check.php';
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center">Name</td>
                         <td colspan="3"><input type='text' name='name' value='<?php echo $name ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-left'>
                         <td class="text-center">Description</td>
                         <td colspan="3"><textarea type='text' name='description' class='form-control'><?php echo $description ?></textarea></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center col-3">Price</td>
                         <td><input type='text' name='price' value='<?php echo $price ?>' class='form-control' /></td>
                         <td class="text-center col-3">Promotion price</td>
                         <td><input type='text' name='promotion_price' value='<?php echo $promotion_price ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-left'>
                         <td class="text-center">Manufacture Date</td>
                         <td><input type='date' name='manufacture_date' value='<?php echo $manufacture_date ?>' class='form-control' /></td>
                         <td class="text-center">Expired Date</td>
                         <td><input type='date' name='expired_date' value='<?php echo $expired_date ?>' class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center">Photo</td>
                         <td colspan="3"><input type="file" name="image" /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-left'>
                         <td></td>
                         <td colspan="3" class="text-end">
                             <button type='submit' class='btn btn-success'>
@@ -197,6 +198,12 @@ include 'check.php';
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -72,12 +73,12 @@
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center'>ID</th>";
-            echo "<th class='text-center'>Name</th>";
-            echo "<th>Description</th>";
-            echo "<th class='text-end'>Price</th>";
-            echo "<th class='text-center'>Photo</th>";
-            echo "<th class='text-center'>Action</th>";
+            echo "<th class='text-center' data-aos='fade-left'>ID</th>";
+            echo "<th class='text-center' data-aos='fade-left'>Name</th>";
+            echo "<th data-aos='fade-left'>Description</th>";
+            echo "<th class='text-end' data-aos='fade-right'>Price</th>";
+            echo "<th class='text-center' data-aos='fade-right'>Photo</th>";
+            echo "<th class='text-center' data-aos='fade-right'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -88,13 +89,13 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-1 text-center'>{$id}</td>";
-                echo "<td class='col-2 text-center'>{$name}</td>";
-                echo "<td class='col-2'>{$description}</td>";
+                echo "<td class='col-1 text-center' data-aos='fade-left'>{$id}</td>";
+                echo "<td class='col-2 text-center' data-aos='fade-left'>{$name}</td>";
+                echo "<td class='col-2' data-aos='fade-left'>{$description}</td>";
                 $price = number_format($price, 1) . "0";
-                echo "<td class='text-end col-1'>RM $price</td>";
-                echo "<td class='col-3 text-center'><img src='uploads/$image' class='w-25'></td>";
-                echo "<td class='col-3'>";
+                echo "<td class='text-end col-1' data-aos='fade-right'>RM $price</td>";
+                echo "<td class='col-3 text-center' data-aos='fade-right'><img src='uploads/$image' class='w-25'></td>";
+                echo "<td class='col-3' data-aos='fade-right'>";
                 // read one record
                 echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
@@ -131,6 +132,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

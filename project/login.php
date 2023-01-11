@@ -15,12 +15,13 @@ session_start();
     <link href="css/button.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-warning">
 
-    <div class="container w-50 bg-dark p-3 pt-1 my-5">
+    <div class="container w-50 bg-dark p-3 pt-1 my-5" data-aos="fade-top">
 
         <?php
 
@@ -71,17 +72,17 @@ session_start();
 
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
                 <table class='table table-hover table-responsive table-bordered '>
-                    <div class="form-floating my-3">
+                    <div class="form-floating my-3" data-aos="fade-left">
                         <input type="text" class="form-control" id="floatingInput" name="username">
                         <label for="floatingInput">Username</label>
                     </div>
 
-                    <div class="form-floating my-3">
+                    <div class="form-floating my-3" data-aos="fade-right">
                         <input type="password" class="form-control" id="floatingPassword" name="password">
                         <label for="floatingPassword">Password</label>
                     </div>
 
-                    <div class="text-center my-4">
+                    <div class="text-center my-4" data-aos="fade-left">
                         <button class="submitbtn w-100" role="button" type="submit"><span class="text">Sign In</span></button>
                     </div>
                     <div class="text-center my-4">
@@ -94,6 +95,11 @@ session_start();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

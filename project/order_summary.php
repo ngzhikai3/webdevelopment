@@ -14,6 +14,7 @@ include 'check.php';
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -69,12 +70,12 @@ include 'check.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center'>Order ID</th>";
-            echo "<th class='text-center'>Order Date</th>";
-            echo "<th class='text-center'>First Name</th>";
-            echo "<th class='text-center'>Last Name</th>";
-            echo "<th class='text-end'>Total Price</th>";
-            echo "<th class='text-center'>Action</th>";
+            echo "<th class='text-center' data-aos='fade-left'>Order ID</th>";
+            echo "<th class='text-center' data-aos='fade-left'>Order Date</th>";
+            echo "<th class='text-center' data-aos='fade-left'>First Name</th>";
+            echo "<th class='text-center' data-aos='fade-right'>Last Name</th>";
+            echo "<th class='text-end' data-aos='fade-right'>Total Price</th>";
+            echo "<th class='text-center' data-aos='fade-right'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -86,13 +87,13 @@ include 'check.php';
 
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='text-center'>{$order_id}</td>";
-                echo "<td class='text-center'>{$order_date}</td>";
-                echo "<td class='text-center'>{$first_name}</td>";
-                echo "<td class='text-center'>{$last_name}</td>";
+                echo "<td class='text-center' data-aos='fade-left'>{$order_id}</td>";
+                echo "<td class='text-center' data-aos='fade-left'>{$order_date}</td>";
+                echo "<td class='text-center' data-aos='fade-left'>{$first_name}</td>";
+                echo "<td class='text-center' data-aos='fade-right'>{$last_name}</td>";
                 $total_price = number_format($total_price, 1) . "0";
-                echo "<td class='text-end'>RM $total_price</td>";
-                echo "<td class='text-center'>";
+                echo "<td class='text-end' data-aos='fade-right'>RM $total_price</td>";
+                echo "<td class='text-center' data-aos='fade-right'>";
                 // read one record
                 echo "<a href='order_summary_one.php?order_id={$order_id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
@@ -129,6 +130,11 @@ include 'check.php';
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

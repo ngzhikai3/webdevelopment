@@ -11,9 +11,10 @@ include 'check.php';
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="images/icon.png"/>
+    <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -71,16 +72,16 @@ include 'check.php';
             }
 
             //new
-            echo "<table class='table table-hover table-dark table-responsive table-bordered'>"; //start table
+            echo "<table class='table table-hover table-dark table-responsive table-bordered' data-aos='fade-top'>"; //start table
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center col-1'>User ID</th>";
-            echo "<th class='text-center col-2'>First Name</th>";
-            echo "<th class='text-center col-2'>Last Name</th>";
-            echo "<th class='text-center col-2'>Gender</th>";
-            echo "<th class='text-center col-2'>Photo</th>";
-            echo "<th class='text-center col-3'>Action</th>";
+            echo "<th class='text-center col-1' data-aos='fade-right'>User ID</th>";
+            echo "<th class='text-center col-2' data-aos='fade-right'>First Name</th>";
+            echo "<th class='text-center col-2' data-aos='fade-right'>Last Name</th>";
+            echo "<th class='text-center col-2' data-aos='fade-left'>Gender</th>";
+            echo "<th class='text-center col-2' data-aos='fade-left'>Photo</th>";
+            echo "<th class='text-center col-3' data-aos='fade-left'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -91,16 +92,16 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-1 text-center'>{$user_id}</td>";
-                echo "<td class='col-2 text-center text-break'>{$first_name}</td>";
-                echo "<td class='col-2 text-center text-break'>{$last_name}</td>";
+                echo "<td class='col-1 text-center' data-aos='fade-right'>{$user_id}</td>";
+                echo "<td class='col-2 text-center text-break' data-aos='fade-right'>{$first_name}</td>";
+                echo "<td class='col-2 text-center text-break' data-aos='fade-right'>{$last_name}</td>";
                 if ($gender == "male") {
-                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person fs-1 text-primary'></i></td>";
+                    echo "<td class='col-2 text-center' data-aos='fade-left'><i class='fa-solid fa-person fs-1 text-primary'></i></td>";
                 } else {
-                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person-dress fs-1 text-danger'></i></td>";
+                    echo "<td class='col-2 text-center' data-aos='fade-left'><i class='fa-solid fa-person-dress fs-1 text-danger'></i></td>";
                 }
-                echo "<td class='col-2 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
-                echo "<td class='col-3'>";
+                echo "<td class='col-2 text-center' data-aos='fade-left'><img src='cus_uploads/$cus_image' class='w-25'></td>";
+                echo "<td class='col-3' data-aos='fade-left'>";
                 // read one record
                 echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
@@ -135,9 +136,12 @@ include 'check.php';
         }
     </script>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
 </body>
 

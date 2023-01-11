@@ -15,6 +15,7 @@ include 'check.php';
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -227,27 +228,27 @@ include 'check.php';
             <!--we have our html form here where new record information can be updated-->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered'>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center">Name</td>
                         <td colspan="3"><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-left'>
                         <td class="text-center">Description</td>
                         <td colspan="3"><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center col-3">Price</td>
                         <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
                         <td class="text-center col-3">Promotion Price</td>
                         <td><input type='text' name='promotion_price' value="<?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-left'>
                         <td class="text-center col-3">Manufacture Date</td>
                         <td><input type='date' name='manufacture_date' value="<?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?>" class='form-control' /></td>
                         <td class="text-center col-3">Expired Date</td>
                         <td><input type='date' name='expired_date' value="<?php echo htmlspecialchars($expired_date, ENT_QUOTES);  ?>" class='form-control' /></td>
                     </tr>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center">Photo</td>
                         <td colspan="3">
                             <div><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);  ?>" class="w-25 mb-2"></div>
@@ -274,6 +275,11 @@ include 'check.php';
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>

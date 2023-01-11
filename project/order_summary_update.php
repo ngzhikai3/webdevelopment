@@ -15,6 +15,7 @@ include 'check.php';
     <link rel="icon" type="image/x-icon" href="images/icon.png" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
@@ -133,7 +134,7 @@ include 'check.php';
             <!--we have our html form here where new record information can be updated-->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?order_id={$order_id}"); ?>" method="post" enctype="multipart/form-data">
                 <table class='table table-hover table-dark table-responsive table-bordered' id='delete_row'>
-                    <tr>
+                    <tr data-aos='fade-right'>
                         <td class="text-center">Username</td>
                         <td colspan="4">
                             <select class="form-select form-select" name="username" aria-label=".form-select example">
@@ -168,7 +169,7 @@ include 'check.php';
                     if ($count > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            echo "<tr class='pRow'>
+                            echo "<tr class='pRow' data-aos='fade-left'>
                             <td class='col-2 text-center'>Product</td>
                             <td class='col-6'><select class=\"form-select form-select\" aria-label=\".form-select example\" name=\"product_id[]\">
                             <option value=\"$id\">$name</option>";
@@ -247,6 +248,11 @@ include 'check.php';
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    
 </body>
 
 </html>
