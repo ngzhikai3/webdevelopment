@@ -69,16 +69,16 @@
             }
 
             //new
-            echo "<table class='table table-hover table-dark table-responsive table-bordered'>"; //start table
+            echo "<table class='table table-hover table-dark table-responsive table-bordered' data-aos='fade-top'>"; //start table
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center' data-aos='fade-left'>ID</th>";
-            echo "<th class='text-center' data-aos='fade-left'>Name</th>";
-            echo "<th data-aos='fade-left'>Description</th>";
-            echo "<th class='text-end' data-aos='fade-right'>Price</th>";
-            echo "<th class='text-center' data-aos='fade-right'>Photo</th>";
-            echo "<th class='text-center' data-aos='fade-right'>Action</th>";
+            echo "<th class='text-center'>ID</th>";
+            echo "<th class='text-center'>Name</th>";
+            echo "<th>Description</th>";
+            echo "<th class='text-end'>Price</th>";
+            echo "<th class='text-center'>Photo</th>";
+            echo "<th class='text-center'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -89,13 +89,13 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-1 text-center' data-aos='fade-left'>{$id}</td>";
-                echo "<td class='col-2 text-center' data-aos='fade-left'>{$name}</td>";
-                echo "<td class='col-2' data-aos='fade-left'>{$description}</td>";
+                echo "<td class='col-1 text-center'>{$id}</td>";
+                echo "<td class='col-2 text-center'>{$name}</td>";
+                echo "<td class='col-2'>{$description}</td>";
                 $price = number_format($price, 1) . "0";
-                echo "<td class='text-end col-1' data-aos='fade-right'>RM $price</td>";
-                echo "<td class='col-3 text-center' data-aos='fade-right'><img src='uploads/$image' class='w-25'></td>";
-                echo "<td class='col-3' data-aos='fade-right'>";
+                echo "<td class='text-end col-1'>RM $price</td>";
+                echo "<td class='col-3 text-center'><img src='uploads/$image' class='w-25'></td>";
+                echo "<td class='col-3'>";
                 // read one record
                 echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 

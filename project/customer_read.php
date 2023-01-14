@@ -76,12 +76,12 @@ include 'check.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th class='text-center col-1' data-aos='fade-right'>User ID</th>";
-            echo "<th class='text-center col-2' data-aos='fade-right'>First Name</th>";
-            echo "<th class='text-center col-2' data-aos='fade-right'>Last Name</th>";
-            echo "<th class='text-center col-2' data-aos='fade-left'>Gender</th>";
-            echo "<th class='text-center col-2' data-aos='fade-left'>Photo</th>";
-            echo "<th class='text-center col-3' data-aos='fade-left'>Action</th>";
+            echo "<th class='text-center col-1'>User ID</th>";
+            echo "<th class='text-center col-2'>First Name</th>";
+            echo "<th class='text-center col-2'>Last Name</th>";
+            echo "<th class='text-center col-2'>Gender</th>";
+            echo "<th class='text-center col-2'>Photo</th>";
+            echo "<th class='text-center col-3'>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -92,16 +92,16 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td class='col-1 text-center' data-aos='fade-right'>{$user_id}</td>";
-                echo "<td class='col-2 text-center text-break' data-aos='fade-right'>{$first_name}</td>";
-                echo "<td class='col-2 text-center text-break' data-aos='fade-right'>{$last_name}</td>";
+                echo "<td class='col-1 text-center'>{$user_id}</td>";
+                echo "<td class='col-2 text-center text-break'>{$first_name}</td>";
+                echo "<td class='col-2 text-center text-break'>{$last_name}</td>";
                 if ($gender == "male") {
-                    echo "<td class='col-2 text-center' data-aos='fade-left'><i class='fa-solid fa-person fs-1 text-primary'></i></td>";
+                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person fs-1 text-primary'></i></td>";
                 } else {
-                    echo "<td class='col-2 text-center' data-aos='fade-left'><i class='fa-solid fa-person-dress fs-1 text-danger'></i></td>";
+                    echo "<td class='col-2 text-center'><i class='fa-solid fa-person-dress fs-1 text-danger'></i></td>";
                 }
-                echo "<td class='col-2 text-center' data-aos='fade-left'><img src='cus_uploads/$cus_image' class='w-25'></td>";
-                echo "<td class='col-3' data-aos='fade-left'>";
+                echo "<td class='col-2 text-center'><img src='cus_uploads/$cus_image' class='w-25'></td>";
+                echo "<td class='col-3'>";
                 // read one record
                 echo "<a href='customer_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-3'><i class='fa-solid fa-eye'></i></a>";
 
